@@ -1,9 +1,13 @@
+@use "abstracts/index" as i;
+@import url(https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;800;900&display=swap);
+
 html,
 body {
   padding: 0;
   margin: 0;
+  background-color: i.$bg-color;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
 a {
@@ -11,6 +15,20 @@ a {
   text-decoration: none;
 }
 
+nav,
+ul {
+  margin: 0;
+  padding: 0;
+}
+
 * {
   box-sizing: border-box;
+}
+
+li {
+  list-style-type: none;
+}
+
+.font-montserrat {
+  font-family: 'Montserrat', sans-serif;
 }

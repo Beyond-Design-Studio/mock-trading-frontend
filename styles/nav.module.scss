@@ -1,0 +1,72 @@
+@use "abstracts/index" as *;
+
+
+.container {
+	@include contain;
+	background-color: transparent;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	z-index: 10;
+}
+
+.nav {
+	@include flex-center;
+	justify-content: space-between;
+}
+
+.title {
+	align-self: center;
+
+	a {
+		font-weight: bold;
+		font-size: 1rem;
+	}
+
+	@include media-medium {
+		a {
+			font-weight: bold;
+			font-size: 1.5rem;
+		}
+	}
+
+}
+
+.nav-btn {
+	@include btn($bg-color, $accent-color);
+	font-size: small;
+	text-transform: uppercase;
+	font-family: $font-montserrat;
+	@include transition(all, 150ms, ease-in);
+
+	&:hover {
+		cursor: pointer;
+		background-color: $bg-color;
+		color: $sec-color;
+		@include transition(all, 150ms, ease-in);
+	}
+
+	@include media-medium {
+		font-size: medium;
+	}
+
+}
+
+.btn-login {
+	background-color: $bg-color;
+	color: $accent-color;
+	@include transition(all, 150ms, ease-in);
+
+	&:hover {
+		cursor: pointer;
+		background-color: $accent-color;
+		color: $bg-color;
+		@include transition(all, 150ms, ease-in);
+	}
+}
+
+.nav-right {
+	@include flex-center;
+	gap: 1.0rem;
+}
