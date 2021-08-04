@@ -86,3 +86,80 @@ export const BodhiIcon = (): JSX.Element => {
     </svg>
   );
 }
+
+export const RightArrow = (): JSX.Element => {
+    return (
+      <svg
+        width="24"
+        height="24"
+        fill="none"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.5"
+        color="var(--geist-foreground)"
+        shapeRendering="geometricPrecision"
+        viewBox="0 0 24 24"
+      >
+        <path d="M5 12h14M12 5l7 7-7 7"></path>
+      </svg>
+    );
+}
+
+export const LeftArrow = (): JSX.Element => {
+  return (
+    <svg
+      width="24"
+      height="24"
+      fill="none"
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="1.5"
+      color="var(--geist-foreground)"
+      shapeRendering="geometricPrecision"
+      viewBox="0 0 24 24"
+    >
+      <path d="M19 12H5M12 19l-7-7 7-7"></path>
+    </svg>
+  );
+}
+
+export const NewsIcon = (): JSX.Element => {
+  return (
+    <svg
+      width="24"
+      height="24"
+      fill="none"
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="1.5"
+      color="var(--geist-foreground)"
+      shapeRendering="geometricPrecision"
+      viewBox="0 0 24 24"
+    >
+      <path d="M21 8v13H3V8M1 3h22v5H1zM10 12h4"></path>
+    </svg>
+  );
+}
+
+export const RulesIcon = (): JSX.Element => {
+  return (
+    <svg
+      width="24"
+      height="24"
+      fill="none"
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="1.5"
+      color="var(--geist-foreground)"
+      shapeRendering="geometricPrecision"
+      viewBox="0 0 24 24"
+    >
+      <path d="M4 19.5A2.5 2.5 0 016.5 17H20"></path>
+      <path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"></path>
+    </svg>
+  );
+}
