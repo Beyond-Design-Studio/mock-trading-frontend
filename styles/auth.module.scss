@@ -29,7 +29,7 @@
   }
 }
 
-.logInContainer {
+.authContainer {
   @include flex-col-center;
   width: 80%;
   border-radius: 3%;
@@ -54,6 +54,7 @@
   }
   a {
     cursor: pointer;
+    text-decoration: underline;
   }
   a:hover {
     color: dodgerblue;
@@ -91,5 +92,10 @@
 
 .authLogInButton {
   @include logInButton;
+  margin-bottom: 40%;
+}
+
+.authRegisterButton {
+  @include registerButton;
   margin-bottom: 40%;
 }
