@@ -9,7 +9,7 @@ const Home = ():JSX.Element => {
 				<title>Mock Stock Market | Home</title>
 			</Head>
 
-			{/* <Sidenav /> */}
+			<Sidenav />
 
 			<div style={{marginLeft: "7rem"}}>
 				classname

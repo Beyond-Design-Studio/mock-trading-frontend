@@ -1,17 +1,19 @@
 @use "abstracts/index" as *;
 
 .leftbar {
-  position: absolute;
-  top: 0;
+  position: fixed;
+	top: auto;
+	bottom: 0;
   background-color: darken($bg-color, 1%);
-  height: 100vh;
+  height: 10vh;
 	width: 100%;
   @include flex-center;
-  justify-content: space-between;
+  justify-content: center;
 	align-items: flex-end;
   @include contain;
-  padding: 2rem 0;
+	padding: 0.25rem 1rem;
   @include transition(transform, 150ms, ease-in);
+	gap: 1rem;
 
   &:hover {
     transform: translateX(0%);
@@ -20,22 +22,61 @@
 
 	@include media-medium {
 		width: 10rem;
+		height: 100vh;
+		top: 0;
+		bottom: auto;
 		transform: translateX(-60%);
-		flex-direction: column
+		padding: 2rem 0;
+		flex-direction: column;
+		justify-content: space-between;
+		gap: 0;
 	}
 
 }
 
 .linkIcon {
 	@include flex-center;
-	gap: 1rem;
-	padding: 1rem 0;
-	padding-right: 1.5rem;
+	flex-direction: column-reverse;
+	gap: 0.15rem;
+	padding: 0.15rem 0.5rem;
 	// background-color: darken($bg-color, 3%);
+
+	p {
+		font-size: small;
+
+		@include media-medium {
+			font-size: 1rem;
+		}
+
+	}
+
+	@include media-medium {
+		flex-direction: row;
+		padding: 1rem 0;
+		padding-right: 1.5rem;
+		gap: 1rem;
+	}
+
 }
 
 .centerIcons {
-	@include flex-col-center;
-	align-items: flex-end;
+	@include flex-center;
+	align-items: center;
+	justify-content: center;
+	gap: 1rem;
+
+	@include media-medium {
+		align-items: flex-end;
+		flex-direction: column;
+		gap: 0;
+	}
+
 }
 
+.bodhiTitle {
+	display: none;
+
+	@include media-medium {
+		display: block;
+	}
+}

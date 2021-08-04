@@ -17,7 +17,7 @@ const Sidenav = (): JSX.Element => {
 
 	return (
 		<aside className={`${styles.leftbar}`}>
-			<div>
+			<div className={`${styles.bodhiTitle}`}>
 				<Link href="/">
 					<a className={`${styles.linkIcon}`}>
 						<p>Bodhi</p>
@@ -49,7 +49,7 @@ const Sidenav = (): JSX.Element => {
 				</Link>
 			</div>
 			
-			<div>
+			<div className={`${styles.logout}`}>
 				<Link href="/">
 					<a className={`${styles.linkIcon}`}>
 						<p>Logout</p>
