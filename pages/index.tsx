@@ -1,10 +1,16 @@
 import React from "react";
+import Head from "next/head";
 
 import styles from "@styles/home.module.scss";
 
 const Home = (): JSX.Element => {
   return (
     <div style={{ overflow: "hidden" }}>
+
+      <Head>
+        <title>Mock Trading</title>
+      </Head>
+
       <div className={styles.background}></div>
       <div className={styles.container}>
         <div>
