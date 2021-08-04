@@ -1,53 +1,62 @@
 import React, { useEffect } from "react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
-import { HomeIcon, LogOutIcon, PortfolioIcon, MarketIcon, BodhiIcon } from "./icons";
+import { HomeIcon, LogOutIcon, PortfolioIcon, MarketIcon, BodhiIcon } from "@components/icons";
 import styles from "@styles/sidenav.module.scss";
 
 const Sidenav = (): JSX.Element => {
 
+	const router = useRouter();
+
 	useEffect(() => {
-		console.log("a")
-	}, [])
+		if (router && router.query) {
+			console.log("hello", router.pathname);
+		}
+	}, [router]);
 
 	return (
 		<aside className={`${styles.leftbar}`}>
-			<Link href="/">
-				<a className={`${styles.linkIcon}`}>
-					Bodhi
-					<BodhiIcon />
-				</a>
-			</Link>
+			<div>
+				<Link href="/">
+					<a className={`${styles.linkIcon}`}>
+						<p>Bodhi</p>
+						<BodhiIcon />
+					</a>
+				</Link>
+			</div>
 			
 			<div className={`${styles.centerIcons}`}>
 				<Link href="/">
 					<a className={`${styles.linkIcon}`}>
-						Home
+						<p>Home</p>
 						<HomeIcon />
 					</a>
 				</Link>
 				
 				<Link href="/">
 					<a className={`${styles.linkIcon}`}>
-						Portfolio
+						<p>Portfolio</p>
 						<PortfolioIcon />
 					</a>
 				</Link>
 
 				<Link href="/markets">
 					<a className={`${styles.linkIcon}`}>
-						Market
+						<p>Market</p>
 						<MarketIcon />
 					</a>
 				</Link>
 			</div>
 			
-			<Link href="/">
-				<a className={`${styles.linkIcon}`}>
-					logout
-					<LogOutIcon />
-				</a>
-			</Link>
+			<div>
+				<Link href="/">
+					<a className={`${styles.linkIcon}`}>
+						<p>Logout</p>
+						<LogOutIcon />
+					</a>
+				</Link>
+			</div>
 		</aside>
 	)
 }

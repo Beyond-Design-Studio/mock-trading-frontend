@@ -1,17 +1,16 @@
 @use "abstracts/index" as *;
 
 .leftbar {
-  position: sticky;
+  position: absolute;
   top: 0;
   background-color: darken($bg-color, 1%);
   height: 100vh;
-  width: 10%;
-  @include flex-col-center;
+	width: 100%;
+  @include flex-center;
   justify-content: space-between;
 	align-items: flex-end;
   @include contain;
   padding: 2rem 0;
-  transform: translateX(-60%);
   @include transition(transform, 150ms, ease-in);
 
   &:hover {
@@ -19,16 +18,24 @@
     @include transition(transform, 150ms, ease-out);
   }
 
-  .linkIcon {
-    @include flex-center;
-    gap: 1rem;
-		padding: 1rem 0;
-		padding-right: 1.5rem;
-		// background-color: darken($bg-color, 3%);
+	@include media-medium {
+		width: 10rem;
+		transform: translateX(-60%);
+		flex-direction: column
 	}
 
-  .centerIcons {
-    @include flex-col-center;
-		align-items: flex-end;
-  }
 }
+
+.linkIcon {
+	@include flex-center;
+	gap: 1rem;
+	padding: 1rem 0;
+	padding-right: 1.5rem;
+	// background-color: darken($bg-color, 3%);
+}
+
+.centerIcons {
+	@include flex-col-center;
+	align-items: flex-end;
+}
+
