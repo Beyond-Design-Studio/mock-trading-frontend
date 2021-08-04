@@ -18,10 +18,10 @@ const Nav = ():JSX.Element => {
 
 				<li className={styles["nav-right"]}>
 					<Link href="/auth">
-						<button className={styles.navLogInButton}>Login</button>
+						<a className={styles.navLogInButton}>Login</a>
 					</Link>
 					<Link href="auth">
-						<button className={styles.navRegisterButton}>Register</button>
+						<a className={styles.navRegisterButton}>Register</a>
 					</Link>
 				</li>
 			</ul>

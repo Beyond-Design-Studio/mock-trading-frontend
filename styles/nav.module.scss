@@ -1,4 +1,5 @@
 @use "abstracts/index" as *;
+@use "abstracts/buttons" as btn;
 
 .container {
   @include contain;
@@ -32,11 +33,11 @@
 }
 
 .navRegisterButton {
-  @include registerButton;
+  @include btn.registerButton;
 }
 
 .navLogInButton {
-  @include logInButton;
+  @include btn.logInButton;
 }
 
 .nav-right {

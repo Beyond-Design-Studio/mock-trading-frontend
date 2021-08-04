@@ -19,8 +19,11 @@
   background-size: cover;
   background-position: top;
   clip-path: polygon(0% 100vh, 100% 100vh, 100% 64.7%, 0% 78.28%);
+  clip-path: polygon(0 88%, 99% 82%, 100% 100%, 0% 100%);
+  
   @include media-medium {
     clip-path: polygon(0% 100vh, 100% 100vh, 100% 60%, 0% 80%);
+    clip-path: polygon(0 88%, 100% 76%, 100% 100%, 0% 100%);
   }
 }
 
@@ -31,7 +34,7 @@
   flex-direction: column;
 
   div {
-    padding-bottom: 10rem;
+    padding-bottom: 5rem;
   }
 
   h1 {

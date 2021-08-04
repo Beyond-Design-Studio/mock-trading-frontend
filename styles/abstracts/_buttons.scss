@@ -1,0 +1,67 @@
+@use "index" as *;
+
+@mixin btn($color, $background-color) {
+  padding: 0.35rem 0.5rem;
+  background-color: $background-color;
+  color: $color;
+  border: none;
+}
+
+@mixin logInButton {
+  @include btn($bg-color, $accent-color);
+  font-size: small;
+  text-transform: uppercase;
+  font-family: $font-montserrat;
+  background-color: $bg-color;
+  color: $accent-color;
+  @include transition(all, 150ms, ease-in);
+
+  &:hover {
+    cursor: pointer;
+    background-color: $accent-color;
+    color: $bg-color;
+    @include transition(all, 150ms, ease-in);
+  }
+  @include media-medium {
+    font-size: medium;
+  }
+}
+
+@mixin registerButton {
+  @include btn($bg-color, $accent-color);
+  font-size: small;
+  text-transform: uppercase;
+  font-family: $font-montserrat;
+  @include transition(all, 150ms, ease-in);
+
+  &:hover {
+    cursor: pointer;
+    background-color: $bg-color;
+    color: $sec-color;
+    @include transition(all, 150ms, ease-in);
+  }
+
+  @include media-medium {
+    font-size: medium;
+  }
+}
+
+@mixin logInButton {
+  @include btn($bg-color, $accent-color);
+  font-size: small;
+  text-transform: uppercase;
+  font-family: $font-montserrat;
+  background-color: $bg-color;
+  color: $accent-color;
+  @include transition(all, 150ms, ease-in);
+
+  &:hover {
+    cursor: pointer;
+    background-color: $accent-color;
+    color: $bg-color;
+    @include transition(all, 150ms, ease-in);
+  }
+  @include media-medium {
+    font-size: medium;
+  }
+}
