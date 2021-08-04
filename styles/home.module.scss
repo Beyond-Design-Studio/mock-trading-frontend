@@ -9,10 +9,16 @@
   min-height: 100vh;
   font-family: $font-montserrat;
   color: $accent-color;
-  background: linear-gradient(to right, rgba($bg-color, 0.55), rgba($bg-color, 0.55)) left top, url("../public/bg.jpg") left top;
+  background: linear-gradient(
+        to right,
+        rgba($bg-color, 0.55),
+        rgba($bg-color, 0.55)
+      )
+      left top,
+    url("../public/bg.jpg") left top;
   background-size: cover;
   background-position: top;
-  clip-path: polygon(0% 100vh, 100% 100vh, 100% 64.7%, 0.00% 78.28%);
+  clip-path: polygon(0% 100vh, 100% 100vh, 100% 64.7%, 0% 78.28%);
   @include media-medium {
     clip-path: polygon(0% 100vh, 100% 100vh, 100% 60%, 0% 80%);
   }
@@ -37,5 +43,4 @@
     color: $sec-color;
     text-align: center;
   }
-
 }

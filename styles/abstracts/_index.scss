@@ -1,13 +1,17 @@
-$font-montserrat: 'Montserrat', sans-serif;
+$font-montserrat: "Montserrat", sans-serif;
 $bg-color: #222222;
-$accent-color: #8BBF4A;
+$accent-color: #8bbf4a;
 $sec-color: #ffffff;
 
-
 @mixin flex-center {
-	display: flex;
-	align-items: center;
-	justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-col-center {
+  @include flex-center;
+  flex-direction: column;
 }
 
 @mixin media-large {
@@ -28,7 +32,12 @@ $sec-color: #ffffff;
   padding: 1rem;
 }
 
-@mixin transition($for: all, $time-in: 250ms, $type: ease-in-out, $time-out: 0s) {
+@mixin transition(
+  $for: all,
+  $time-in: 250ms,
+  $type: ease-in-out,
+  $time-out: 0s
+) {
   transition: $for $time-in $type $time-out;
   -moz-transition: $for $time-in $type $time-out;
   -webkit-transition: $for $time-in $type $time-out;
@@ -37,7 +46,46 @@ $sec-color: #ffffff;
 
 @mixin btn($color, $background-color) {
   padding: 0.35rem 0.5rem;
-	background-color: $background-color;
-	color: $color;
-	border: none;
+  background-color: $background-color;
+  color: $color;
+  border: none;
+}
+
+@mixin registerButton {
+  @include btn($bg-color, $accent-color);
+  font-size: small;
+  text-transform: uppercase;
+  font-family: $font-montserrat;
+  @include transition(all, 150ms, ease-in);
+
+  &:hover {
+    cursor: pointer;
+    background-color: $bg-color;
+    color: $sec-color;
+    @include transition(all, 150ms, ease-in);
+  }
+
+  @include media-medium {
+    font-size: medium;
+  }
+}
+
+@mixin logInButton {
+  @include btn($bg-color, $accent-color);
+  font-size: small;
+  text-transform: uppercase;
+  font-family: $font-montserrat;
+  background-color: $bg-color;
+  color: $accent-color;
+  @include transition(all, 150ms, ease-in);
+
+  &:hover {
+    cursor: pointer;
+    background-color: $accent-color;
+    color: $bg-color;
+    @include transition(all, 150ms, ease-in);
+  }
+  @include media-medium {
+    font-size: medium;
+  }
 }
