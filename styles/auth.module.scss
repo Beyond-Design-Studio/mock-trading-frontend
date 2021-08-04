@@ -99,3 +99,15 @@
   @include registerButton;
   margin-bottom: 40%;
 }
+
+.errorContainer {
+  color: red;
+  margin-bottom: 5%;
+  p {
+    font-size: small;
+    margin: 0;
+    @include media-medium {
+      font-size: medium;
+    }
+  }
+}

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "@styles/auth.module.scss";
 
 interface Props {
@@ -6,6 +6,22 @@ interface Props {
 }
 
  function LogIn(props:Props) {
+   const [email, setEmail] = useState<string>("");
+   const [password, setPassword] = useState<string>("");
+   const [error, setError] = useState<string|null>(null)
+   function loginHandler() {
+     setError(null)
+      if(email === "" || password === "") {
+        setError("Please fill in all the fields")
+      }
+      else if(!(email.includes("@") && email.includes("."))) {
+        setError("Please enter a valid email address")
+      }
+      else {
+        setError(null);
+        //LogIn request
+      }
+   }
   return (
       <div className={styles.authContainer}>
         <h1>Login to your account</h1>
@@ -17,7 +33,8 @@ interface Props {
             type="text"
             name="email"
             placeholder="Email"
-            required
+            value={email}
+            onChange={e => setEmail(e.target.value)}
             />
         </div>
         <div className={styles.fieldContainer}>
@@ -27,14 +44,18 @@ interface Props {
             type="password"
             name="password"
             placeholder="Password"
-            required
-            />
+            value={password}
+            onChange={e => setPassword(e.target.value)}/>
         </div>
+        {error && (
+        <div className={styles.errorContainer}>
+          <p>{error}</p>
+        </div>
+        )}
         <div>
-        <button className={styles.authLogInButton}>Login</button>
+        <button onClick={loginHandler} className={styles.authLogInButton}>Login</button>
         </div>
       </div>
-
   );
 };
 

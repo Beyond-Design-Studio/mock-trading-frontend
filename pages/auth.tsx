@@ -4,9 +4,7 @@ import LogIn from "@components/login";
 import Register from "@components/register";
 
 const Auth = (): JSX.Element => {
- const [screen, setScreen] = useState('login')
-
-
+  const [screen, setScreen] = useState('login')
   return (
     <div className={styles.pageContainer}>
       <div className={styles.background}></div>
