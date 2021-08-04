@@ -20,9 +20,6 @@ const Nav = ():JSX.Element => {
 					<Link href="/auth">
 						<a className={styles.navLogInButton}>Login</a>
 					</Link>
-					<Link href="auth">
-						<a className={styles.navRegisterButton}>Register</a>
-					</Link>
 				</li>
 			</ul>
 		</nav>
