@@ -1,12 +1,12 @@
 import '../styles/globals.scss'
 import type { AppProps } from 'next/app'
 
-import Nav from '@components/nav';
+// import Nav from '@components/nav';
 
 function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   return (
     <div>
-      <Nav />
+      {/* <Nav /> */}
       <Component {...pageProps} />
     </div>
   )

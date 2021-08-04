@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useRouter } from "next/router";
 import styles from "@styles/auth.module.scss";
 
 interface Props {
@@ -9,8 +10,11 @@ function LogIn(props: Props): JSX.Element {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
-  
-  const loginHandler = () => {
+
+  const router = useRouter();
+
+  const loginHandler = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
+    e.preventDefault();
     setError(null);
     if (email === "" || password === "") {
       setError("Please fill in all the fields");
@@ -19,10 +23,16 @@ function LogIn(props: Props): JSX.Element {
     } else {
       setError(null);
     }
-  }
-  
+
+    if (email === "mail@mail.com" && password === "pass") {
+      router.push("/markets");
+    } else {
+      setError("Password or e-mail invalid");
+    }
+  };
+
   return (
-    <div className={styles.authContainer}>
+    <form className={styles.authContainer}>
       <h1>Login to your account</h1>
       <p>
         {"Don't have an account? "}
@@ -56,11 +66,12 @@ function LogIn(props: Props): JSX.Element {
         </div>
       )}
       <div>
-        <button onClick={loginHandler} className={styles.authLogInButton}>
+        <button onClick={(e) => loginHandler(e)} className={styles.authLogInButton}>
           Login
         </button>
       </div>
-    </div>
+      <p>mail@mail.com - pass</p>
+    </form>
   );
 }
 

@@ -3,6 +3,7 @@ import styles from "@styles/auth.module.scss";
 import LogIn from "@components/login";
 import Register from "@components/register";
 import Head from "next/head";
+import Nav from "@components/nav";
 
 const Auth = (): JSX.Element => {
   const [screen, setScreen] = useState('login')
@@ -12,6 +13,8 @@ const Auth = (): JSX.Element => {
       <Head>
         <title>{screen === "login" ? "Login" : "Register"}</title>
       </Head>
+
+      <Nav />
       
       <div className={styles.background}></div>
       {screen === "login" && (
