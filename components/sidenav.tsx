@@ -34,7 +34,7 @@ const Sidenav = (): JSX.Element => {
 					</a>
 				</Link>
 				
-				<Link href="/">
+				<Link href="/portfolio">
 					<a className={`${styles.linkIcon}`}>
 						<p>Portfolio</p>
 						<PortfolioIcon />
