@@ -10,7 +10,7 @@ function LogIn(props: Props): JSX.Element {
   const [password, setPassword] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
   
-  function loginHandler() {
+  const loginHandler = () => {
     setError(null);
     if (email === "" || password === "") {
       setError("Please fill in all the fields");
