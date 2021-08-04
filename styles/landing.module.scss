@@ -1,0 +1,49 @@
+@use "abstracts/index" as *;
+
+.background {
+  @include flex-center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  min-height: 100vh;
+  font-family: $font-montserrat;
+  color: $accent-color;
+  background: linear-gradient(
+        to right,
+        rgba($bg-color, 0.55),
+        rgba($bg-color, 0.55)
+      )
+      left top,
+    url("../public/bg.jpg") left top;
+  background-size: cover;
+  background-position: top;
+  clip-path: polygon(0% 100vh, 100% 100vh, 100% 64.7%, 0% 78.28%);
+  clip-path: polygon(0 88%, 99% 82%, 100% 100%, 0% 100%);
+  
+  @include media-medium {
+    clip-path: polygon(0% 100vh, 100% 100vh, 100% 60%, 0% 80%);
+    clip-path: polygon(0 88%, 100% 76%, 100% 100%, 0% 100%);
+  }
+}
+
+.container {
+  @include flex-center;
+  @include contain;
+  height: 100vh;
+  flex-direction: column;
+
+  div {
+    padding-bottom: 5rem;
+  }
+
+  h1 {
+    text-align: center;
+    font-size: 3rem;
+  }
+
+  p {
+    color: $sec-color;
+    text-align: center;
+  }
+}

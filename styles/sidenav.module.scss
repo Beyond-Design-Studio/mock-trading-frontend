@@ -1,14 +1,14 @@
 @use "abstracts/index" as *;
 
 .leftbar {
-  position: absolute;
+  position: fixed;
   top: 0;
   background-color: darken($bg-color, 1%);
   height: 100vh;
-	width: 100%;
+  width: 100%;
   @include flex-center;
   justify-content: space-between;
-	align-items: flex-end;
+  align-items: flex-end;
   @include contain;
   padding: 2rem 0;
   @include transition(transform, 150ms, ease-in);
@@ -18,24 +18,22 @@
     @include transition(transform, 150ms, ease-out);
   }
 
-	@include media-medium {
-		width: 10rem;
-		transform: translateX(-60%);
-		flex-direction: column
-	}
-
+  @include media-medium {
+    width: 10rem;
+    transform: translateX(-60%);
+    flex-direction: column;
+  }
 }
 
 .linkIcon {
-	@include flex-center;
-	gap: 1rem;
-	padding: 1rem 0;
-	padding-right: 1.5rem;
-	// background-color: darken($bg-color, 3%);
+  @include flex-center;
+  gap: 1rem;
+  padding: 1rem 0;
+  padding-right: 1.5rem;
+  // background-color: darken($bg-color, 3%);
 }
 
 .centerIcons {
-	@include flex-col-center;
-	align-items: flex-end;
+  @include flex-col-center;
+  align-items: flex-end;
 }
-
