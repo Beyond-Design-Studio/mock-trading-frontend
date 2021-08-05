@@ -1,4 +1,4 @@
-interface NewsMain {
+export interface NewsMain {
   time: string;
   serialNo: number;
   headlines: string[];
@@ -11,6 +11,9 @@ const NewsData:NewsMain[] = [
     time: "9:00 pm",
     serialNo: 1,
     headlines: [
+      "Trade towers fall",
+      "All US stocks are down oops",
+      "Invest in India lol",
       "Bomb goes off",
       "Help me",
       "This is not fun"

@@ -1,24 +1,18 @@
 import React, { useState, useEffect } from "react";
 import styles from "@styles/home.module.scss"
 import { RightArrow, LeftArrow, NewsIcon } from "@components/icons";
-import NewsData from "../../data/news"
+import NewsData, { NewsMain } from "@data/news";
 import Loading from "@components/loading";
-interface NewsMain {
-  time: string;
-  serialNo: number;
-  headlines: string[];
-	new?: boolean;
-}
+
 
 const News = ():JSX.Element => {
-	console.log(NewsData);
+	// console.log(NewsData);
 	//newsLimit is the number of news updates that has been done so far (different from final limit)
 	const newsLimit = 4;
 	const [newsNo, setNewsNo] = useState<number>(1)
 	const [currentArticle, setCurrentArticle] = useState<NewsMain | null>(null)
-
+	
 	useEffect(() => {
-		// setCurrentArticle(null)
 		setCurrentArticle(NewsData[newsNo-1]);
 	}, [newsNo])
 
@@ -65,7 +59,7 @@ const News = ():JSX.Element => {
 				<hr/>
 				<div className={styles.newsBody}>
 				<ul>
-					{currentArticle.headlines.map((item,ind) => <li key={ind}>{item}</li>)}
+					{currentArticle.headlines.map((item, i) => <li key={i}>{item}</li>)}
 			
 				</ul>
 				</div>
