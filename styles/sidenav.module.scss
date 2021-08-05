@@ -1,4 +1,5 @@
 @use "abstracts/index" as *;
+@use "abstracts/buttons" as btn;
 
 .leftbar {
   position: fixed;
@@ -36,10 +37,11 @@
 
 .linkIcon {
 	@include flex-center;
+	@include btn.btn($accent-color, transparent);
 	flex-direction: column-reverse;
 	gap: 0.15rem;
 	padding: 0.15rem 0.5rem;
-	// background-color: darken($bg-color, 3%);
+	width: 100%;
 
 	p {
 		font-size: small;
@@ -50,11 +52,27 @@
 
 	}
 
+	&:hover {
+		background-color: darken($bg-color, 3%);
+	}
+
 	@include media-medium {
 		flex-direction: row;
 		padding: 1rem 0;
 		padding-right: 1.5rem;
 		gap: 1rem;
+		justify-content: flex-end;
+	}
+
+}
+
+.bodhiTitle,
+.logout,
+.centerIcons {
+	width: auto;
+
+	@include media-medium {
+		width: 100%;
 	}
 
 }

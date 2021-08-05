@@ -19,7 +19,7 @@ const Sidenav = (): JSX.Element => {
 		<aside className={`${styles.leftbar}`}>
 			<div className={`${styles.bodhiTitle}`}>
 				<Link href="/">
-					<a className={`${styles.linkIcon}`}>
+					<a tabIndex={0} className={`${styles.linkIcon}`}>
 						<p>Bodhi</p>
 						<BodhiIcon />
 					</a>
@@ -28,21 +28,21 @@ const Sidenav = (): JSX.Element => {
 			
 			<div className={`${styles.centerIcons}`}>
 				<Link href="/home">
-					<a className={`${styles.linkIcon}`}>
+					<a tabIndex={0} className={`${styles.linkIcon}`}>
 						<p>Home</p>
 						<HomeIcon />
 					</a>
 				</Link>
 				
-				<Link href="/">
-					<a className={`${styles.linkIcon}`}>
+				<Link href="/portfolio">
+					<a tabIndex={0} className={`${styles.linkIcon}`}>
 						<p>Portfolio</p>
 						<PortfolioIcon />
 					</a>
 				</Link>
 
 				<Link href="/markets">
-					<a className={`${styles.linkIcon}`}>
+					<a tabIndex={0} className={`${styles.linkIcon}`}>
 						<p>Market</p>
 						<MarketIcon />
 					</a>
@@ -51,7 +51,7 @@ const Sidenav = (): JSX.Element => {
 			
 			<div className={`${styles.logout}`}>
 				<Link href="/">
-					<a className={`${styles.linkIcon}`}>
+					<a tabIndex={0} className={`${styles.linkIcon}`}>
 						<p>Logout</p>
 						<LogOutIcon />
 					</a>
