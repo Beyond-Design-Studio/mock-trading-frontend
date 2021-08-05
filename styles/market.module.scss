@@ -13,14 +13,14 @@
 		padding: 3rem;
 		margin-left: 5vw;
 		width: 95vw;
-		grid-template-columns: auto;
 		grid-template-areas: 
-			"noti noti noti lead lead lead"
-			"noti noti noti lead lead lead"
-			"mark mark mark mark port port"
-			"mark mark mark mark port port"
-			"mark mark mark mark port port";
-		grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+		"noti noti noti lead lead lead"
+		"noti noti noti lead lead lead"
+		"mark mark mark mark port port"
+		"mark mark mark mark port port"
+		"mark mark mark mark port port";
+		grid-template-rows: repeat(5, 1fr);
+		grid-template-columns: auto;
 	}
 }
 
@@ -82,6 +82,7 @@
 	border: 1px solid $accent-color;
   border-collapse: collapse;
 	width: 100%;
+	color: $sec-color;
 	
 	th,
 	td {

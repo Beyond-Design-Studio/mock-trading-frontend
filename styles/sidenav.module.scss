@@ -1,4 +1,5 @@
 @use "abstracts/index" as *;
+@use "abstracts/buttons" as btn;
 
 .leftbar {
   position: fixed;
@@ -36,6 +37,7 @@
 
 .linkIcon {
 	@include flex-center;
+	@include btn.btn($accent-color, transparent);
 	flex-direction: column-reverse;
 	gap: 0.15rem;
 	padding: 0.15rem 0.5rem;

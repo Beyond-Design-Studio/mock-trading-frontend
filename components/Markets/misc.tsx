@@ -26,7 +26,7 @@ interface TableProps {
 const TableRow: FC<TableProps > = ({name, img, previousBid, currentBid}):JSX.Element => {
 
 	const gain = ((currentBid - previousBid) / previousBid)
-	const color = gain < 0 ? "red" : gain === 0 ? "grey" : "green";
+	// const color = gain < 0 ? "red" : gain === 0 ? "grey" : "green";
 
 	console.log(img);
 	return (
@@ -42,7 +42,7 @@ const TableRow: FC<TableProps > = ({name, img, previousBid, currentBid}):JSX.Ele
 			<td>
 				<div>
 					<p>{currentBid - previousBid}</p>
-					<p style={{color: `${color}`}}>{`(${gain < 0 ? "" : gain === 0 ? "" : "+"}${gain.toFixed(2)})`}</p>
+					<p>{`(${gain < 0 ? "" : gain === 0 ? "" : "+"}${gain.toFixed(2)})`}</p>
 				</div>
 			</td>
 		</tr>
