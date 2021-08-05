@@ -3,6 +3,7 @@ import Head from "next/head";
 
 import Sidenav from "@components/sidenav";
 import styles from "@styles/market.module.scss";
+import { Notification, Portfolio, Market, Leader } from "@components/Markets/misc";
 
 const Markets = ():JSX.Element => {
 	return (
@@ -15,19 +16,19 @@ const Markets = ():JSX.Element => {
 			
 			<div className={`${styles.container}`}>
 				<div className={`${styles.notification} ${styles.section}`}>
-					notification
+					<Notification />
 				</div>
 
 				<div className={`${styles.portfolio} ${styles.section}`}>
-					portfolio
+					<Portfolio />
 				</div>
 				
 				<div className={`${styles.market} ${styles.section}`}>
-					market
+					<Market />
 				</div>
 				
 				<div className={`${styles.leader} ${styles.section}`}>
-					leader
+					<Leader />
 				</div>
 			</div>
 
