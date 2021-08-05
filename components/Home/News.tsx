@@ -18,14 +18,8 @@ const News = ():JSX.Element => {
 	const [currentArticle, setCurrentArticle] = useState<NewsMain | null>(null)
 
 	useEffect(() => {
-		const timeout = setTimeout(() => {
-			setCurrentArticle(NewsData[newsNo-1]);
-		}, 700);
-
-		return () => {
-			clearTimeout(timeout);
-		}
-
+		// setCurrentArticle(null)
+		setCurrentArticle(NewsData[newsNo-1]);
 	}, [newsNo])
 
 	function increaseNewsNo() {
@@ -71,7 +65,7 @@ const News = ():JSX.Element => {
 				<hr/>
 				<div className={styles.newsBody}>
 				<ul>
-					{currentArticle.headlines.map(item => <li key={item}>{item}</li>)}
+					{currentArticle.headlines.map((item,ind) => <li key={ind}>{item}</li>)}
 			
 				</ul>
 				</div>

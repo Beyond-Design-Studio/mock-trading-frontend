@@ -43,10 +43,6 @@ const NewsData:NewsMain[] = [
     headlines: [
       "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Illo nisi corrupti quidem delectus possimus rem similique exercitationem! Corporis, inventore beatae?",
       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis, at.",
-      "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Illo nisi corrupti quidem delectus possimus rem similique exercitationem! Corporis, inventore beatae?",
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis, at.",
-      "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Illo nisi corrupti quidem delectus possimus rem similique exercitationem! Corporis, inventore beatae?",
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis, at."
     ],
     new: true
   },
