@@ -37,16 +37,22 @@ const Holdings = ():JSX.Element => {
           <th>Current</th>
           <th>P&L</th>
         </tr>
-        {holdingsVal?.map((item, ind)=> (
-          <tr>
+        {holdingsVal?.map((item, ind)=> {
+          let pnlClass = styles.pnlProfit;
+          if (item.pnl < 0) {
+            pnlClass = styles.pnlLoss;
+          }
+          return (
+            <tr key={ind}>
             <td>{item.stock}</td>
             <td>{indianNumberConverter(item.purchasePrice)}</td>
             <td>{indianNumberConverter(item.currentPrice)}</td>
             <td>{indianNumberConverter(item.invested)}</td>
             <td>{indianNumberConverter(item.current)}</td>
-            <td>{indianNumberConverter(item.pnl)}</td>
+            <td className={pnlClass}>{indianNumberConverter(item.pnl)}</td>
           </tr>
-        ))}
+          )
+        })}
       </table>
     </div>
   )

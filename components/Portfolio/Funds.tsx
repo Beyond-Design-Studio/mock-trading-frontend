@@ -16,7 +16,7 @@ const Funds = ():JSX.Element => {
           </div>
         <div>
           <h3>Profit</h3>
-          <p>+ ₹98,000</p>
+          <p>+ ₹ 98,000</p>
           </div>
         <div>
           <h3>Equity</h3>

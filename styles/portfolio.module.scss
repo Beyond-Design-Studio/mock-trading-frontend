@@ -130,21 +130,25 @@
 
 .holdingsTable {
   width: 100%;
-  // background: red;
-  // border: 1px solid $accent-color;
   border-collapse: collapse;
   text-align: center;
   font-size: small;
   margin-top: 1rem;
   th {
     padding: 1rem;
-    border: 1px solid $accent-color;
+    // border-bottom: 1px solid lighten($accent-color, 5%);
   }
   td {
-    border-bottom: 1px solid darken($accent-color, 30%);
     padding: 1rem;
+    // border-bottom: 1px solid $accent-color;
   }
   @include media-medium {
     font-size: medium;
   }
+}
+.pnlProfit {
+  color: $accent-color;
+}
+.pnlLoss {
+  color: #d2042d;
 }
