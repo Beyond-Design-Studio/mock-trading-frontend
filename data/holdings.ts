@@ -1,4 +1,4 @@
-interface holding {
+export interface holding {
   stock: string;
   purchasePrice: number;
   currentPrice: number;

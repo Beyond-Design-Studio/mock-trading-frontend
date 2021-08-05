@@ -6,7 +6,7 @@ const Profile = ():JSX.Element => {
   return(
     <div className={styles.profileContainer}>
 				<div className={styles.avatarContainer}>
-					<Image src="/portfolio/avatar-placeholder2.png" className={styles.avatar}
+					<Image src="/portfolio/avatar-placeholder2.png" alt={"Your dumb fucking face"} className={styles.avatar}
 					height={100} width={100} layout="responsive"  />
 				</div>
 				<div className={styles.personalInfoContainer}>

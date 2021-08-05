@@ -1,23 +1,19 @@
 import React, { useState, useEffect } from 'react'
 import styles from "@styles/portfolio.module.scss"
-import holdingsData from '@data/holdings'
-interface holding {
-  stock: string;
-  purchasePrice: number;
-  currentPrice: number;
-  invested: number;
-  current: number;
-  pnl: number;
-}
+import holdingsData, { holding } from '@data/holdings'
+
 function indianNumberConverter(y:number) {
-  let x:string;
-  x=y.toString();
+  
+  const x=y.toString();
+  
   let lastThree = x.substring(x.length-3);
-  let otherNumbers = x.substring(0,x.length-3);
+  const otherNumbers = x.substring(0,x.length-3);
+  
   if(otherNumbers != '')
-      lastThree = ',' + lastThree;
-  let res = otherNumbers.replace(/\B(?=(\d{2})+(?!\d))/g, ",") + lastThree;
-  return(res);
+    lastThree = ',' + lastThree;
+    const res = otherNumbers.replace(/\B(?=(\d{2})+(?!\d))/g, ",") + lastThree;
+  
+    return(res);
 }
 
 const Holdings = ():JSX.Element => {

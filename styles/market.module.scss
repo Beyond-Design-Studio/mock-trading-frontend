@@ -137,7 +137,7 @@
 .newsContainer {
   @include flex-col-center;
 	align-items: flex-start;
-	justify-content: start;
+	justify-content: flex-start;
 	font-size: small;
   color: white;
 	width: 100%;
