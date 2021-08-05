@@ -10,6 +10,7 @@ const Rules = ():JSX.Element => {
         </span>
         <h1>Rules</h1>
       </div>
+      <hr/>
       <div>
       <ul>
         <li>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sunt, amet.</li>
