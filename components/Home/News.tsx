@@ -13,12 +13,19 @@ interface NewsMain {
 const News = ():JSX.Element => {
 	console.log(NewsData);
 	//newsLimit is the number of news updates that has been done so far (different from final limit)
-	const newsLimit:number = 4;
+	const newsLimit = 4;
 	const [newsNo, setNewsNo] = useState<number>(1)
 	const [currentArticle, setCurrentArticle] = useState<NewsMain | null>(null)
 
 	useEffect(() => {
-		setCurrentArticle(NewsData[newsNo-1])
+		const timeout = setTimeout(() => {
+			setCurrentArticle(NewsData[newsNo-1]);
+		}, 700);
+
+		return () => {
+			clearTimeout(timeout);
+		}
+
 	}, [newsNo])
 
 	function increaseNewsNo() {
@@ -64,7 +71,7 @@ const News = ():JSX.Element => {
 				<hr/>
 				<div className={styles.newsBody}>
 				<ul>
-					{currentArticle.headlines.map(item => <li>{item}</li>)}
+					{currentArticle.headlines.map(item => <li key={item}>{item}</li>)}
 			
 				</ul>
 				</div>
