@@ -1,0 +1,96 @@
+@use "abstracts/index" as *;
+@use "abstracts/buttons" as btn;
+
+.leftbar {
+  position: fixed;
+  top: auto;
+  bottom: 0;
+  background-color: darken($bg-color, 1%);
+  height: 10vh;
+  width: 100%;
+  @include flex-center;
+  justify-content: center;
+  align-items: flex-end;
+  @include contain;
+  padding: 0.25rem 1rem;
+  @include transition(transform, 150ms, ease-in);
+  gap: 1rem;
+  z-index: 10;
+
+  &:hover {
+    transform: translateX(0%);
+    @include transition(transform, 150ms, ease-out);
+  }
+
+  @include media-medium {
+    width: 10rem;
+    height: 100vh;
+    top: 0;
+    bottom: auto;
+    transform: translateX(-60%);
+    padding: 2rem 0;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 0;
+  }
+}
+
+.linkIcon {
+  @include flex-center;
+  @include btn.btn($accent-color, transparent);
+  flex-direction: column-reverse;
+  gap: 0.15rem;
+  padding: 0.15rem 0.5rem;
+  width: 100%;
+
+  p {
+    font-size: small;
+
+    @include media-medium {
+      font-size: 1rem;
+    }
+  }
+
+  &:hover {
+    background-color: darken($bg-color, 3%);
+  }
+
+  @include media-medium {
+    flex-direction: row;
+    padding: 1rem 0;
+    padding-right: 1.5rem;
+    gap: 1rem;
+    justify-content: flex-end;
+  }
+}
+
+.bodhiTitle,
+.logout,
+.centerIcons {
+  width: auto;
+
+  @include media-medium {
+    width: 100%;
+  }
+}
+
+.centerIcons {
+  @include flex-center;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+
+  @include media-medium {
+    align-items: flex-end;
+    flex-direction: column;
+    gap: 0;
+  }
+}
+
+.bodhiTitle {
+  display: none;
+
+  @include media-medium {
+    display: block;
+  }
+}

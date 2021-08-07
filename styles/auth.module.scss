@@ -1,0 +1,126 @@
+@use "abstracts/index" as *;
+@use "abstracts/buttons" as btn;
+
+.pageContainer {
+  height: 90vh;
+  @include flex-center;
+}
+
+.background {
+  @include flex-center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  min-height: 100vh;
+  font-family: $font-montserrat;
+  color: $accent-color;
+  background: linear-gradient(
+        to right,
+        rgba($bg-color, 0.55),
+        rgba($bg-color, 0.55)
+      )
+      left top,
+    url("../public/bg.jpg") left top;
+  background-size: cover;
+  background-position: top;
+  clip-path: polygon(0 88%, 99% 82%, 100% 100%, 0% 100%);
+  
+  @include media-medium {
+    clip-path: polygon(0 88%, 100% 76%, 100% 100%, 0% 100%);
+  }
+}
+
+.authContainer {
+  @include flex-col-center;
+  width: 80%;
+  border-radius: 3%;
+  border: 3px solid $accent-color;
+  color: white;
+  font-size: small;
+  
+  @include media-medium {
+    width: 50%;
+    font-size: medium;
+  }
+  
+  @include media-large {
+    width: 30%;
+  }
+  text-align: center;
+  
+  h1 {
+    margin-bottom: 1rem;
+  }
+  
+  p {
+    font-size: small;
+    margin: 0.2rem;
+    margin-bottom: 1rem;
+  }
+  
+  a {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+  
+  a:hover {
+    color: dodgerblue;
+  }
+}
+
+.fieldContainer {
+  @include flex-col-center;
+  margin-left: 12%;
+  margin-right: 12%;
+  margin-bottom: 5%;
+  width: 76%;
+
+  label {
+    align-self: flex-start;
+    margin: 0.2rem;
+  }
+  
+  input {
+    margin: 1%;
+    padding: 3%;
+    width: 100%;
+    color: white;
+    background: $bg-color;
+    border: 1px solid gray;
+    border-radius: 0.3rem;
+  }
+  
+  input:hover {
+    border: 1px solid $accent-color;
+  }
+  
+  input:focus {
+    outline: none;
+    border: 2px solid $accent-color;
+  }
+}
+
+.authLogInButton {
+  @include btn.logInButton;
+  margin-bottom: 40%;
+}
+
+.authRegisterButton {
+  @include btn.registerButton;
+  margin-bottom: 40%;
+}
+
+.errorContainer {
+  color: red;
+  margin-bottom: 5%;
+  
+  p {
+    font-size: small;
+    margin: 0;
+    
+    @include media-medium {
+      font-size: medium;
+    }
+  }
+}

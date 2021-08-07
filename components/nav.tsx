@@ -17,8 +17,9 @@ const Nav = ():JSX.Element => {
 				</li>
 
 				<li className={styles["nav-right"]}>
-					<button className={`${styles["nav-btn"]} ${styles["btn-login"]}`}>Login</button>
-					<button className={styles["nav-btn"]}>Register</button>
+					<Link href="/auth">
+						<a><button className={styles.navLogInButton}>Login</button></a>
+					</Link>
 				</li>
 			</ul>
 		</nav>

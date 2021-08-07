@@ -1,41 +1,156 @@
 @use "abstracts/index" as *;
-
-.background {
-  @include flex-center;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  min-height: 100vh;
-  font-family: $font-montserrat;
-  color: $accent-color;
-  background: linear-gradient(to right, rgba($bg-color, 0.55), rgba($bg-color, 0.55)) left top, url("../public/bg.jpg") left top;
-  background-size: cover;
-  background-position: top;
-  clip-path: polygon(0% 100vh, 100% 100vh, 100% 64.7%, 0.00% 78.28%);
+.pageContainer {
   @include media-medium {
-    clip-path: polygon(0% 100vh, 100% 100vh, 100% 60%, 0% 80%);
+    width: 95vw;
+    margin-left: 5vw;
+    height: 100vh;
   }
 }
 
-.container {
-  @include flex-center;
-  @include contain;
-  height: 100vh;
+.topRow {
+  width: 100%;
+  display: flex;
   flex-direction: column;
-
-  div {
-    padding-bottom: 10rem;
+  padding: 2rem;
+  gap: 0;
+  
+  @include media-medium {
+    display: flex;
+    flex-direction: row;
+    // justify-content: space-around;
+    gap: 4rem;
   }
+}
 
+.newsContainer {
+  @include flex-col-center;
+  // border: 2px solid $accent-color;
+  background-color: darken($bg-color, 0.7%);
+  box-shadow: 1px 1px 2px 0px darken($bg-color, 5%);
+  font-size: small;
+  width: 85vw;
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  color: white;
+  margin-bottom: 2rem;
   h1 {
-    text-align: center;
-    font-size: 3rem;
+    color: $accent-color;
+    margin: 0;
   }
+  h5 {
+    margin: 0;
+    margin-top: 0.2rem;
+    font-weight: 400;
+  }
+  hr {
+    width: 100%;
+    margin-top: 0.5rem;
+    border-top: 1px solid darken($accent-color, 2%);
+  }
+  @include media-medium {
+    height: fit-content;
+    max-height: 28rem;
+    width: 50%;
+    font-size: medium;
+    margin-left: 1rem;
+    margin-bottom: 0rem;
+  }
+}
 
-  p {
-    color: $sec-color;
+.headerContainer {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.headerLeft {
+  div {
+    display: flex;
+    width: fit-content;
+    align-items: center;
+    gap: 1rem;
+  }
+  span {
+    padding-top: 0.1rem;
+    color: $accent-color;
+  }
+}
+
+.headerRight {
+  padding: 0.5rem;
+  div {
+    margin-top: 0.5rem;
+    background: $accent-color;
     text-align: center;
   }
+}
 
+.newsBody {
+  align-self: flex-start;
+  ul {
+    list-style-type: circle;
+    margin-left: 1rem;
+  }
+  li {
+    list-style-type: circle;
+    margin-top: 0.4rem;
+    font-weight: 300;
+  }
+}
+
+.arrowContainer {
+  // background: red;
+  width: 8rem;
+  display: flex;
+  justify-content: space-around;
+  margin-top: 0.5rem;
+  align-self: flex-end;
+  svg {
+    color: $accent-color;
+    cursor: pointer;
+  }
+}
+
+.rulesHeader {
+  display: flex;
+  align-items: center;
+  max-width: fit-content;
+  gap: 1rem;
+  span {
+    color: $accent-color;
+    padding-top: 0.2rem;
+  }
+}
+
+.rulesContainer {
+  // border: 2px solid $accent-color;
+  background-color: darken($bg-color, 0.7%);
+  box-shadow: 1px 1px 2px 0px darken($bg-color, 5%);
+  border-radius: 0.5rem;
+  font-size: small;
+  color: white;
+  width: 85vw;
+  padding: 1.5rem;
+  h1 {
+    margin: 0;
+  }
+  ul {
+    list-style-type: circle;
+    margin-left: 1rem;
+  }
+  li {
+    list-style-type: number;
+    margin-top: 0.4rem;
+    font-weight: 300;
+  }
+  hr {
+    width: 100%;
+    margin-top: 0.5rem;
+    border-top: 1px solid darken($accent-color, 2%);
+  }
+  @include media-medium {
+    width: 30%;
+    max-height: 35rem;
+    font-size: medium;
+  }
 }

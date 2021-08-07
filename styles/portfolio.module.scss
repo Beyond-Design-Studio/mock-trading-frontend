@@ -1,0 +1,181 @@
+@use "abstracts/index" as *;
+
+.pageContainer {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 6rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+
+  @include media-medium {
+    width: 95vw;
+    margin-left: 5vw;
+    height: 100vh;
+    margin-bottom: 0;
+    padding-left: 0;
+    padding-right: 0;
+    padding: 1.5rem;
+    width: 90%;
+    margin-left: 5%;
+  }
+}
+
+.profileContainer {
+  background-color: darken($bg-color, 0.7%);
+  box-shadow: 1px 1px 2px 0px darken($bg-color, 5%);
+  width: 98%;
+  color: white;
+  margin-top: 0.8rem;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 1rem;
+  height: auto;
+  // background: red;\
+}
+
+.avatarContainer {
+  height: 5rem;
+  width: 5rem;
+  justify-self: flex-start;
+  font-size: xx-large;
+  
+  @include media-medium {
+    height: 10rem;
+    width: 10rem;
+  }
+}
+
+.avatar {
+  background: $accent-color;
+  z-index: 0;
+  border-radius: 50%;
+}
+
+.personalInfoContainer {
+  text-align: center;
+  font-size: smaller;
+
+  a {
+    color: $accent-color;
+  }
+  
+  p {
+    font-size: larger;
+  }
+  
+  @include media-medium {
+    font-size: medium;
+  }
+}
+
+.statsContainer {
+  margin-top: 3rem;
+  width: 98%;
+  height: 40rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  @include media-medium {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+}
+
+.holdingsContainer {
+  height: 50rem;
+  background-color: darken($bg-color, 0.7%);
+  box-shadow: 1px 1px 2px 0px darken($bg-color, 5%);
+  padding: 1rem;
+  color: white;
+  font-size: small;
+  overflow-x: scroll;
+  
+  h1 {
+    margin: 0;
+    color: $accent-color;
+    padding-left: 2rem;
+  }
+
+  @include media-medium {
+    width: 55%;
+    height: fit-content;
+    max-height: 30rem;
+    font-size: medium;
+    overflow-x: hidden;
+  }
+}
+
+.fundsContainer {
+  margin-top: 1rem;
+  background-color: darken($bg-color, 0.7%);
+  box-shadow: 1px 1px 2px 0px darken($bg-color, 5%);
+  height: 40rem;
+  padding: 0.5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  font-size: small;
+
+  h1 {
+    margin: 0;
+    color: $accent-color;
+  }
+  
+  @include media-medium {
+    width: 40%;
+    height: fit-content;
+    margin-top: 0;
+    font-size: medium;
+    padding: 1.25rem 1.5rem;
+  }
+}
+
+.fundDetails {
+  color: $sec-color;
+
+  div {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2rem;
+  }
+
+  h3 {
+    margin: 0;
+    font-weight: 600;
+  }
+  
+  div:last-child {
+    margin-bottom: 1rem;
+  }
+}
+
+.holdingsTable {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+  font-size: small;
+  margin-top: 1rem;
+
+  th {
+    padding: 1rem;
+    // border-bottom: 1px solid lighten($accent-color, 5%);
+  }
+  
+  td {
+    padding: 1rem;
+    // border-bottom: 1px solid $accent-color;
+  }
+  
+  @include media-medium {
+    font-size: medium;
+  }
+}
+
+.pnlProfit {
+  color: #029d02;
+}
+
+.pnlLoss {
+  color: #ff3535;
+}

@@ -1,17 +1,21 @@
-$font-montserrat: 'Montserrat', sans-serif;
+$font-montserrat: "Montserrat", sans-serif;
 $bg-color: #222222;
-$accent-color: #8BBF4A;
+$accent-color: #8bbf4a;
 $sec-color: #ffffff;
 
-
 @mixin flex-center {
-	display: flex;
-	align-items: center;
-	justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-col-center {
+  @include flex-center;
+  flex-direction: column;
 }
 
 @mixin media-large {
-  @media only screen and (min-width: 1024px) {
+  @media only screen and (min-width: 1025px) {
     @content;
   }
 }
@@ -22,22 +26,26 @@ $sec-color: #ffffff;
   }
 }
 
+@mixin media-smol {
+  @media only screen and (min-width: 625px) {
+    @content;
+  }
+}
+
 @mixin contain {
   font-family: $font-montserrat;
   color: $accent-color;
   padding: 1rem;
 }
 
-@mixin transition($for: all, $time-in: 250ms, $type: ease-in-out, $time-out: 0s) {
+@mixin transition(
+  $for: all,
+  $time-in: 250ms,
+  $type: ease-in-out,
+  $time-out: 0s
+) {
   transition: $for $time-in $type $time-out;
   -moz-transition: $for $time-in $type $time-out;
   -webkit-transition: $for $time-in $type $time-out;
   -o-transition: $for $time-in $type $time-out;
-}
-
-@mixin btn($color, $background-color) {
-  padding: 0.35rem 0.5rem;
-	background-color: $background-color;
-	color: $color;
-	border: none;
 }
