@@ -3,16 +3,19 @@
 .container {
 	@include contain;
 	padding: 1rem;
-	height: 100vh;
+	height: 100%;
 	display: grid;
 	gap: 2rem;
-	grid-template-areas: none;
 	padding-top: 3rem;
-	grid-template-columns: auto;
+	margin-bottom: 4rem;
+	grid-template-columns: 1fr;
+	grid-template-areas: none;
+	grid-template-rows: auto;
 
 	@include media-medium {
 		padding: 3rem;
 		margin-left: 5vw;
+		margin-bottom: 0;
 		width: 95vw;
 		grid-template-areas: 
 		"noti noti noti lead lead lead"
@@ -22,6 +25,7 @@
 		"mark mark mark mark port port";
 		grid-template-rows: repeat(5, 1fr);
 		grid-template-columns: repeat(6, 1fr);
+		height: 100vh;
 	}
 }
 
@@ -33,12 +37,15 @@
 	box-shadow: 1px 1px 2px 0px darken($bg-color, 5%);
 }
 
+
+// Notification
 .notification {
 	grid-area: auto;
 	scrollbar-width: thin;
 	overflow-y: scroll;
 	display: block;
-	
+	min-height: 12rem;
+
 	&::-webkit-scrollbar {
 		width: 3px;
 		background: transparent;
@@ -51,87 +58,6 @@
 	@include media-medium {
 		grid-area: noti;
 	}
-}
-
-.portfolio {
-	grid-area: auto;
-	
-	@include media-medium {
-		grid-area: port;
-	}
-}
-
-.market {
-	grid-area: auto;
-	padding: 1rem;
-	height: 100%;
-	scrollbar-width: thin;
-	overflow-y: scroll;
-	display: block;
-
-	&::-webkit-scrollbar {
-		width: 3px;
-		height: 3px;
-		background: transparent;
-	}
-
-	&::-webkit-scrollbar-thumb {
-		background: #757575;
-	}
-
-	@include media-medium {
-		grid-area: mark;
-	}
-}
-
-.leader {
-	grid-area: auto;
-	
-	@include media-medium {
-		grid-area: lead;
-	}
-}
-
-.marketTable {
-	border: 1px solid $accent-color;
-  border-collapse: collapse;
-	width: 100%;
-	color: $sec-color;
-	
-	th,
-	td {
-		border: 1px solid $accent-color;
-		border-collapse: collapse;
-		padding: 0.1rem 0.5rem;
-		text-align: left;
-	}
-
-	th {
-		text-align: left;
-		padding: 0.1rem 0.5rem;
-	}
-
-	td {
-		padding: 0.5rem 0.5rem;
-		border-right: none;
-		border-left: none;
-		height: 4rem;
-
-		p:nth-child(2) {
-			font-size: 0.9rem;
-		}
-
-	}
-
-	td:nth-child(1) {
-		width: 15%;
-		padding-left: 2rem;
-	}
-
-	td:nth-child(2) {
-		width: 25%;
-	}
-
 }
 
 .newsContainer {
@@ -213,3 +139,197 @@
 	}
 
 }
+
+// Market
+.market {
+	grid-area: auto;
+	padding: 1rem;
+	min-height: 30rem;
+	scrollbar-width: thin;
+	overflow-y: scroll;
+	display: block;
+
+	&::-webkit-scrollbar {
+		width: 3px;
+		height: 3px;
+		background: transparent;
+	}
+
+	&::-webkit-scrollbar-thumb {
+		background: #757575;
+	}
+
+	@include media-medium {
+		min-height: 20rem;
+		grid-area: mark;
+		height: 100%;
+	}
+}
+
+.marketTable {
+	border: 1px solid $accent-color;
+  border-collapse: collapse;
+	width: 100%;
+	color: $sec-color;
+
+	th,
+	td {
+		border: 1px solid $accent-color;
+		border-collapse: collapse;
+		padding: 0.1rem 0.5rem;
+		text-align: left;
+	}
+
+	th {
+		text-align: left;
+		padding: 0.1rem 0.5rem;
+	}
+
+	td {
+		padding: 0.5rem 0.5rem;
+		border-right: none;
+		border-left: none;
+		height: 4rem;
+		cursor: pointer;
+
+		p:nth-child(2) {
+			font-size: 0.9rem;
+		}
+
+	}
+
+	td:nth-child(1) {
+		width: 15%;
+		padding-left: 0.75rem;
+
+		@include media-medium {
+			padding-left: 2rem;	
+		}
+
+	}
+
+	td:nth-child(2) {
+		width: 25%;
+	}
+
+	td:nth-last-child(1) {
+		text-align: right;
+
+		& > div > div {
+			display: flex;
+			gap: 0.5rem;
+			justify-content: flex-end;
+		
+			@include media-medium {
+				justify-content: flex-start;
+			}
+		
+		}
+
+		@include media-medium {
+			text-align: left;
+		}
+
+	}
+
+}
+
+// LeaderBoard
+.leader {
+	grid-area: auto;
+	height: min-content;
+	
+	@include media-medium {
+		grid-area: lead;
+	}
+}
+
+.leaderComponent {
+	@include contain;
+	width: 100%;
+
+	table {
+		border: 1px solid $accent-color;
+		border-collapse: collapse;
+		width: 100%;			
+		color: $sec-color;
+	}
+
+	h2 {
+		padding: 0.5rem;
+		padding-bottom: 1rem;
+		@include flex-center;
+		justify-content: flex-start;
+		gap: 0.75rem;
+	}
+
+	th,
+	td {
+		border: 1px solid $accent-color;
+		border-collapse: collapse;
+		padding: 0.1rem 0.5rem;
+		text-align: left;
+	}
+
+	td {
+		padding: 0.5rem 0.5rem;
+		border-color: rgba($accent-color, 0.3);
+	}
+
+}
+
+// Portfolio
+.portfolio {
+	grid-area: auto;
+	scrollbar-width: thin;
+	overflow-y: scroll;
+	display: block;
+	height: min-content;
+	padding-bottom: 1rem;
+
+	&::-webkit-scrollbar {
+		width: 3px;
+		height: 3px;
+		background: transparent;
+	}
+
+	&::-webkit-scrollbar-thumb {
+		background: #757575;
+	}
+	
+	@include media-medium {
+		padding-bottom: 2rem;
+		grid-area: port;
+	}
+}
+
+.portfolioComponent {
+	@include contain;
+
+	h2 {
+		margin: 0;
+		padding-bottom: 1rem;
+		@include flex-center;
+		justify-content: flex-start;
+		gap: 0.75rem;
+	}
+
+	h3 {
+		margin: 0;
+		font-size: 1rem;
+	}
+
+	& > div {
+		color: $sec-color;
+		@include flex-col-center;
+		align-self: flex-start;
+		gap: 0.5rem;
+
+		div {
+			@include flex-center;
+			justify-content: space-between;
+			width: 100%;
+		}
+	}
+}
+

@@ -26,6 +26,12 @@ $sec-color: #ffffff;
   }
 }
 
+@mixin media-smol {
+  @media only screen and (min-width: 625px) {
+    @content;
+  }
+}
+
 @mixin contain {
   font-family: $font-montserrat;
   color: $accent-color;

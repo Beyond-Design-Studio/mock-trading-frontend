@@ -201,3 +201,22 @@ export const Avatar = (): JSX.Element => {
     </svg>
   )
 }
+
+export const ChartIcon = (): JSX.Element => {
+  return (
+    <svg
+      width="24"
+      height="24"
+      fill="none"
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="1.5"
+      color="var(--geist-foreground)"
+      shapeRendering="geometricPrecision"
+      viewBox="0 0 24 24"
+    >
+      <path d="M12 20V10M18 20V4M6 20v-4"></path>
+    </svg>
+  );
+}

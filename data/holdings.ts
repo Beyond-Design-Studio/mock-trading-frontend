@@ -7,8 +7,15 @@ export interface holding {
   pnl: number;
 }
 
+export interface PortfolioInterface {
+  availFunds: number,
+  allocFunds: number,
+  profit: number,
+  equity: number,
+  holdings: holding[]
+}
 
-const holdingsData:holding[] = [
+const holdingsData: holding[] = [
   {
     stock: "INFY",
     purchasePrice: 900,
@@ -41,7 +48,14 @@ const holdingsData:holding[] = [
     current: 12000,
     pnl: 30000
   },
-  
-
 ]
-export default holdingsData;
+
+const PortfolioData: PortfolioInterface = {
+  availFunds: 20_10_900,
+  allocFunds: 10_12_000,
+  profit: 98_000,
+  equity: 12_00_000,
+  holdings: holdingsData
+}
+
+export default PortfolioData;
