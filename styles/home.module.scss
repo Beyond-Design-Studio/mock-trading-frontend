@@ -1,22 +1,12 @@
 @use "abstracts/index" as *;
 .pageContainer {
-  @include media-medium {
-    width: 95vw;
-    margin-left: 5vw;
-    height: 100vh;
-  }
-}
-
-.topRow {
-  width: 100%;
   display: flex;
   flex-direction: column;
   padding: 2rem;
   gap: 0;
-  
   @include media-medium {
-    display: flex;
-    flex-direction: row;
+    width: 92vw;
+    margin-left: 5vw;
     // justify-content: space-around;
     gap: 4rem;
   }
@@ -24,13 +14,8 @@
 
 .newsContainer {
   @include flex-col-center;
-  // border: 2px solid $accent-color;
-  background-color: darken($bg-color, 0.7%);
-  box-shadow: 1px 1px 2px 0px darken($bg-color, 5%);
-  font-size: small;
+  @include homeContainer;
   width: 85vw;
-  border-radius: 0.5rem;
-  padding: 1.5rem;
   color: white;
   margin-bottom: 2rem;
   h1 {
@@ -49,9 +34,8 @@
   }
   @include media-medium {
     height: fit-content;
-    max-height: 28rem;
+    max-height: 30rem;
     width: 50%;
-    font-size: medium;
     margin-left: 1rem;
     margin-bottom: 0rem;
   }
@@ -111,29 +95,9 @@
   }
 }
 
-.rulesHeader {
-  display: flex;
-  align-items: center;
-  max-width: fit-content;
-  gap: 1rem;
-  span {
-    color: $accent-color;
-    padding-top: 0.2rem;
-  }
-}
-
 .rulesContainer {
-  // border: 2px solid $accent-color;
-  background-color: darken($bg-color, 0.7%);
-  box-shadow: 1px 1px 2px 0px darken($bg-color, 5%);
-  border-radius: 0.5rem;
-  font-size: small;
-  color: white;
+  @include homeContainer;
   width: 85vw;
-  padding: 1.5rem;
-  h1 {
-    margin: 0;
-  }
   ul {
     list-style-type: circle;
     margin-left: 1rem;
@@ -143,14 +107,58 @@
     margin-top: 0.4rem;
     font-weight: 300;
   }
-  hr {
-    width: 100%;
-    margin-top: 0.5rem;
-    border-top: 1px solid darken($accent-color, 2%);
-  }
   @include media-medium {
-    width: 30%;
+    width: 100%;
     max-height: 35rem;
     font-size: medium;
   }
+}
+
+.aboutUsContainer {
+  @include homeContainer;
+}
+.containerHeader {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  span {
+    color: $accent-color;
+    padding-top: 0.2rem;
+  }
+}
+.aboutBody {
+  display: flex;
+  flex-direction: column;
+  margin-top: 1rem;
+  @include media-medium {
+    flex-direction: row;
+    // justify-content: space-around;
+    gap: 2rem;
+  }
+}
+.aboutSection {
+  margin-bottom: 1rem;
+  min-height: 20rem;
+  h2 {
+    font-weight: 300;
+  }
+  p {
+    font-weight: 300;
+  }
+  div {
+    margin-top: 1rem;
+  }
+  @include media-medium {
+    width: 48%;
+    margin-bottom: 0;
+  }
+}
+
+.aboutLine {
+  border-left: 1px solid darken($accent-color, 2%);
+  min-height: 100%;
+}
+
+.sponsorsContainer {
+  @include homeContainer;
 }

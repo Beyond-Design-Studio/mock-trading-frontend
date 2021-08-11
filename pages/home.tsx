@@ -4,6 +4,8 @@ import Sidenav from "@components/sidenav";
 import styles from "@styles/home.module.scss"
 import News from "@components/Home/News";
 import Rules from "@components/Home/Rules";
+import AboutUs from "@components/Home/AboutUs";
+import Sponsors from "@components/Home/Sponsors";
 
 const Home = ():JSX.Element => {
 	return (
@@ -13,10 +15,10 @@ const Home = ():JSX.Element => {
 			</Head>
 			<Sidenav />
 			<div className={styles.pageContainer}>
-				<div className={styles.topRow}>
-						<News />
+						{/* <News /> */}
 						<Rules />
-				</div>
+						<AboutUs/>
+						<Sponsors/>
 			</div>
 		</div>
 	);

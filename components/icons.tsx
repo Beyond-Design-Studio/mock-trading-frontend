@@ -220,3 +220,42 @@ export const ChartIcon = (): JSX.Element => {
     </svg>
   );
 }
+export const InfoIcon = ():JSX.Element => {
+  return (
+    <svg
+      width="24"
+      height="24"
+      fill="none"
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="1.5"
+      color="var(--geist-foreground)"
+      shapeRendering="geometricPrecision"
+      viewBox="0 0 24 24"
+    >
+      <circle cx="12" cy="12" r="10" fill="var(--geist-fill)"></circle>
+      <path stroke="var(--geist-stroke)" d="M12 16v-4M12 8h.01"></path>
+    </svg>
+  )
+}
+  
+export const SponsorsIcon = ():JSX.Element => {
+  return (
+    <svg
+      width="24"
+      height="24"
+      fill="none"
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="1.5"
+      color="var(--geist-foreground)"
+      shapeRendering="geometricPrecision"
+      viewBox="0 0 24 24"
+    >
+      <circle cx="12" cy="8" r="7"></circle>
+      <path d="M8.21 13.89L7 23l5-3 5 3-1.21-9.12"></path>
+    </svg>
+  );
+}

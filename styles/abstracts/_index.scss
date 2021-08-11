@@ -49,3 +49,25 @@ $sec-color: #ffffff;
   -webkit-transition: $for $time-in $type $time-out;
   -o-transition: $for $time-in $type $time-out;
 }
+@mixin homeContainer {
+  background-color: darken($bg-color, 0.7%);
+  box-shadow: 1px 1px 2px 0px darken($bg-color, 5%);
+  font-size: small;
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  color: white;
+  hr {
+    width: 100%;
+    margin-top: 0.5rem;
+    border-bottom: 1px solid darken($accent-color, 2%);
+    outline: none;
+  }
+  margin-bottom: 2rem;
+  h1 {
+    font-weight: 400;
+  }
+  @include media-medium {
+    font-size: medium;
+    margin-bottom: 0;
+  }
+}
