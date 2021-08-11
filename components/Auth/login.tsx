@@ -23,7 +23,8 @@ function LogIn(props: Props): JSX.Element {
       setError("Please fill in all the fields");
     } else if (!(email.includes("@") && email.includes("."))) {
       setError("Please enter a valid email address");
-    } else {
+    } 
+    else {
       setError(null);
       loginRequest(email, password);
     }

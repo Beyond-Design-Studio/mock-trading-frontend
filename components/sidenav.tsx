@@ -38,18 +38,16 @@ const Sidenav = (): JSX.Element => {
 						<HomeIcon />
 					</a>
 				</Link>
-				
-				<Link href="/portfolio">
-					<a tabIndex={0} className={`${styles.linkIcon}`}>
-						<p>Portfolio</p>
-						<PortfolioIcon />
-					</a>
-				</Link>
-
 				<Link href="/markets">
 					<a tabIndex={0} className={`${styles.linkIcon}`}>
 						<p>Market</p>
 						<MarketIcon />
+					</a>
+				</Link>
+				<Link href="/portfolio">
+					<a tabIndex={0} className={`${styles.linkIcon}`}>
+						<p>Portfolio</p>
+						<PortfolioIcon />
 					</a>
 				</Link>
 			</div>
