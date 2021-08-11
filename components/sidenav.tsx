@@ -9,11 +9,16 @@ const Sidenav = (): JSX.Element => {
 
 	const router = useRouter();
 
-	useEffect(() => {
-		if (router && router.query) {
-			console.log("hello", router.pathname);
-		}
-	}, [router]);
+	// useEffect(() => {
+	// 	if (router && router.query) {
+	// 		console.log("hello", router.pathname);
+	// 	}
+	// }, [router]);
+
+	function LogOutHandler() {
+		localStorage.removeItem('token')
+		router.push("/")
+	}
 
 	return (
 		<aside className={`${styles.leftbar}`}>
@@ -50,12 +55,12 @@ const Sidenav = (): JSX.Element => {
 			</div>
 			
 			<div className={`${styles.logout}`}>
-				<Link href="/">
-					<a tabIndex={0} className={`${styles.linkIcon}`}>
+		
+					<a tabIndex={0} className={`${styles.linkIcon}`} onClick={LogOutHandler}>
 						<p>Logout</p>
 						<LogOutIcon />
 					</a>
-				</Link>
+
 			</div>
 		</aside>
 	)

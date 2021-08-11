@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
 import styles from "@styles/auth.module.scss";
+import * as qs from 'qs';
+import axios, { AxiosRequestConfig } from 'axios'
+import { loginRequest } from "api/Api";
 
 interface Props {
   setScreen: (value: string | ((prevVar: string) => string)) => void;
@@ -22,12 +25,7 @@ function LogIn(props: Props): JSX.Element {
       setError("Please enter a valid email address");
     } else {
       setError(null);
-    }
-
-    if (email === "mail@mail.com" && password === "pass") {
-      router.push("/markets");
-    } else {
-      setError("Password or e-mail invalid");
+      loginRequest(email, password);
     }
   };
 
@@ -70,7 +68,7 @@ function LogIn(props: Props): JSX.Element {
           Login
         </button>
       </div>
-      <p>mail@mail.com - pass</p>
+      <p>test12345@test.com - Test12345</p>
     </form>
   );
 }

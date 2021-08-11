@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styles from "@styles/auth.module.scss";
-import LogIn from "@components/login";
-import Register from "@components/register";
+import LogIn from "@components/Auth/login";
+import Register from "@components/Auth/register";
 import Head from "next/head";
 import Nav from "@components/nav";
 
