@@ -31,6 +31,7 @@ const NewsData:NewsMain[] = [
   {
     time: "9:30 pm",
     serialNo: 3,
+    new: true,
     headlines: [
       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis, at.",
       "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Illo nisi corrupti quidem delectus possimus rem similique exercitationem! Corporis, inventore beatae?",
@@ -40,16 +41,6 @@ const NewsData:NewsMain[] = [
       "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Illo nisi corrupti quidem delectus possimus rem similique exercitationem! Corporis, inventore beatae?"
     ]
   },
-  {
-    time: "9:45 pm",
-    serialNo: 4,
-    headlines: [
-      "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Illo nisi corrupti quidem delectus possimus rem similique exercitationem! Corporis, inventore beatae?",
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis, at.",
-    ],
-    new: true
-  },
-
 ]
 
 export default NewsData;

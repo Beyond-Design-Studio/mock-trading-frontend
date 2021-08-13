@@ -21,7 +21,9 @@ const Markets = ():JSX.Element => {
 					<News />
 					<PortfolioSnapshot/>
 				</div>
+				<Market />
 			</div>
+
 			
 
 		</div>

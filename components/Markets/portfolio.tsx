@@ -8,16 +8,15 @@ import { fundsData, fundsInterface } from "@data/portfolio";
 
 
 const PortfolioSnapshot = (): JSX.Element => {
-  const [portfolio, setPortfolio] = useState<fundsInterface | null>(null)
+  const [funds, setFunds] = useState<fundsInterface | null>(null)
   
   useEffect(() => {
-    setPortfolio(fundsData);
+    setFunds(fundsData);
   }, [])
   
 
   return (
     <div className={styles.portfolioComponent}>
-
      <div className={styles.header}>
         <span>
           <PortfolioIcon />	
@@ -25,28 +24,27 @@ const PortfolioSnapshot = (): JSX.Element => {
         <h1>My Portfolio</h1>
      </div>
      <hr/>
-     {portfolio && (
+     {funds && (
       <div className={styles.fundsCont}>
           <div>
             <h3>Available Funds</h3>
-            <p>{`₹ ${indianNumberConverter(portfolio.availFunds)}`}</p>
+            <p>{`₹ ${indianNumberConverter(funds.availFunds)}`}</p>
           </div>
           <div>
             <h3>Allocated Funds</h3>
-            <p>{`₹ ${indianNumberConverter(portfolio.allocFunds)}`}</p>
+            <p>{`₹ ${indianNumberConverter(funds.allocFunds)}`}</p>
             </div>
           <div>
             <h3>Profit</h3>
-            <p>{`₹ ${indianNumberConverter(portfolio.profit)}`}</p>
+            <p>{`₹ ${indianNumberConverter(funds.profit)}`}</p>
             </div>
           <div>
             <h3>Total Value</h3>
-            <p>{`₹ ${indianNumberConverter(portfolio.equity)}`}</p>
+            <p>{`₹ ${indianNumberConverter(funds.equity)}`}</p>
             </div>
       </div>
      )
     }
-      
     </div>
   );
 };

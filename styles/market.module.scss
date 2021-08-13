@@ -109,47 +109,31 @@
   }
 }
 
-.arrowContainer {
+.linkContainer {
   position: absolute;
-  width: 8rem;
+  width: 10rem;
   display: flex;
   justify-content: space-around;
   margin-top: 1rem;
   align-self: flex-end;
-  bottom: 2%;
-  svg {
-    color: $accent-color;
+  bottom: 3%;
+  h5 {
+    text-decoration: underline;
     cursor: pointer;
+    font-weight: 200;
+  }
+  h5:hover {
+    color: $accent-color;
+  }
+  @include media-medium {
+    font-size: large;
   }
 }
 
 // Market
-.market {
-  grid-area: auto;
-  padding: 1rem;
-  min-height: 30rem;
-  scrollbar-width: thin;
-  overflow-y: scroll;
-  display: block;
-
-  &::-webkit-scrollbar {
-    width: 3px;
-    height: 3px;
-    background: transparent;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background: #757575;
-  }
-
-  @include media-medium {
-    min-height: 20rem;
-    grid-area: mark;
-    height: 100%;
-  }
-}
 
 .marketTable {
+  margin-top: 2rem;
   border: 1px solid $accent-color;
   border-collapse: collapse;
   width: 100%;

@@ -3,35 +3,20 @@ import styles from "@styles/market.module.scss"
 import { RightArrow, LeftArrow, NewsIcon } from "@components/icons";
 import NewsData, { NewsMain } from "@data/news";
 import Loading from "@components/loading";
-
+import Link from "next/link";
 
 const News = ():JSX.Element => {
 	// console.log(NewsData);
 	//newsLimit is the number of news updates that has been done so far (different from final limit)
 	const newsLimit = 4;
-	const [newsNo, setNewsNo] = useState<number>(1)
+
 	const [currentArticle, setCurrentArticle] = useState<NewsMain | null>(null)
 	
 	useEffect(() => {
-		setCurrentArticle(NewsData[newsNo-1]);
-	}, [newsNo])
+		setCurrentArticle(NewsData[2]);
+	}, [])
 
-	function increaseNewsNo() {
-		if (newsNo >= newsLimit) {
-			return
-		}
-		else {
-			setNewsNo(newsNo+1)
-		}
-	}
-	function decreaseNewsNo() {
-		if (newsNo <= 1) {
-			return
-		}
-		else {
-			setNewsNo(newsNo-1)
-		}
-	}
+
 
   return(
     <div className={styles.newsContainer}>
@@ -63,14 +48,10 @@ const News = ():JSX.Element => {
 			
 				</ul>
 				</div>
-				<div className={styles.arrowContainer}>
-					<a onClick={decreaseNewsNo}>
-						<LeftArrow />
-					</a>
-					<p>{newsNo}/{newsLimit}</p>
-					<a onClick={increaseNewsNo}>
-						<RightArrow />
-					</a>
+				<div className={styles.linkContainer}>
+					<Link href={"/all-news"}>
+					<h5>View all news updates</h5>
+					</Link>
 				</div>
 			</>
 			)}
