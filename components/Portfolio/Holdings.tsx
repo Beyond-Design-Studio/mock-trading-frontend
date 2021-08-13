@@ -1,47 +1,113 @@
 import React, { useState, useEffect } from 'react'
 import styles from "@styles/portfolio.module.scss"
-import PortfolioData, { PortfolioInterface } from '@data/holdings'
+import { holdingInterface, holdingsData } from '@data/portfolio'
 import indianNumberConverter from "@components/functions/numberConvertor";
 
 
 const Holdings = (): JSX.Element => {
   
-  const [portfolio, setPortfolio] = useState<PortfolioInterface | null>(null)
+  const [holdings, setHoldings] = useState<holdingInterface[] | null>(null)
   
   useEffect(() => {
-    setPortfolio(PortfolioData);
+    setHoldings(holdingsData);
   }, [])
   
   return (
     <div className={styles.holdingsContainer}>
       <h1>Your Holdings</h1>
-      <table className={styles.holdingsTable}>
-        <tr>
-          <th>Stock</th>
-          <th>Price at purchase</th>
-          <th>Current Price</th>
-          <th>Invested</th>
-          <th>Current</th>
-          <th>P&L</th>
-        </tr>
-        {portfolio?.holdings?.map((item, ind)=> {
-          let pnlClass = styles.pnlProfit;
-          
-          if (item.pnl < 0) {
-            pnlClass = styles.pnlLoss;
-          }
-          return (
-            <tr key={ind}>
-              <td>{item.stock}</td>
-              <td>{`${indianNumberConverter(item.purchasePrice)}`}</td>
-              <td>{`${indianNumberConverter(item.currentPrice)}`}</td>
-              <td>{`${indianNumberConverter(item.invested)}`}</td>
-              <td>{`${indianNumberConverter(item.current)}`}</td>
-              <td className={pnlClass}>{`${indianNumberConverter(item.pnl)}`}</td>
-            </tr>
-          )
-        })}
-      </table>
+      <div className={styles.holdingsTable}>
+        <h3>Stocks</h3>
+        <table>
+          <tr>
+            <th>Stock</th>
+            <th>Price at purchase</th>
+            <th>Current Price</th>
+            <th>Quantity</th>
+            <th>Invested</th>
+            <th>Current</th>
+            <th>P&L</th>
+          </tr>
+          {holdings?.map((item, ind)=> {
+            let pnlClass = styles.pnlProfit;
+            if (item.pnl < 0) {
+              pnlClass = styles.pnlLoss;
+            }
+            return (
+              <tr key={ind}>
+                <td>{item.stock}</td>
+                <td>{`${indianNumberConverter(item.purchasePrice)}`}</td>
+                <td>{`${indianNumberConverter(item.currentPrice)}`}</td>
+                <td>{`${indianNumberConverter(item.quantity)}`}</td>
+                <td>{`${indianNumberConverter(item.invested)}`}</td>
+                <td>{`${indianNumberConverter(item.current)}`}</td>
+                <td className={pnlClass}>{`${indianNumberConverter(item.pnl)}`}</td>
+              </tr>
+            )
+          })}
+        </table>
+      </div>
+      <div className={styles.holdingsTable}>
+        <h3>Cryptocurrency</h3>
+         <table>
+          <tr>
+            <th>Crypto</th>
+            <th>Price at purchase</th>
+            <th>Current Price</th>
+            <th>Quantity</th>
+            <th>Invested</th>
+            <th>Current</th>
+            <th>P&L</th>
+          </tr>
+          {holdings?.map((item, ind)=> {
+            let pnlClass = styles.pnlProfit;
+            if (item.pnl < 0) {
+              pnlClass = styles.pnlLoss;
+            }
+            return (
+              <tr key={ind}>
+                <td>{item.stock}</td>
+                <td>{`${indianNumberConverter(item.purchasePrice)}`}</td>
+                <td>{`${indianNumberConverter(item.currentPrice)}`}</td>
+                <td>{`${indianNumberConverter(item.quantity)}`}</td>
+                <td>{`${indianNumberConverter(item.invested)}`}</td>
+                <td>{`${indianNumberConverter(item.current)}`}</td>
+                <td className={pnlClass}>{`${indianNumberConverter(item.pnl)}`}</td>
+              </tr>
+            )
+          })}
+        </table>
+      </div>
+      <div className={styles.holdingsTable}>
+        <h3>Commodities</h3>
+         <table>
+          <tr>
+            <th>Commodity</th>
+            <th>Price at purchase</th>
+            <th>Current Price</th>
+            <th>Quantity</th>
+            <th>Invested</th>
+            <th>Current</th>
+            <th>P&L</th>
+          </tr>
+          {holdings?.map((item, ind)=> {
+            let pnlClass = styles.pnlProfit;
+            if (item.pnl < 0) {
+              pnlClass = styles.pnlLoss;
+            }
+            return (
+              <tr key={ind}>
+                <td>{item.stock}</td>
+                <td>{`${indianNumberConverter(item.purchasePrice)}`}</td>
+                <td>{`${indianNumberConverter(item.currentPrice)}`}</td>
+                <td>{`${indianNumberConverter(item.quantity)}`}</td>
+                <td>{`${indianNumberConverter(item.invested)}`}</td>
+                <td>{`${indianNumberConverter(item.current)}`}</td>
+                <td className={pnlClass}>{`${indianNumberConverter(item.pnl)}`}</td>
+              </tr>
+            )
+          })}
+        </table>
+      </div>
     </div>
   )
 }

@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import styles from "@styles/portfolio.module.scss"
-import PortfolioData, { PortfolioInterface } from '@data/holdings'
+import  { fundsData, fundsInterface } from '@data/portfolio'
 import indianNumberConverter from "@components/functions/numberConvertor";
+import { useMediaQuery } from 'react-responsive';
 
 
 const Funds = ():JSX.Element => {
 
-  const [portfolio, setPortfolio] = useState<PortfolioInterface | null>(null)
-  
+  const [funds, setFunds] = useState<fundsInterface | null>(null)
+  const isMobile = useMediaQuery({maxWidth: 1024})
   useEffect(() => {
-    setPortfolio(PortfolioData);
+    setFunds(fundsData);
   }, [])
   
 
@@ -18,24 +19,51 @@ const Funds = ():JSX.Element => {
       <h1>Your Funds</h1>
       <div className={styles.fundDetails}>
         {
-          portfolio && <>
-          <div>
-            <h3>Available Funds</h3>
-            <p>{`₹ ${indianNumberConverter(portfolio.availFunds)}`}</p>
+          (funds && isMobile) && 
+          <>
+            <div>
+              <h3>Available Funds</h3>
+              <p>{`₹ ${indianNumberConverter(funds.availFunds)}`}</p>
             </div>
-          <div>
-            <h3>Allocated Funds</h3>
-            <p>{`₹ ${indianNumberConverter(portfolio.allocFunds)}`}</p>
+            <div>
+              <h3>Allocated Funds</h3>
+              <p>{`₹ ${indianNumberConverter(funds.allocFunds)}`}</p>
             </div>
-          <div>
-            <h3>Profit</h3>
-            <p>{`₹ ${indianNumberConverter(portfolio.profit)}`}</p>
+            <div>
+              <h3>Profit</h3>
+              <p>{`₹ ${indianNumberConverter(funds.profit)}`}</p>
             </div>
-          <div>
-            <h3>Equity</h3>
-            <p>{`₹ ${indianNumberConverter(portfolio.equity)}`}</p>
-          </div>
+            <div>
+              <h3>Total Value</h3>
+              <p>{`₹ ${indianNumberConverter(funds.equity)}`}</p>
+            </div>
           </>
+        }
+        {
+          (funds && !isMobile) && (
+            <>
+              <div className={styles.fundsRow}>
+                <div>
+                  <h3>Available Funds</h3>
+                  <p>{`₹ ${indianNumberConverter(funds.availFunds)}`}</p>
+                </div>
+                <div>
+                  <h3>Allocated Funds</h3>
+                  <p>{`₹ ${indianNumberConverter(funds.allocFunds)}`}</p>
+                </div>
+              </div>
+              <div className={styles.fundsRow}>
+              <div>
+                <h3>Profit</h3>
+                <p>{`₹ ${indianNumberConverter(funds.profit)}`}</p>
+              </div>
+              <div>
+                <h3>Total Value</h3>
+                <p>{`₹ ${indianNumberConverter(funds.equity)}`}</p>
+              </div>
+              </div>
+            </>
+          )
         }
       </div>
     </div>

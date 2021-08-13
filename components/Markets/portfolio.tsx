@@ -4,14 +4,14 @@ import Link from "next/dist/client/link";
 import indianNumberConverter from "@components/functions/numberConvertor";
 import { PortfolioIcon } from "@components/icons";
 import styles from "@styles/market.module.scss";
-import PortfolioData, { PortfolioInterface } from "@data/holdings";
+import { fundsData, fundsInterface } from "@data/portfolio";
 
 
 const PortfolioComponent = (): JSX.Element => {
-  const [portfolio, setPortfolio] = useState<PortfolioInterface | null>(null)
+  const [portfolio, setPortfolio] = useState<fundsInterface | null>(null)
   
   useEffect(() => {
-    setPortfolio(PortfolioData);
+    setPortfolio(fundsData);
   }, [])
   
 
