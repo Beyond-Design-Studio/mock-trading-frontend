@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import styles from "@styles/home.module.scss"
+import styles from "@styles/market.module.scss"
 import { RightArrow, LeftArrow, NewsIcon } from "@components/icons";
 import NewsData, { NewsMain } from "@data/news";
 import Loading from "@components/loading";

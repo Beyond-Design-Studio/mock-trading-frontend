@@ -7,7 +7,7 @@ import styles from "@styles/market.module.scss";
 import { fundsData, fundsInterface } from "@data/portfolio";
 
 
-const PortfolioComponent = (): JSX.Element => {
+const PortfolioSnapshot = (): JSX.Element => {
   const [portfolio, setPortfolio] = useState<fundsInterface | null>(null)
   
   useEffect(() => {
@@ -16,39 +16,39 @@ const PortfolioComponent = (): JSX.Element => {
   
 
   return (
-    <div className={`${styles.portfolioComponent}`}>
+    <div className={styles.portfolioComponent}>
 
-      <Link href="/portfolio">
-        <a>
-          <h2> <PortfolioIcon /> Your Portfolio</h2>
-        </a>
-      </Link>
-
-      <div>
-        {
-          portfolio && <>
-            <div>
-              <h3>Available Funds</h3>
-              <p>{`₹ ${indianNumberConverter(portfolio.availFunds)}`}</p>
-              </div>
-            <div>
-              <h3>Allocated Funds</h3>
-              <p>{`₹ ${indianNumberConverter(portfolio.allocFunds)}`}</p>
-              </div>
-            <div>
-              <h3>Profit</h3>
-              <p>{`₹ ${indianNumberConverter(portfolio.profit)}`}</p>
-              </div>
-            <div>
-              <h3>Equity</h3>
-              <p>{`₹ ${indianNumberConverter(portfolio.equity)}`}</p>
+     <div className={styles.header}>
+        <span>
+          <PortfolioIcon />	
+        </span>
+        <h1>My Portfolio</h1>
+     </div>
+     <hr/>
+     {portfolio && (
+      <div className={styles.fundsCont}>
+          <div>
+            <h3>Available Funds</h3>
+            <p>{`₹ ${indianNumberConverter(portfolio.availFunds)}`}</p>
+          </div>
+          <div>
+            <h3>Allocated Funds</h3>
+            <p>{`₹ ${indianNumberConverter(portfolio.allocFunds)}`}</p>
             </div>
-          </>
-        }
+          <div>
+            <h3>Profit</h3>
+            <p>{`₹ ${indianNumberConverter(portfolio.profit)}`}</p>
+            </div>
+          <div>
+            <h3>Total Value</h3>
+            <p>{`₹ ${indianNumberConverter(portfolio.equity)}`}</p>
+            </div>
       </div>
+     )
+    }
       
     </div>
   );
 };
 
-export default PortfolioComponent;
+export default PortfolioSnapshot;
