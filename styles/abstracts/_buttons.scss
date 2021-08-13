@@ -7,26 +7,6 @@
   border: none;
 }
 
-@mixin logInButton {
-  @include btn($bg-color, $accent-color);
-  font-size: small;
-  text-transform: uppercase;
-  font-family: $font-montserrat;
-  background-color: $bg-color;
-  color: $accent-color;
-  @include transition(all, 150ms, ease-in);
-
-  &:hover {
-    cursor: pointer;
-    background-color: $accent-color;
-    color: $bg-color;
-    @include transition(all, 150ms, ease-in);
-  }
-  @include media-medium {
-    font-size: medium;
-  }
-}
-
 @mixin registerButton {
   @include btn($bg-color, $accent-color);
   font-size: small;

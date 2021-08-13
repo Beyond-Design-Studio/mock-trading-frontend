@@ -7,7 +7,7 @@ import indianNumberConverter from "@components/functions/numberConvertor";
 const Holdings = (): JSX.Element => {
   
   const [holdings, setHoldings] = useState<holdingInterface[] | null>(null)
-  
+  const [holdingsView, setHoldingsView] = useState<string>("stocks")
   useEffect(() => {
     setHoldings(holdingsData);
   }, [])
@@ -15,8 +15,19 @@ const Holdings = (): JSX.Element => {
   return (
     <div className={styles.holdingsContainer}>
       <h1>Your Holdings</h1>
-      <div className={styles.holdingsTable}>
-        <h3>Stocks</h3>
+      <div className={styles.holdingsMenu}>
+        <a onClick={()=>setHoldingsView('stocks')}><button className={holdingsView === "stocks" ? styles.selButton : styles.unselButton}>
+          Stocks
+        </button></a>
+        <a onClick={()=>setHoldingsView('crypto')}><button className={holdingsView === "crypto" ? styles.selButton : styles.unselButton}>
+          Crypto
+        </button></a>
+        <a onClick={()=>setHoldingsView('commodities')}><button className={holdingsView === "commodities" ? styles.selButton : styles.unselButton}>
+          Commodities
+        </button></a>
+      </div>
+      {holdingsView === "stocks" && (
+        <div className={styles.holdingsTable}>
         <table>
           <tr>
             <th>Stock</th>
@@ -44,10 +55,31 @@ const Holdings = (): JSX.Element => {
               </tr>
             )
           })}
+          {holdings?.map((item, ind)=> {
+            let pnlClass = styles.pnlProfit;
+            if (item.pnl < 0) {
+              pnlClass = styles.pnlLoss;
+            }
+            return (
+              <tr key={ind}>
+                <td>{item.stock}</td>
+                <td>{`${indianNumberConverter(item.purchasePrice)}`}</td>
+                <td>{`${indianNumberConverter(item.currentPrice)}`}</td>
+                <td>{`${indianNumberConverter(item.quantity)}`}</td>
+                <td>{`${indianNumberConverter(item.invested)}`}</td>
+                <td>{`${indianNumberConverter(item.current)}`}</td>
+                <td className={pnlClass}>{`${indianNumberConverter(item.pnl)}`}</td>
+              </tr>
+            )
+          })}
+          
         </table>
       </div>
+      )}
+      {holdingsView === "crypto" && (
+
       <div className={styles.holdingsTable}>
-        <h3>Cryptocurrency</h3>
+        
          <table>
           <tr>
             <th>Crypto</th>
@@ -77,8 +109,11 @@ const Holdings = (): JSX.Element => {
           })}
         </table>
       </div>
+      )}
+      {holdingsView === "commodities" && (
+
       <div className={styles.holdingsTable}>
-        <h3>Commodities</h3>
+       
          <table>
           <tr>
             <th>Commodity</th>
@@ -108,6 +143,7 @@ const Holdings = (): JSX.Element => {
           })}
         </table>
       </div>
+      )}
     </div>
   )
 }

@@ -18,7 +18,7 @@ const Portfolio = ():JSX.Element => {
 				<Profile />
 				<div className={styles.statsContainer}>
 					<Funds/>
-					{/* <Holdings /> */}
+					<Holdings />
 				</div>
 			</div>
 		</div>
