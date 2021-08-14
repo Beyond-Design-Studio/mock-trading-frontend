@@ -3,9 +3,8 @@ import Head from "next/head";
 
 import Sidenav from "@components/sidenav";
 import styles from "@styles/market.module.scss";
-import { Notification, Market, Leader } from "@components/Markets/misc";
-import News from "@components/Home/News";
-import Funds from "@components/Portfolio/Funds";
+import MarketComponent from "@components/Markets/market";
+import News from "@components/Markets/News";
 import PortfolioSnapshot from "@components/Markets/portfolio";
 
 const Markets = ():JSX.Element => {
@@ -21,7 +20,7 @@ const Markets = ():JSX.Element => {
 					<News />
 					<PortfolioSnapshot/>
 				</div>
-				<Market />
+				<MarketComponent />
 			</div>
 
 			

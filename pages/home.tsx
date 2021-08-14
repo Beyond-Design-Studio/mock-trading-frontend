@@ -2,7 +2,7 @@ import React from "react";
 import Head from "next/head";
 import Sidenav from "@components/sidenav";
 import styles from "@styles/home.module.scss"
-import News from "@components/Home/News";
+import News from "@components/Markets/News";
 import Rules from "@components/Home/Rules";
 import AboutUs from "@components/Home/AboutUs";
 import Sponsors from "@components/Home/Sponsors";

@@ -158,7 +158,6 @@
     border-right: none;
     border-left: none;
     height: 4rem;
-    cursor: pointer;
 
     p:nth-child(2) {
       font-size: 0.9rem;
@@ -252,4 +251,7 @@
 }
 .unselButton {
   @include btn.logInButton;
+}
+.actionModal {
+  @include homeContainer;
 }
