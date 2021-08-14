@@ -5,10 +5,10 @@ import { useMediaQuery } from "react-responsive";
 import Modal from "@components/modal";
 import useModal from "@components/functions/useModal";
 import { LoaderIcon } from "@components/icons";
-import StonksData, { StonksInterface } from "@data/stonks";
+import { SecurityInterface, StonksData, CryptoData, CommodityData } from "@data/stonks";
 import styles from "@styles/market.module.scss";
 
-const TableRow: FC<StonksInterface> = ({
+const TableRow: FC<SecurityInterface> = ({
   name,
   img,
   previousBid,
@@ -72,26 +72,44 @@ const TableRow: FC<StonksInterface> = ({
 };
 
 const MarketComponent = (): JSX.Element => {
-  const [stonks, setStonks] = useState<StonksInterface[]>([]);
+  const [stonks, setStonks] = useState<SecurityInterface[]>([]);
+  const [marketView, setMarketView] = useState<string>("stocks")
   const isMedium = useMediaQuery({ query: "(min-width: 769px)" });
 
   useEffect(() => {
-    const timeout = setTimeout(() => {
+    if (marketView === "stocks") {
       setStonks(StonksData);
-    }, 1000);
+    }
+    else if (marketView === "crypto") {
+      setStonks(CryptoData);
+    }
+    else if (marketView === "commodities") {
+      setStonks(CommodityData)
+    }
+    else {
+      setStonks([])
+    }
 
-    return () => {
-      clearTimeout(timeout);
-    };
-  }, []);
+  }, [marketView]);
 
   return (
-    <>
+    <section className={styles.marketCont}>
       {/* <button onClick={toggleModal}>click meh</button> */}
+      <div className={styles.marketMenu}>
+        <a onClick={()=>setMarketView('stocks')}><button className={marketView === "stocks" ? styles.selButton : styles.unselButton}>
+          Stocks
+        </button></a>
+        <a onClick={()=>setMarketView('crypto')}><button className={marketView === "crypto" ? styles.selButton : styles.unselButton}>
+          Crypto
+        </button></a>
+        <a onClick={()=>setMarketView('commodities')}><button className={marketView === "commodities" ? styles.selButton : styles.unselButton}>
+          Commodities
+        </button></a>
+      </div>
       <table className={`${styles.marketTable}`}>
         <thead>
           <tr>
-            <th colSpan={2}>MARKET</th>
+            <th colSpan={2}>STOCK</th>
             {isMedium ? (
               <>
                 <th>PREVIOUS BID</th>
@@ -120,7 +138,7 @@ const MarketComponent = (): JSX.Element => {
           <tbody></tbody>
         )}
       </table>
-    </>
+    </section>
   );
 };
 
