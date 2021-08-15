@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
-import { HomeIcon, LogOutIcon, PortfolioIcon, MarketIcon, BodhiIcon } from "@components/icons";
+import { HomeIcon, LogOutIcon, PortfolioIcon, MarketIcon, BodhiIcon, NewsIcon } from "@components/icons";
 import styles from "@styles/sidenav.module.scss";
 
 const Sidenav = (): JSX.Element => {
@@ -48,6 +48,12 @@ const Sidenav = (): JSX.Element => {
 					<a tabIndex={0} className={`${styles.linkIcon}`}>
 						<p>Portfolio</p>
 						<PortfolioIcon />
+					</a>
+				</Link>
+				<Link href="/all-news">
+					<a tabIndex={0} className={`${styles.linkIcon}`}>
+						<p>News</p>
+						<NewsIcon />
 					</a>
 				</Link>
 			</div>

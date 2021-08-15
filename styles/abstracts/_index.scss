@@ -71,3 +71,22 @@ $sec-color: #ffffff;
     margin-bottom: 0;
   }
 }
+
+@mixin pageContainer {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 6rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+
+  @include media-medium {
+    width: 95vw;
+    margin-left: 5vw;
+    margin-bottom: 0;
+    padding-left: 0;
+    padding-right: 0;
+    padding: 1.5rem;
+    width: 90%;
+    margin-left: 5%;
+  }
+}

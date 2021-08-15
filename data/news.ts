@@ -1,46 +1,42 @@
-export interface NewsMain {
-  time: string;
-  serialNo: number;
-  headlines: string[];
-  new?: boolean;
+export interface NewsUpdateInterface {
+  id: number;
+  published: string;
+  Article1: string;
+  Article2?: string | null;
+  Article3?: string | null;
+  Article4?: string | null;
+  Article5?: string | null;
+  published_at: "2021-08-15T15:55:13.506Z",
+  created_at: "2021-08-15T15:55:08.183Z",
+  updated_at: "2021-08-15T15:55:13.519Z"
 }
 
 
-const NewsData:NewsMain[] = [
+export const NewsData:NewsUpdateInterface[] = [
   {
-    time: "9:00 pm",
-    serialNo: 1,
-    headlines: [
-      "Trade towers fall",
-      "All US stocks are down oops",
-      "Invest in India lol",
-      "Bomb goes off",
-      "Help me",
-      "This is not fun"
-    ]
+    "id": 1,
+    "published": "00:00:00.000",
+    "Article1": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Libero nunc consequat interdum varius sit amet mattis vulputate enim.",
+    "Article2": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Libero nunc consequat interdum varius sit amet mattis vulputate enim.",
+    "Article3": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Libero nunc consequat interdum varius sit amet mattis vulputate enim.",
+    "Article4": null,
+    "Article5": null,
+    "published_at": "2021-08-15T15:55:13.506Z",
+    "created_at": "2021-08-15T15:55:08.183Z",
+    "updated_at": "2021-08-15T15:55:13.519Z"
   },
   {
-    time: "9:15 pm",
-    serialNo: 2,
-    headlines: [
-      "Trade towers fall",
-      "All US stocks are down oops",
-      "Invest in India lol"
-    ]
-  },
-  {
-    time: "9:30 pm",
-    serialNo: 3,
-    new: true,
-    headlines: [
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis, at.",
-      "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Illo nisi corrupti quidem delectus possimus rem similique exercitationem! Corporis, inventore beatae?",
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis, at.",
-      "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Illo nisi corrupti quidem delectus possimus rem similique exercitationem! Corporis, inventore beatae?",
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis, at.",
-      "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Illo nisi corrupti quidem delectus possimus rem similique exercitationem! Corporis, inventore beatae?"
-    ]
+    "id": 2,
+    "published": "00:20:00.000",
+    "Article1": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Libero nunc consequat interdum varius sit amet mattis vulputate enim.",
+    "Article2": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Libero nunc consequat interdum varius sit amet mattis vulputate enim.",
+    "Article3": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Libero nunc consequat interdum varius sit amet mattis vulputate enim.",
+    "Article4": "Lol",
+    "Article5": null,
+    "published_at": "2021-08-15T15:55:13.506Z",
+    "created_at": "2021-08-15T15:55:08.183Z",
+    "updated_at": "2021-08-15T15:55:13.519Z"
   },
 ]
 
-export default NewsData;
+

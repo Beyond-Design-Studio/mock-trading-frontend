@@ -1,22 +1,7 @@
 @use "abstracts/index" as *;
 @use "abstracts/buttons" as btn;
-.pageContainer {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 6rem;
-  padding-left: 1rem;
-  padding-right: 1rem;
-
-  @include media-medium {
-    width: 95vw;
-    margin-left: 5vw;
-    margin-bottom: 0;
-    padding-left: 0;
-    padding-right: 0;
-    padding: 1.5rem;
-    width: 93vw;
-    margin-left: 5%;
-  }
+.portfolioPage {
+  @include pageContainer;
 }
 
 .profileContainer {

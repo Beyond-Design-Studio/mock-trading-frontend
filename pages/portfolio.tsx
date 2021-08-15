@@ -14,7 +14,7 @@ const Portfolio = ():JSX.Element => {
 			</Head>
 
 			<Sidenav />
-			<div className={styles.pageContainer}>
+			<div className={styles.portfolioPage}>
 				<Profile />
 				<div className={styles.statsContainer}>
 					<Funds/>
