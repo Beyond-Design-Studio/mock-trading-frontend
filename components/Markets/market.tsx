@@ -13,6 +13,7 @@ const TableRow: FC<SecurityInterface> = ({
   img,
   previousPrice,
   currentPrice,
+  type
 }): JSX.Element => {
   const gain = (currentPrice - previousPrice) / previousPrice;
   const color = gain < 0 ? "#ff3535" : gain === 0 ? "#888" : "#029d02";
@@ -28,7 +29,8 @@ const TableRow: FC<SecurityInterface> = ({
     name: name,
     img: img,
     previousPrice: previousPrice,
-    currentPrice: currentPrice
+    currentPrice: currentPrice,
+    type: type
   }
 
   return (
@@ -141,6 +143,7 @@ const MarketComponent = (): JSX.Element => {
                   img={data.img}
                   previousPrice={data.previousPrice}
                   currentPrice={data.currentPrice}
+                  type={data.type}
                 />
               );
             })}

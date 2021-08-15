@@ -286,3 +286,13 @@
     width: 90%;
   }
 }
+.errorCont {
+  width: 80%;
+  margin-top: 1rem;
+  text-align: center;
+  word-wrap: break-word;
+  p {
+    font-size: smaller;
+    color: red;
+  }
+}
