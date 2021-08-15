@@ -1,4 +1,4 @@
-export default function indianNumberConverter(y: number): string | void {
+export default function indianNumberConverter(y: number): string  {
   const x = y.toString();
   
   let lastThree = x.substring(x.length-3);
@@ -7,6 +7,5 @@ export default function indianNumberConverter(y: number): string | void {
   if (otherNumbers != '')
     lastThree = ',' + lastThree;
     const res = otherNumbers.replace(/\B(?=(\d{2})+(?!\d))/g, ",") + lastThree;
-  
     return(res);
 }

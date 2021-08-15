@@ -254,4 +254,35 @@
 }
 .actionModal {
   @include homeContainer;
+  width: 30rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  span {
+    color: $accent-color;
+  }
+}
+.actionRow {
+  margin-top: 1rem;
+  width: 70%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  h4 {
+    font-weight: 400;
+    margin-bottom: 0.3rem;
+  }
+  input {
+    margin: 1%;
+    padding: 2%;
+    width: 30%;
+    color: white;
+    background: $bg-color;
+    border: 1px solid gray;
+    border-radius: 0.3rem;
+  }
+  @include media-medium {
+    width: 90%;
+  }
 }

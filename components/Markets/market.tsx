@@ -11,10 +11,10 @@ import MarketActions from "./marketAction";
 const TableRow: FC<SecurityInterface> = ({
   name,
   img,
-  previousBid,
-  currentBid,
+  previousPrice,
+  currentPrice,
 }): JSX.Element => {
-  const gain = (currentBid - previousBid) / previousBid;
+  const gain = (currentPrice - previousPrice) / previousPrice;
   const color = gain < 0 ? "#ff3535" : gain === 0 ? "#888" : "#029d02";
   const { isVisible, toggleModal } = useModal();
   const isMedium = useMediaQuery({ query: "(min-width: 769px)" });
@@ -27,14 +27,14 @@ const TableRow: FC<SecurityInterface> = ({
   const modalProps = {
     name: name,
     img: img,
-    previousBid: previousBid,
-    currentBid: currentBid
+    previousPrice: previousPrice,
+    currentPrice: currentPrice
   }
 
   return (
     <>
       <Modal showClose={true} isVisible={isVisible} toggleModal={toggleModal}>
-        <MarketActions values={modalProps} action={secAction}/>
+        <MarketActions values={modalProps} action={secAction} toggleModal={toggleModal}/>
       </Modal>
 
       <tr tabIndex={1} >
@@ -58,17 +58,17 @@ const TableRow: FC<SecurityInterface> = ({
 
         {isMedium ? (
           <>
-            <td>{previousBid}</td>
-            <td>{currentBid}</td>
+            <td>{previousPrice}</td>
+            <td>{currentPrice}</td>
             
           </>
         ) : null}
 
         <td>
           <div>
-            {!isMedium && <p>{currentBid}</p>}
+            {!isMedium && <p>{currentPrice}</p>}
             <div>
-            <p style={{ color: `${color}` }}>{currentBid - previousBid}</p>
+            <p style={{ color: `${color}` }}>{currentPrice - previousPrice}</p>
             <p style={{ color: `${color}` }}>{`(${
               gain < 0 ? "" : gain === 0 ? "" : "+"
             }${(gain * 100).toFixed(2)}%)`}</p>
@@ -123,8 +123,8 @@ const MarketComponent = (): JSX.Element => {
             <th colSpan={2}>STOCK</th>
             {isMedium ? (
               <>
-                <th>PREVIOUS BID</th>
-                <th>CURRENT BID</th>
+                <th>PREVIOUS PRICE</th>
+                <th>CURRENT PRICE</th>
               </>
             ) : null}
             <th>CHANGE</th>
@@ -139,8 +139,8 @@ const MarketComponent = (): JSX.Element => {
                   key={index}
                   name={data.name}
                   img={data.img}
-                  previousBid={data.previousBid}
-                  currentBid={data.currentBid}
+                  previousPrice={data.previousPrice}
+                  currentPrice={data.currentPrice}
                 />
               );
             })}
