@@ -1,8 +1,10 @@
 import React from 'react';
 import Image from 'next/image';
 import styles from "@styles/portfolio.module.scss"
-
-const Profile = ():JSX.Element => {
+interface Props {
+	toggleModal: () => void;
+}
+const Profile = (props: Props):JSX.Element => {
   return(
     <div className={styles.profileContainer}>
 				<div className={styles.avatarContainer}>
@@ -11,7 +13,7 @@ const Profile = ():JSX.Element => {
 				</div>
 				<div className={styles.personalInfoContainer}>
 					<h1>Welcome, <a>Bill Gates</a></h1>
-					<p>You are currently #21 on the leaderboard!</p>
+					<p>You are currently <span onClick={props.toggleModal}>#21 on the leaderboard</span>!</p>
 				</div>
 			</div>
   )

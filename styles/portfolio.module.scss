@@ -47,6 +47,13 @@
   p {
     font-size: larger;
   }
+  span {
+    text-decoration: underline;
+    cursor: pointer;
+  }
+  span:hover {
+    color: $accent-color;
+  }
 
   @include media-medium {
     font-size: medium;
@@ -203,4 +210,41 @@
 }
 .unselButton {
   @include btn.logInButton;
+}
+
+.leaderBoardContainer {
+  @include homeContainer;
+  width: 90vw;
+  @include media-medium {
+    width: 60vw;
+  }
+}
+
+.leaderHeader {
+  display: flex;
+  gap: 1rem;
+  svg {
+    color: $accent-color;
+    margin-top: 0.6rem;
+  }
+}
+
+.leaderTable {
+  // background: red;
+  width: 100%;
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  tr {
+    width: 100%;
+  }
+  th,
+  td {
+    text-align: center;
+    padding: 1rem;
+  }
+}
+.yourPosition {
+  border-top: 1px solid $accent-color;
 }

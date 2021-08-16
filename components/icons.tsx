@@ -240,7 +240,7 @@ export const InfoIcon = ():JSX.Element => {
   )
 }
   
-export const SponsorsIcon = ():JSX.Element => {
+export const LeaderboardIcon = ():JSX.Element => {
   return (
     <svg
       width="24"
@@ -269,6 +269,26 @@ export const AllNewsIcon = (): JSX.Element => {
       viewBox="0 0 24 24"
     >
       <path d="M2 3v15c0 1.645 1.355 3 3 3h14c1.645 0 3-1.355 3-3V7h-2v11c0 .565-.435 1-1 1s-1-.435-1-1V3H2zm2 2h12v13c0 .388.279.658.416 1H5c-.565 0-1-.435-1-1V5zm2 2v3h8V7H6zm0 5v2h8v-2H6zm0 4v2h8v-2H6z"></path>
+    </svg>
+  );
+}
+export const SponsorsIcon = (): JSX.Element => {
+  return (
+    <svg
+      width="24"
+      height="24"
+      fill="none"
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="1.5"
+      color="var(--geist-foreground)"
+      shapeRendering="geometricPrecision"
+      viewBox="0 0 24 24"
+    >
+      <circle cx="12" cy="12" r="10"></circle>
+      <circle cx="12" cy="12" r="4"></circle>
+      <path d="M4.93 4.93l4.24 4.24M14.83 14.83l4.24 4.24M14.83 9.17l4.24-4.24M14.83 9.17l3.53-3.53M4.93 19.07l4.24-4.24"></path>
     </svg>
   );
 }
