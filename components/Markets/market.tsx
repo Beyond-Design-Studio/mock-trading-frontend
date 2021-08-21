@@ -77,8 +77,12 @@ const TableRow: FC<SecurityInterface> = ({
             </div>
           </div>
         </td>
-        <td onClick={() => modalHandler('buy')}><button className={styles.selButton}>BUY</button></td>
-        <td onClick={() => modalHandler('sell')}><button className={styles.unselButton}>SELL</button></td>
+
+        <td>
+          <div onClick={() => modalHandler('buy')}><button className={styles.selButton}>BUY</button></div>
+          <div onClick={() => modalHandler('sell')}><button className={styles.unselButton}>SELL</button></div>
+        </td>
+      
       </tr>
     </>
   );

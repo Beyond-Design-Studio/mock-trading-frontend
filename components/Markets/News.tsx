@@ -40,7 +40,9 @@ const News = ():JSX.Element => {
 						
 					</div>
 				</div>
-				<hr/>
+
+				<div style={{width: "100%", height: "2px", backgroundColor: "var(--accent-color)"}}></div>
+
 				<div className={styles.newsBody}>
 				<ul>
 					{currentArticle.Article1 ? <li>{currentArticle.Article1}</li> : null}
@@ -52,7 +54,7 @@ const News = ():JSX.Element => {
 				</div>
 				<div className={styles.linkContainer}>
 					<Link href={"/all-news"}>
-					<h5>View all news updates</h5>
+						<a>View all news updates</a>
 					</Link>
 				</div>
 			</>

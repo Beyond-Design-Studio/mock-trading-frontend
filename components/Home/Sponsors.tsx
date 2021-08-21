@@ -11,7 +11,9 @@ const Sponsors = ():JSX.Element => {
         </span>
         <h1>Our Sponsors</h1>
       </div>
-      <hr/>
+
+      <div style={{width: "100%", height: "2px", backgroundColor: "var(--accent-color)"}}></div>
+
     </div>
   )
 }

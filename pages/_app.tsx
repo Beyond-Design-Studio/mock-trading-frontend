@@ -11,4 +11,4 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
     </div>
   )
 }
-export default MyApp
+export default MyApp;

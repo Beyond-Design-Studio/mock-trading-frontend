@@ -1,14 +1,18 @@
 @use "abstracts/index" as *;
+
+
 .pageContainer {
   display: flex;
   flex-direction: column;
   padding: 2rem;
   gap: 0;
+  margin-bottom: 2rem;
+  
   @include media-medium {
     width: 92vw;
     margin-left: 5vw;
     // justify-content: space-around;
-    gap: 4rem;
+    gap: 3rem;
   }
 }
 
@@ -117,37 +121,47 @@
 .aboutUsContainer {
   @include homeContainer;
 }
+
 .containerHeader {
   display: flex;
   align-items: center;
   gap: 1rem;
+  padding-bottom: 0.2rem;
+
   span {
     color: $accent-color;
     padding-top: 0.2rem;
   }
 }
+
 .aboutBody {
   display: flex;
   flex-direction: column;
   margin-top: 1rem;
+
   @include media-medium {
     flex-direction: row;
     // justify-content: space-around;
     gap: 2rem;
   }
 }
+
 .aboutSection {
   margin-bottom: 1rem;
-  min-height: 20rem;
+  min-height: 15rem;
+
   h2 {
-    font-weight: 300;
+    font-weight: 500;
   }
+  
   p {
     font-weight: 300;
   }
+  
   div {
     margin-top: 1rem;
   }
+  
   @include media-medium {
     width: 48%;
     margin-bottom: 0;
@@ -155,7 +169,7 @@
 }
 
 .aboutLine {
-  border-left: 1px solid darken($accent-color, 2%);
+  border-left: 2px solid darken($accent-color, 2%);
   min-height: 100%;
 }
 

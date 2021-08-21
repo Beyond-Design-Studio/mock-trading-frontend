@@ -15,7 +15,8 @@
   align-items: center;
   padding: 1rem;
   height: auto;
-  // background: red;\
+  border-radius: 0.5rem;
+  // background: red;
 }
 
 .avatarContainer {
@@ -85,9 +86,11 @@
   font-size: small;
   width: 100%;
   height: fit-content;
+  border-radius: 0.5rem;
+
   h1 {
     margin: 0;
-    color: $accent-color;
+    color: $sec-color;
     font-weight: 400;
   }
 
@@ -101,10 +104,11 @@
 
 .fundDetails {
   color: $sec-color;
+  
   div {
     display: flex;
     justify-content: space-between;
-    margin-top: 2rem;
+    margin-top: 1rem;
   }
 
   h3 {
@@ -138,20 +142,23 @@
   @include homeContainer;
   font-size: small;
   overflow-x: scroll;
-  max-width: 100vw;
+  max-width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   max-height: 100vh;
+  border-radius: 0.5rem;
+
   h1 {
     margin: 0;
-    color: $accent-color;
+    color: $sec-color;
     align-self: flex-start;
   }
   h3 {
     text-decoration: underline;
     font-weight: 400;
   }
+
   @include media-medium {
     width: 100%;
     font-size: medium;
@@ -169,6 +176,16 @@
   display: flex;
   flex-direction: column;
   overflow-x: scroll;
+
+  &::-webkit-scrollbar {
+    height: 3px;
+    width: 3px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    height: 3px;
+  }
+
 
   th {
     padding: 1rem;

@@ -1,8 +1,5 @@
 import React, { useState } from "react";
-import { useRouter } from "next/router";
 import styles from "@styles/auth.module.scss";
-import * as qs from 'qs';
-import axios, { AxiosRequestConfig } from 'axios'
 import { loginRequest } from "api/Api";
 
 interface Props {
@@ -13,8 +10,6 @@ function LogIn(props: Props): JSX.Element {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
-
-  const router = useRouter();
 
   const loginHandler = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
     e.preventDefault();

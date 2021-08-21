@@ -25,7 +25,7 @@
   position: relative;
   height: 40vh;
   h1 {
-    color: $accent-color;
+    color: $sec-color;
   }
   h5 {
     margin: 0;
@@ -103,14 +103,18 @@
   margin-top: 1rem;
   align-self: flex-end;
   bottom: 3%;
-  h5 {
+
+  a {
     text-decoration: underline;
     cursor: pointer;
     font-weight: 200;
+    font-size: 1rem;
   }
-  h5:hover {
+  
+  a:hover {
     color: $accent-color;
   }
+  
   @include media-medium {
     font-size: large;
   }
@@ -162,7 +166,7 @@
     width: 25%;
   }
 
-  td:nth-last-child(1) {
+  td:nth-last-child(2) {
     text-align: right;
 
     & > div > div {
@@ -185,7 +189,7 @@
   @include homeContainer;
 
   h1 {
-    color: $accent-color;
+    color: $sec-color;
     margin: 0;
   }
   @include media-medium {

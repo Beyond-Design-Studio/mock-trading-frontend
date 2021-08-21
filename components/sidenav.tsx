@@ -9,11 +9,11 @@ const Sidenav = (): JSX.Element => {
 
 	const router = useRouter();
 
-	// useEffect(() => {
-	// 	if (router && router.query) {
-	// 		console.log("hello", router.pathname);
-	// 	}
-	// }, [router]);
+	useEffect(() => {
+		if (router && router.query) {
+			console.log("hello", router.pathname);
+		}
+	}, [router]);
 
 	function LogOutHandler() {
 		localStorage.removeItem('token')

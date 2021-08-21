@@ -9,7 +9,9 @@ const Leaderboard = ():JSX.Element => {
         <LeaderboardIcon />
         <h1>Leaderboard</h1>
       </div>
-      <hr/>
+
+      <div style={{width: "100%", height: "2px", backgroundColor: "var(--accent-color)"}}></div>
+
       <div className={styles.leaderTable}>
         <table>
         <tr>

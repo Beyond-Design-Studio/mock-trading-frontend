@@ -17,8 +17,8 @@ interface Props {
 
 const MarketActions = (props:Props): JSX.Element => {
   const isMedium = useMediaQuery({ query: "(min-width: 769px)" });
-  const ownedStock: number = 100;
-  const availableFunds:number = 100000000;
+  const ownedStock = 100;
+  const availableFunds = 100000000;
   const allocationLimit:number = props.values.type === "stocks" ? 400000 : 300000; 
   const quantityLimit: number = Math.floor(allocationLimit/props.values.currentPrice);
   console.log(allocationLimit, quantityLimit);
@@ -41,17 +41,15 @@ const MarketActions = (props:Props): JSX.Element => {
     }
   }
 
-
-  function calculateTotal() : void {
-    setTotal(desiredQty * props.values.currentPrice)
-  }
   useEffect(() => {
-    calculateTotal();
-  }, [desiredQty])
+    setTotal(desiredQty * props.values.currentPrice)
+
+  }, [desiredQty, props.values.currentPrice])
 
 
   function maxOutBuy() {
-    let maxValue:number = (Math.round(availableFunds/props.values.currentPrice));
+    const maxValue:number = (Math.round(availableFunds/props.values.currentPrice));
+    
     if (maxValue > quantityLimit) {
       setDesiredQty(quantityLimit);
     }
@@ -59,6 +57,7 @@ const MarketActions = (props:Props): JSX.Element => {
       setDesiredQty(maxValue);
     }
   }
+  
   return(
     <div className={styles.actionModal}>
       <h2><span>{props.action.toLocaleUpperCase()}</span> {props.values.name}</h2>
