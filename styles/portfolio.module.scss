@@ -1,7 +1,15 @@
 @use "abstracts/index" as *;
 @use "abstracts/buttons" as btn;
+
 .portfolioPage {
   @include pageContainer;
+  width: 100%;
+
+  @include media-medium {
+    width: 80%;
+    margin-left: 10%;
+  }
+
 }
 
 .profileContainer {

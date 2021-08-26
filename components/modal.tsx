@@ -16,6 +16,7 @@ const Modal: FC<propTypes> = ({
   showClose,
 	backgroundColor,
 }) => {
+
   return isVisible
     ? createPortal(
         <div

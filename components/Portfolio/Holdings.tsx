@@ -1,151 +1,72 @@
-import React, { useState, useEffect } from 'react'
-import styles from "@styles/portfolio.module.scss"
-import { holdingInterface, holdingsData } from '@data/portfolio'
+import React, { useState, useEffect } from "react";
+import styles from "@styles/portfolio.module.scss";
+// import { holdingInterface, holdingsData } from "@data/portfolio";
 import indianNumberConverter from "@components/functions/numberConvertor";
-
+import { useGetUrl } from "@components/functions/useGetUrl";
+import TabbedButtons from "@components/tabbedBottons";
+import { useAuth } from "@components/contexts/authContext";
 
 const Holdings = (): JSX.Element => {
-  
-  const [holdings, setHoldings] = useState<holdingInterface[] | null>(null)
-  const [holdingsView, setHoldingsView] = useState<string>("stocks")
+  const [holdings, setHoldings] = useState<any[] | null>(null);
+  const [holdingsView, setHoldingsView] = useState<string>("stock");
+
+  const {user} = useAuth();
+
+  const {data} = useGetUrl(user.jwt, `/holdings?portfolio=${user.portfolio}`);
+  console.log(data);
+
   useEffect(() => {
-    setHoldings(holdingsData);
-  }, [])
-  
+    setHoldings(data);
+  }, [data]);
+
+  const clickHandler = (str: string): void => {
+    setHoldingsView(str);
+  };
+
   return (
     <div className={styles.holdingsContainer}>
       <h1>Your Holdings</h1>
       <div className={styles.holdingsMenu}>
-        <a onClick={()=>setHoldingsView('stocks')}><button className={holdingsView === "stocks" ? styles.selButton : styles.unselButton}>
-          Stocks
-        </button></a>
-        <a onClick={()=>setHoldingsView('crypto')}><button className={holdingsView === "crypto" ? styles.selButton : styles.unselButton}>
-          Crypto
-        </button></a>
-        <a onClick={()=>setHoldingsView('commodities')}><button className={holdingsView === "commodities" ? styles.selButton : styles.unselButton}>
-          Commodities
-        </button></a>
+        <TabbedButtons market={holdingsView} setMarket={clickHandler} />
       </div>
-      {holdingsView === "stocks" && (
-        <div className={styles.holdingsTable}>
+
+      <div className={styles.holdingsTable}>
         <table>
-          <tr>
-            <th>Stock</th>
-            <th>Price at purchase</th>
-            <th>Current Price</th>
-            <th>Quantity</th>
-            <th>Invested</th>
-            <th>Current</th>
-            <th>P&L</th>
-          </tr>
-          {holdings?.map((item, ind)=> {
-            let pnlClass = styles.pnlProfit;
-            if (item.pnl < 0) {
-              pnlClass = styles.pnlLoss;
-            }
-            return (
-              <tr key={ind}>
-                <td>{item.stock}</td>
-                <td>{`${indianNumberConverter(item.purchasePrice)}`}</td>
-                <td>{`${indianNumberConverter(item.currentPrice)}`}</td>
-                <td>{`${indianNumberConverter(item.quantity)}`}</td>
-                <td>{`${indianNumberConverter(item.invested)}`}</td>
-                <td>{`${indianNumberConverter(item.current)}`}</td>
-                <td className={pnlClass}>{`${indianNumberConverter(item.pnl)}`}</td>
-              </tr>
-            )
-          })}
-          {holdings?.map((item, ind)=> {
-            let pnlClass = styles.pnlProfit;
-            if (item.pnl < 0) {
-              pnlClass = styles.pnlLoss;
-            }
-            return (
-              <tr key={ind}>
-                <td>{item.stock}</td>
-                <td>{`${indianNumberConverter(item.purchasePrice)}`}</td>
-                <td>{`${indianNumberConverter(item.currentPrice)}`}</td>
-                <td>{`${indianNumberConverter(item.quantity)}`}</td>
-                <td>{`${indianNumberConverter(item.invested)}`}</td>
-                <td>{`${indianNumberConverter(item.current)}`}</td>
-                <td className={pnlClass}>{`${indianNumberConverter(item.pnl)}`}</td>
-              </tr>
-            )
-          })}
-          
-        </table>
-      </div>
-      )}
-      {holdingsView === "crypto" && (
+          <thead>
+            <tr>
+              {holdingsView === "stock" && <th>Stocks</th>}
+              {holdingsView === "crypto" && <th>Crypto</th>}
+              {holdingsView === "commodity" && <th>Commodity</th>}
+              <th>Price at purchase</th>
+              <th>Current Price</th>
+              <th>Quantity</th>
+              <th>Invested</th>
+              <th>Current</th>
+              <th>P&L</th>
+            </tr>
+          </thead>
 
-      <div className={styles.holdingsTable}>
-        
-         <table>
-          <tr>
-            <th>Crypto</th>
-            <th>Price at purchase</th>
-            <th>Current Price</th>
-            <th>Quantity</th>
-            <th>Invested</th>
-            <th>Current</th>
-            <th>P&L</th>
-          </tr>
-          {holdings?.map((item, ind)=> {
-            let pnlClass = styles.pnlProfit;
-            if (item.pnl < 0) {
-              pnlClass = styles.pnlLoss;
-            }
-            return (
-              <tr key={ind}>
-                <td>{item.stock}</td>
-                <td>{`${indianNumberConverter(item.purchasePrice)}`}</td>
-                <td>{`${indianNumberConverter(item.currentPrice)}`}</td>
-                <td>{`${indianNumberConverter(item.quantity)}`}</td>
-                <td>{`${indianNumberConverter(item.invested)}`}</td>
-                <td>{`${indianNumberConverter(item.current)}`}</td>
-                <td className={pnlClass}>{`${indianNumberConverter(item.pnl)}`}</td>
-              </tr>
-            )
-          })}
+          <tbody>
+            {holdings?.filter(item => item.security.type === holdingsView).map((hold, ind) => {
+              return (
+                <tr key={ind}>
+                  <td>{`${hold.StockTicker}`}</td>
+                  <td>{`${indianNumberConverter(hold.PurchasePrice)}`}</td>
+                  <td>{`${indianNumberConverter(hold.security.currentPrice)}`}</td>
+                  <td>{`${indianNumberConverter(hold.OwnedQuantity)}`}</td>
+                  <td>{`${indianNumberConverter(hold.PurchasePrice * hold.OwnedQuantity)}`}</td>
+                  <td>{`${indianNumberConverter(hold.OwnedQuantity * hold.security.currentPrice)}`}</td>
+                  <td className={
+                      (hold.security.currentPrice - hold.PurchasePrice) >= 0 ? styles.pnlProfit : styles.pnlLoss
+                    }>{`${indianNumberConverter((hold.security.currentPrice - hold.PurchasePrice) * hold.OwnedQuantity)}`}</td>
+                </tr>
+              );
+            })}
+          </tbody>
         </table>
       </div>
-      )}
-      {holdingsView === "commodities" && (
-
-      <div className={styles.holdingsTable}>
-       
-         <table>
-          <tr>
-            <th>Commodity</th>
-            <th>Price at purchase</th>
-            <th>Current Price</th>
-            <th>Quantity</th>
-            <th>Invested</th>
-            <th>Current</th>
-            <th>P&L</th>
-          </tr>
-          {holdings?.map((item, ind)=> {
-            let pnlClass = styles.pnlProfit;
-            if (item.pnl < 0) {
-              pnlClass = styles.pnlLoss;
-            }
-            return (
-              <tr key={ind}>
-                <td>{item.stock}</td>
-                <td>{`${indianNumberConverter(item.purchasePrice)}`}</td>
-                <td>{`${indianNumberConverter(item.currentPrice)}`}</td>
-                <td>{`${indianNumberConverter(item.quantity)}`}</td>
-                <td>{`${indianNumberConverter(item.invested)}`}</td>
-                <td>{`${indianNumberConverter(item.current)}`}</td>
-                <td className={pnlClass}>{`${indianNumberConverter(item.pnl)}`}</td>
-              </tr>
-            )
-          })}
-        </table>
-      </div>
-      )}
     </div>
-  )
-}
+  );
+};
 
-export default Holdings
+export default Holdings;
