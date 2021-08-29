@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Head from "next/head";
 import styles from "@styles/portfolio.module.scss";
 import Sidenav from "@components/sidenav";
@@ -8,18 +8,15 @@ import Holdings from "@components/Portfolio/Holdings";
 import Modal from "@components/modal";
 import useModal from "@components/functions/useModal";
 import Leaderboard from "@components/Portfolio/LeaderBoard";
-import { useAuth } from "@components/contexts/authContext";
-import router from "next/router";
+import useGetPortfolio from "hooks/useGetPortfolio";
+import useUser from "hooks/useUser";
 
 const Portfolio = (): JSX.Element => {
 
-	const { user } = useAuth();
+	const { user } = useUser();
 	const { isVisible, toggleModal } = useModal();
 
-  useEffect(() => {
-    if (!user.jwt) router.push("/auth");
-  }, [user]);
-
+  const {data} = useGetPortfolio(user.jwt, user.portfolio);
 
   return (
     <div>
@@ -30,22 +27,24 @@ const Portfolio = (): JSX.Element => {
       <Sidenav />
 
       <div className={styles.portfolioPage}>
-          <>
-            <Modal
-              showClose={true}
-              isVisible={isVisible}
-              toggleModal={toggleModal}
-            >
-              <Leaderboard PortfolioID={portfolioState.id} InvestorName={portfolioState.InvestorName}  InvestorNetWorth={portfolioState.NetWorth}/>
-            </Modal>
+        <>
+          <Modal
+            showClose={true}
+            isVisible={isVisible}
+            toggleModal={toggleModal}
+          >
+            {data && 
+              <Leaderboard PortfolioID={data.id} InvestorName={data.InvestorName}  InvestorNetWorth={data.NetWorth}/>
+            }
+          </Modal>
 
-            <Profile toggleModal={toggleModal} />
+          <Profile toggleModal={toggleModal} />
 
-            <div className={styles.statsContainer}>
-              <Funds />
-              <Holdings />
-            </div>
-          </>
+          <div className={styles.statsContainer}>
+            <Funds />
+            <Holdings />
+          </div>
+        </>
       </div>
     </div>
   );

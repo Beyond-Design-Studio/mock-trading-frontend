@@ -5,9 +5,6 @@ import axios from "axios";
 import router from "next/router";
 import { useAuth } from "@components/contexts/authContext";
 
-axios.defaults.baseURL = 'https://bodhi-stock-cms.herokuapp.com';
-axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
-
 interface Props {
   setScreen: (value: string | ((prevVar: string) => string)) => void;
 }

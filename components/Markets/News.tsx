@@ -4,25 +4,22 @@ import { NewsIcon } from "@components/icons";
 import { NewsUpdateInterface } from "@data/news";
 import Loading from "@components/loading";
 import Link from "next/link";
-import { useAuth } from "@components/contexts/authContext";
-import router from "next/router";
 import useGetNews from "hooks/useGetNews";
+import { useAuth } from "@components/contexts/authContext";
 
 const News = (): JSX.Element => {
   //newsLimit is the number of news updates that has been done so far (different from final limit)
   const newsLimit = 4;
+  
   const { user } = useAuth();
-
-  const {data, error} = useGetNews(user.jwt);
-
-  console.log("25", data, error);
+  const { data, error} = useGetNews(user.jwt);
+  console.log(user);
+  console.log(error);
 
   const [currentArticle, setCurrentArticle] =
     useState<NewsUpdateInterface | null>(null);
 
   useEffect(() => {
-    if (!user.jwt) router.push("/auth");
-		
     if (data) setCurrentArticle(data[data.length - 1]);
   }, [user, data]);
 

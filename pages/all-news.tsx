@@ -1,37 +1,20 @@
-import React, { useEffect } from "react";
-import router from "next/router";
+import React from "react";
 import Head from "next/head";
 import Sidenav from "@components/sidenav";
 import styles from "@styles/allNews.module.scss"
-import { useAuth } from "@components/contexts/authContext";
 import { NewsIcon } from "@components/icons";
 import Loading from "@components/loading";
 import useGetNews from "hooks/useGetNews";
+import useUser from "hooks/useUser";
+import { UserInterface } from "@components/contexts/authContext";
 
-const AllNews = (): JSX.Element => {
+const Wrapped = ({user}: {user: UserInterface}): JSX.Element => {
 
-  const { user } = useAuth();
+  const { data } = useGetNews(user.jwt);
 
-  const {data, error} = useGetNews(user.jwt);
-  console.log("25", data, error);
-
-  useEffect(() => {
-    if (!user.jwt) router.push("/auth");
-
-  }, [user]);
-
-  return(
+  return (
     <>
-    <Head>
-      <title>Mock Stock Market</title>
-    </Head>
-
-    <Sidenav />
-    
-    <div className={styles.allNewsPage}>
-      <h1>All News Updates</h1>
-      
-      {
+    {
         data ? 
         [...data].reverse().map((item, ind) => (
           <div className={styles.newsContainer} key={item.id}>
@@ -69,6 +52,28 @@ const AllNews = (): JSX.Element => {
         )) : 
         <Loading />
       }
+    </>
+  )
+
+}
+
+
+const AllNews = (): JSX.Element => {
+
+  const { user } = useUser();
+
+  return(
+    <>
+    <Head>
+      <title>Mock Stock Market</title>
+    </Head>
+
+    <Sidenav />
+    
+    <div className={styles.allNewsPage}>
+      <h1>All News Updates</h1>
+      
+      {user.jwt && <Wrapped user={user} />}
     </div>
     </>
   )

@@ -2,8 +2,9 @@ import React, {useEffect, useState} from 'react';
 import styles from "@styles/portfolio.module.scss"
 import { LeaderboardIcon } from '@components/icons';
 import { useAuth } from '@components/contexts/authContext';
-import { useGetUrl } from "@components/functions/useGetUrl"
 import indianNumberConverter from "../functions/numberConvertor"
+import useGetLeader from 'hooks/useGetLeader';
+
 interface Props {
   InvestorName: string;
   InvestorNetWorth: number;
@@ -13,8 +14,10 @@ interface Props {
 const Leaderboard = (props: Props):JSX.Element => {
   const [top3, setTop3] = useState<any[] | null>(null)
   const [userRank, setUserRank] = useState<number | null>(null)
+
   const {user} = useAuth();
-  const { data } = useGetUrl(user.jwt, `/leaderboard/${props.PortfolioID}`);
+  const { data } = useGetLeader(user.jwt, user.portfolio);
+  
   console.log(data);
   console.log(user);
   
@@ -45,7 +48,7 @@ const Leaderboard = (props: Props):JSX.Element => {
             top3name=styles.yourPosition
           }
           return(
-            <tr className={top3name}>
+            <tr className={top3name} key={ind}>
               <td>{ind+1}</td>
               <td><span>{item.InvestorName}</span></td>
               <td>{indianNumberConverter(item.NetWorth)}</td>

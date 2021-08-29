@@ -1,6 +1,6 @@
 import { authContextType, useAuth } from "@components/contexts/authContext";
-import withAuth from "@components/functions/withAuth";
 import axios from "axios";
+import router from "next/router";
 import { useEffect } from "react";
 
 export default function useUser(): authContextType {
@@ -8,9 +8,18 @@ export default function useUser(): authContextType {
 	const {user, setUser} = useAuth();
 
 	useEffect(() => {
-		const token = withAuth();
 
 		if (!user.jwt) {
+			const token = localStorage.getItem("token");
+
+			if (!token) {
+				console.log("No token found");
+				router.push("/auth")
+				return;
+			}
+
+			console.log("fetching user data");
+			
 			axios({
 				method: "GET",
 				url: "/users/me",
@@ -19,12 +28,19 @@ export default function useUser(): authContextType {
 				}
 			})
 				.then(res => {
+					console.log("data fetched");
 					setUser({
-            jwt: res.data.jwt,
-            id: res.data.user.id,
-            username: res.data.user.username,
-            portfolio: res.data.user.portfolio
+            jwt: token,
+            id: res.data.id,
+            username: res.data.username,
+            portfolio: res.data.portfolio
           });
+
+					return {user, setUser};
+				})
+				.catch(err => {
+					console.log(err);
+					router.push("/auth");
 				})
 		}
 
