@@ -2,7 +2,7 @@ import qs from 'qs';
 import axios, { AxiosRequestConfig } from 'axios'
 import router from 'next/router';
 
-axios.defaults.baseURL = 'http://localhost:1337';
+axios.defaults.baseURL = 'https://bodhi-stock-cms.herokuapp.com';
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
 export function loginRequest(identifier:string, password:string): string | void {

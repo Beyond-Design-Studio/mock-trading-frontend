@@ -36,7 +36,7 @@ const Portfolio = (): JSX.Element => {
               isVisible={isVisible}
               toggleModal={toggleModal}
             >
-              <Leaderboard />
+              <Leaderboard PortfolioID={portfolioState.id} InvestorName={portfolioState.InvestorName}  InvestorNetWorth={portfolioState.NetWorth}/>
             </Modal>
 
             <Profile toggleModal={toggleModal} />
