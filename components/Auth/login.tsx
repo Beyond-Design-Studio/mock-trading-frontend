@@ -55,6 +55,7 @@ function LogIn(props: Props): JSX.Element {
           });
           if (!res.data.user.portfolio) createPortfolio(res.data.jwt, res.data.user.username, res.data.user.id);
 
+          localStorage.setItem("token", res.data.jwt);
           router.push("/home");
         })
         .catch((err) => {

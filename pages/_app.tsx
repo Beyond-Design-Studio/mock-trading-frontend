@@ -1,20 +1,21 @@
 import "../styles/globals.scss";
 import type { AppProps } from "next/app";
 import React from "react";
-import { SWRConfigProvider } from "@components/functions/swrConfig";
 import { AuthProvider } from "@components/contexts/authContext";
+import { QueryClientProvider, QueryClient } from "react-query";
 
-// import Nav from '@components/nav';
+
+const queryClient = new QueryClient();
 
 function MyApp({ Component, pageProps }: AppProps): JSX.Element {
 
   return (
     <div>
-      <SWRConfigProvider>
-        <AuthProvider>
+      <AuthProvider>
+        <QueryClientProvider client={queryClient}>
           <Component {...pageProps} />
-        </AuthProvider>
-      </SWRConfigProvider>
+        </QueryClientProvider>
+      </AuthProvider>
     </div>
 );
 }

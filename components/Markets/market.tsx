@@ -1,16 +1,18 @@
-import React, { FC, useEffect, useState } from "react";
-import Image from "next/image";
-import { useMediaQuery } from "react-responsive";
+import React, { FC, useState } from "react";
+
 import Modal from "@components/modal";
-import useModal from "@components/functions/useModal";
-import { LoaderIcon } from "@components/icons";
-import { SecurityInterface } from "@data/stonks";
+import Image from "next/image";
 import styles from "@styles/market.module.scss";
-import MarketActions from "./marketAction";
-import { useGetUrl } from "@components/functions/useGetUrl";
-import { useAuth } from "@components/contexts/authContext";
 import Loading from "@components/loading";
+import useModal from "@components/functions/useModal";
+import useGetStocks from "hooks/useGetStocks";
+import MarketActions from "./marketAction";
 import TabbedButtons from "@components/tabbedBottons";
+
+import { useAuth } from "@components/contexts/authContext";
+import { LoaderIcon } from "@components/icons";
+import { useMediaQuery } from "react-responsive";
+import { SecurityInterface } from "@data/stonks";
 
 const TableRow: FC<SecurityInterface> = ({
   name,
@@ -105,21 +107,15 @@ const TableRow: FC<SecurityInterface> = ({
 };
 
 const MarketComponent = (): JSX.Element => {
-  const [securities, setSecurities] = useState<SecurityInterface[]>([]);
   const [marketView, setMarketView] = useState<string>("stock");
   const isMedium = useMediaQuery({ query: "(min-width: 769px)" });
 
   const { user } = useAuth();
-  const { data } = useGetUrl(user.jwt, "/stocks");
+  const { data } = useGetStocks(user.jwt);
 
   const clickHandler = (str: string): void => {
     setMarketView(str);
   };
-
-  useEffect(() => {
-    setSecurities(data);
-    console.log(securities);
-  }, [data, securities]);
 
   return (
     <section className={styles.marketCont}>
@@ -141,11 +137,11 @@ const MarketComponent = (): JSX.Element => {
           </tr>
         </thead>
 
-        {securities ? (
+        {data ? (
           <tbody>
-            {securities
-              .filter((item) => item.type === marketView)
-              .map((stock, index) => {
+            {data
+              .filter((item: any) => item.type === marketView)
+              .map((stock: any, index: number) => {
                 return (
                   <TableRow
                     id={stock.id}

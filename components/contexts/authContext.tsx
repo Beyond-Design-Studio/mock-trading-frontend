@@ -8,7 +8,7 @@ export interface UserInterface {
 	portfolio: number
 }
 
-interface authContextType {
+export interface authContextType {
 	user: UserInterface,
 	setUser: (token: UserInterface) => void
 }

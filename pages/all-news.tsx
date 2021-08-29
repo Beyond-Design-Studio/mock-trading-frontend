@@ -1,27 +1,24 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import router from "next/router";
 import Head from "next/head";
 import Sidenav from "@components/sidenav";
 import styles from "@styles/allNews.module.scss"
-import { NewsUpdateInterface } from "@data/news";
 import { useAuth } from "@components/contexts/authContext";
 import { NewsIcon } from "@components/icons";
-import { useGetUrl } from "@components/functions/useGetUrl";
 import Loading from "@components/loading";
+import useGetNews from "hooks/useGetNews";
 
 const AllNews = (): JSX.Element => {
 
   const { user } = useAuth();
 
-  const {data, error} = useGetUrl(user.jwt, "/news-updates")
+  const {data, error} = useGetNews(user.jwt);
   console.log("25", data, error);
-  const [newsUpdates, setNewsUpdates] = useState<NewsUpdateInterface[]>([])
 
   useEffect(() => {
     if (!user.jwt) router.push("/auth");
-  
-    setNewsUpdates(data);
-  }, [user, data]);
+
+  }, [user]);
 
   return(
     <>
@@ -35,8 +32,8 @@ const AllNews = (): JSX.Element => {
       <h1>All News Updates</h1>
       
       {
-        newsUpdates ? 
-        [...newsUpdates].reverse().map((item, ind) => (
+        data ? 
+        [...data].reverse().map((item, ind) => (
           <div className={styles.newsContainer} key={item.id}>
             <div className={styles.headerContainer}>
               <div className={styles.headerLeft}>

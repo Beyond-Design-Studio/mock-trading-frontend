@@ -22,6 +22,7 @@ export function loginRequest(identifier:string, password:string): string | void 
   axios(config)
     .then((response) => {
       jwt = response.data.jwt;
+      localStorage.setItem("token", jwt);
       router.push("/home")
       return jwt;
     })

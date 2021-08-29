@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from "react";
 import styles from "@styles/market.module.scss";
 import { NewsIcon } from "@components/icons";
-import { NewsData, NewsUpdateInterface } from "@data/news";
+import { NewsUpdateInterface } from "@data/news";
 import Loading from "@components/loading";
 import Link from "next/link";
 import { useAuth } from "@components/contexts/authContext";
-import { useGetUrl } from "@components/functions/useGetUrl";
 import router from "next/router";
+import useGetNews from "hooks/useGetNews";
 
 const News = (): JSX.Element => {
   //newsLimit is the number of news updates that has been done so far (different from final limit)
   const newsLimit = 4;
   const { user } = useAuth();
 
-  const {data, error} = useGetUrl(user.jwt, "/news-updates")
+  const {data, error} = useGetNews(user.jwt);
 
   console.log("25", data, error);
 

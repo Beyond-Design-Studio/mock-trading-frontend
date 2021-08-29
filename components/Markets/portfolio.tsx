@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 import indianNumberConverter from "@components/functions/numberConvertor";
-import { PortfolioIcon } from "@components/icons";
 import styles from "@styles/market.module.scss";
-import { fundsData, fundsInterface } from "@data/portfolio";
+import useGetPortfolio from "hooks/useGetPortfolio";
+import { PortfolioIcon } from "@components/icons";
+import { useAuth } from "@components/contexts/authContext";
 
 const PortfolioSnapshot = (): JSX.Element => {
-  const [funds, setFunds] = useState<fundsInterface | null>(null);
 
-  useEffect(() => {
-    setFunds(fundsData);
-  }, []);
+  const {user} = useAuth();
+
+  const {data, error} = useGetPortfolio(user.jwt, user.portfolio)
 
   return (
     <div className={styles.portfolioComponent}>
@@ -23,23 +23,23 @@ const PortfolioSnapshot = (): JSX.Element => {
 
       <div style={{width: "100%", height: "2px", backgroundColor: "var(--accent-color)"}}></div>
       
-      {funds && (
+      {data && (
         <div className={styles.fundsCont}>
           <div>
             <h3>Available Funds</h3>
-            <p>{`₹ ${indianNumberConverter(funds.availFunds)}`}</p>
+            <p>{`₹ ${indianNumberConverter(data.AvailableFunds)}`}</p>
           </div>
           <div>
             <h3>Allocated Funds</h3>
-            <p>{`₹ ${indianNumberConverter(funds.allocFunds)}`}</p>
+            <p>{`₹ ${indianNumberConverter(data.AllocatedFunds)}`}</p>
           </div>
           <div>
             <h3>Profit</h3>
-            <p>{`₹ ${indianNumberConverter(funds.profit)}`}</p>
+            <p>{`₹ ${indianNumberConverter(10)}`}</p>
           </div>
           <div>
             <h3>Total Value</h3>
-            <p>{`₹ ${indianNumberConverter(funds.equity)}`}</p>
+            <p>{`₹ ${indianNumberConverter(data.NetWorth)}`}</p>
           </div>
         </div>
       )}

@@ -1,23 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styles from "@styles/portfolio.module.scss";
-// import { holdingInterface, holdingsData } from "@data/portfolio";
 import indianNumberConverter from "@components/functions/numberConvertor";
-import { useGetUrl } from "@components/functions/useGetUrl";
 import TabbedButtons from "@components/tabbedBottons";
+import useGetHoldings from "hooks/useGetHoldings";
 import { useAuth } from "@components/contexts/authContext";
 
 const Holdings = (): JSX.Element => {
-  const [holdings, setHoldings] = useState<any[] | null>(null);
   const [holdingsView, setHoldingsView] = useState<string>("stock");
 
   const {user} = useAuth();
 
-  const {data} = useGetUrl(user.jwt, `/holdings?portfolio=${user.portfolio}`);
-  console.log(data);
-
-  useEffect(() => {
-    setHoldings(data);
-  }, [data]);
+  const {data, error} = useGetHoldings(user.jwt, user.portfolio);
+  console.log(data, error);
 
   const clickHandler = (str: string): void => {
     setHoldingsView(str);
@@ -47,7 +41,7 @@ const Holdings = (): JSX.Element => {
           </thead>
 
           <tbody>
-            {holdings?.filter(item => item.security.type === holdingsView).map((hold, ind) => {
+            {data?.filter((item: any) => item.security.type === holdingsView).map((hold: any, ind: number) => {
               return (
                 <tr key={ind}>
                   <td>{`${hold.StockTicker}`}</td>
