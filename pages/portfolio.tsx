@@ -1,28 +1,53 @@
-import React from 'react';
+import React from "react";
 import Head from "next/head";
-import styles from "@styles/portfolio.module.scss"
+import styles from "@styles/portfolio.module.scss";
 import Sidenav from "@components/sidenav";
-import Profile from '@components/Portfolio/Profile';
-import Funds from '@components/Portfolio/Funds';
-import Holdings from '@components/Portfolio/Holdings';
+import Profile from "@components/Portfolio/Profile";
+import Funds from "@components/Portfolio/Funds";
+import Holdings from "@components/Portfolio/Holdings";
+import Modal from "@components/modal";
+import useModal from "@components/functions/useModal";
+import Leaderboard from "@components/Portfolio/LeaderBoard";
+import useGetPortfolio from "hooks/useGetPortfolio";
+import useUser from "hooks/useUser";
 
-const Portfolio = ():JSX.Element => {
-	return (
-		<div>
-			<Head>
-				<title>Your Portfolio</title>
-			</Head>
+const Portfolio = (): JSX.Element => {
 
-			<Sidenav />
-			<div className={styles.pageContainer}>
-				<Profile />
-				<div className={styles.statsContainer}>
-					<Holdings />
-					<Funds/>
-				</div>
-			</div>
-		</div>
-	)
-}
+	const { user } = useUser();
+	const { isVisible, toggleModal } = useModal();
+
+  const {data} = useGetPortfolio(user.jwt, user.portfolio);
+
+  return (
+    <div>
+      <Head>
+        <title>Your Portfolio</title>
+      </Head>
+
+      <Sidenav />
+
+      <div className={styles.portfolioPage}>
+        <>
+          <Modal
+            showClose={true}
+            isVisible={isVisible}
+            toggleModal={toggleModal}
+          >
+            {data && 
+              <Leaderboard PortfolioID={data.id} InvestorName={data.InvestorName}  InvestorNetWorth={data.NetWorth}/>
+            }
+          </Modal>
+
+          <Profile toggleModal={toggleModal} />
+
+          <div className={styles.statsContainer}>
+            <Funds />
+            <Holdings />
+          </div>
+        </>
+      </div>
+    </div>
+  );
+};
 
 export default Portfolio;

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styles from "@styles/auth.module.scss";
 
+
 interface Props {
   setScreen: (value: string | ((prevVar: string) => string)) => void;
 }
@@ -23,7 +24,7 @@ function Register(props: Props): JSX.Element {
       setError("Please choose a longer password");
     } else {
       setError(null);
-      //Register request
+      
     }
   }
 

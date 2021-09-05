@@ -1,39 +1,34 @@
 import React from "react";
 import Head from "next/head";
-
 import Sidenav from "@components/sidenav";
 import styles from "@styles/market.module.scss";
-import { Notification, Portfolio, Market, Leader } from "@components/Markets/misc";
+import MarketComponent from "@components/Markets/market";
+import News from "@components/Markets/News";
+import PortfolioSnapshot from "@components/Markets/portfolio";
+import useUser from "hooks/useUser";
 
-const Markets = ():JSX.Element => {
-	return (
-		<div>
-			<Head>
-				<title>Mock Stock Market</title>
-			</Head>
+const Markets = (): JSX.Element => {
+  const { user } = useUser();
 
-			<Sidenav />
-			
-			<div className={`${styles.container}`}>
-				<div className={`${styles.notification} ${styles.section}`}>
-					<Notification />
-				</div>
+  return (
+    <div>
+      <Head>
+        <title>Mock Stock Market</title>
+      </Head>
 
-				<div className={`${styles.portfolio} ${styles.section}`}>
-					<Portfolio />
-				</div>
-				
-				<div className={`${styles.market} ${styles.section}`}>
-					<Market />
-				</div>
-				
-				<div className={`${styles.leader} ${styles.section}`}>
-					<Leader />
-				</div>
-			</div>
+      <Sidenav />
 
-		</div>
-	);
-}
+      {user.jwt && (
+        <div className={styles.marketPage}>
+          <div className={styles.newsPort}>
+            <News />
+            <PortfolioSnapshot />
+          </div>
+          <MarketComponent />
+        </div>
+      )}
+    </div>
+  );
+};
 
 export default Markets;

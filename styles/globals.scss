@@ -1,6 +1,13 @@
 @use "abstracts/index" as i;
 @import url(https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;800;900&display=swap);
 
+
+:root {
+  --bg-color: #222222;
+  --accent-color: #8bbf4a;
+  --sec-color: #ffffff;
+}
+
 html,
 body {
   padding: 0;
@@ -34,6 +41,16 @@ h1, h2, h3, h4, h5, h6 {
 li {
   list-style-type: none;
 }
+
+::-webkit-scrollbar {
+  width: 5px;
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #757575;
+}
+
 
 .font-montserrat {
   font-family: "Montserrat", sans-serif;

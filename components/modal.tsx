@@ -16,6 +16,7 @@ const Modal: FC<propTypes> = ({
   showClose,
 	backgroundColor,
 }) => {
+
   return isVisible
     ? createPortal(
         <div
@@ -40,7 +41,7 @@ const Modal: FC<propTypes> = ({
 							margin: "0.75rem",
 							cursor: "pointer",
 							position: "absolute",
-							right: "0",
+							right: "1rem",
 							top: "0",
 						}}>
               ❌

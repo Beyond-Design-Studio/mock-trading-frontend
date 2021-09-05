@@ -1,109 +1,42 @@
 @use "abstracts/index" as *;
+@use "abstracts/buttons" as btn;
 
-.container {
-	@include contain;
-	padding: 1rem;
-	height: 100%;
-	display: grid;
-	gap: 2rem;
-	padding-top: 3rem;
-	margin-bottom: 4rem;
-	grid-template-columns: 1fr;
-	grid-template-areas: none;
-	grid-template-rows: auto;
-
-	@include media-medium {
-		padding: 3rem;
-		margin-left: 5vw;
-		margin-bottom: 0;
-		width: 95vw;
-		grid-template-areas: 
-		"noti noti noti lead lead lead"
-		"noti noti noti lead lead lead"
-		"mark mark mark mark port port"
-		"mark mark mark mark port port"
-		"mark mark mark mark port port";
-		grid-template-rows: repeat(5, 1fr);
-		grid-template-columns: repeat(6, 1fr);
-		height: 100vh;
-	}
+.marketPage {
+  @include pageContainer;
 }
 
-.section {
-	@include flex-center;
-	border-radius: 0.5rem;
-	// border: 2px solid $accent-color;
-	background-color: darken($bg-color, 0.7%);
-	box-shadow: 1px 1px 2px 0px darken($bg-color, 5%);
-}
+.newsPort {
+  display: flex;
+  flex-direction: column;
+  padding-left: 0;
 
-
-// Notification
-.notification {
-	grid-area: auto;
-	scrollbar-width: thin;
-	overflow-y: scroll;
-	display: block;
-	min-height: 12rem;
-
-	&::-webkit-scrollbar {
-		width: 3px;
-		background: transparent;
-	}
-
-	&::-webkit-scrollbar-thumb {
-		background: #757575;
-	}
-	
-	@include media-medium {
-		grid-area: noti;
-	}
+  @include media-medium {
+    flex-direction: row;
+    gap: 2rem;
+  }
 }
 
 .newsContainer {
-  @include flex-col-center;
-	align-items: flex-start;
-	justify-content: flex-start;
-	font-size: small;
-  color: white;
-	width: 100%;
-	height: 100%;
-	padding: 0.5rem;
-
-  h2 {
-    color: $accent-color;
-    margin: 0;
+  @include homeContainer;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-bottom: 2rem;
+  position: relative;
+  height: 40vh;
+  h1 {
+    color: $sec-color;
   }
-
   h5 {
     margin: 0;
     margin-top: 0.2rem;
     font-weight: 400;
   }
-  
-	hr {
-    width: 100%;
-    margin-top: 0.5rem;
-    border-top: 1px solid darken($accent-color, 2%);
-  }
 
-	ul {
-		@include flex-col-center;
-		gap: 0.5rem;
-		align-items: flex-start;
-		padding-left: 1rem;
-		padding-top: 0.5rem;
-		padding-bottom: 1rem;
-	}
-
-	li {
-		list-style-type: circle;
-		padding-left: 0.5rem;
-	}
-  
-	@include media-medium {
-    font-size: medium;
-		padding: 1rem 2rem;
+  @include media-medium {
+    height: 50vh;
+    width: 50%;
+    margin-bottom: 0rem;
   }
 }
 
@@ -111,225 +44,244 @@
   display: flex;
   justify-content: space-between;
   width: 100%;
+}
 
-	& > div:nth-child(1) {
-		div {
-			display: flex;
-			width: fit-content;
-			align-items: center;
-			gap: 1rem;
-		}
-	
-		span {
-			padding-top: 0.1rem;
-			color: $accent-color;
-		}
-	}
+.headerLeft {
+  div {
+    display: flex;
+    width: fit-content;
+    align-items: center;
+    gap: 1rem;
+  }
+  span {
+    padding-top: 0.1rem;
+    color: $accent-color;
+  }
+}
 
-	& > div:nth-child(2) {
-		padding: 0.5rem;
-		
-		div {
-			margin-top: 0.5rem;
-			background: $accent-color;
-			text-align: center;
-			color: $bg-color;
-			font-weight: 600;
-		}
-	}
+.headerRight {
+  padding: 0.5rem;
+  div {
+    margin-top: 0.5rem;
+    background: $accent-color;
+    text-align: center;
+  }
+}
 
+.newsBody {
+  align-self: flex-start;
+  height: 68%;
+  overflow-y: scroll;
+  width: 100%;
+  scrollbar-width: thin;
+  padding-left: 1rem;
+  &::-webkit-scrollbar {
+    width: 3px;
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #757575;
+  }
+
+  ul {
+    list-style-type: circle;
+    margin-left: 1rem;
+  }
+  li {
+    list-style-type: circle;
+    margin-top: 0.4rem;
+    font-weight: 300;
+  }
+}
+
+.linkContainer {
+  position: absolute;
+  width: 10rem;
+  display: flex;
+  justify-content: space-around;
+  margin-top: 1rem;
+  align-self: flex-end;
+  bottom: 3%;
+
+  a {
+    text-decoration: underline;
+    cursor: pointer;
+    font-weight: 200;
+    font-size: 1rem;
+  }
+  
+  a:hover {
+    color: $accent-color;
+  }
+  
+  @include media-medium {
+    font-size: large;
+  }
 }
 
 // Market
-.market {
-	grid-area: auto;
-	padding: 1rem;
-	min-height: 30rem;
-	scrollbar-width: thin;
-	overflow-y: scroll;
-	display: block;
-
-	&::-webkit-scrollbar {
-		width: 3px;
-		height: 3px;
-		background: transparent;
-	}
-
-	&::-webkit-scrollbar-thumb {
-		background: #757575;
-	}
-
-	@include media-medium {
-		min-height: 20rem;
-		grid-area: mark;
-		height: 100%;
-	}
-}
 
 .marketTable {
-	border: 1px solid $accent-color;
+  margin-top: 2rem;
+  border: 1px solid $accent-color;
   border-collapse: collapse;
-	width: 100%;
-	color: $sec-color;
+  width: 100%;
+  color: $sec-color;
 
-	th,
-	td {
-		border: 1px solid $accent-color;
-		border-collapse: collapse;
-		padding: 0.1rem 0.5rem;
-		text-align: left;
-	}
+  th,
+  td {
+    border: 1px solid $accent-color;
+    border-collapse: collapse;
+    padding: 0.1rem 0.5rem;
+    text-align: left;
+  }
 
-	th {
-		text-align: left;
-		padding: 0.1rem 0.5rem;
-	}
+  th {
+    text-align: left;
+    padding: 0.1rem 0.5rem;
+  }
 
-	td {
-		padding: 0.5rem 0.5rem;
-		border-right: none;
-		border-left: none;
-		height: 4rem;
-		cursor: pointer;
+  td {
+    padding: 0.5rem 0.5rem;
+    border-right: none;
+    border-left: none;
+    height: 4rem;
 
-		p:nth-child(2) {
-			font-size: 0.9rem;
-		}
+    p:nth-child(2) {
+      font-size: 0.9rem;
+    }
+  }
 
-	}
+  td:nth-child(1) {
+    width: 15%;
+    padding-left: 0.75rem;
 
-	td:nth-child(1) {
-		width: 15%;
-		padding-left: 0.75rem;
+    @include media-medium {
+      padding-left: 2rem;
+    }
+  }
 
-		@include media-medium {
-			padding-left: 2rem;	
-		}
+  td:nth-child(2) {
+    width: 25%;
+  }
 
-	}
+  td:nth-last-child(2) {
+    text-align: right;
 
-	td:nth-child(2) {
-		width: 25%;
-	}
+    & > div > div {
+      display: flex;
+      gap: 0.5rem;
+      justify-content: flex-end;
 
-	td:nth-last-child(1) {
-		text-align: right;
+      @include media-medium {
+        justify-content: flex-start;
+      }
+    }
 
-		& > div > div {
-			display: flex;
-			gap: 0.5rem;
-			justify-content: flex-end;
-		
-			@include media-medium {
-				justify-content: flex-start;
-			}
-		
-		}
-
-		@include media-medium {
-			text-align: left;
-		}
-
-	}
-
-}
-
-// LeaderBoard
-.leader {
-	grid-area: auto;
-	height: min-content;
-	
-	@include media-medium {
-		grid-area: lead;
-	}
-}
-
-.leaderComponent {
-	@include contain;
-	width: 100%;
-
-	table {
-		border: 1px solid $accent-color;
-		border-collapse: collapse;
-		width: 100%;			
-		color: $sec-color;
-	}
-
-	h2 {
-		padding: 0.5rem;
-		padding-bottom: 1rem;
-		@include flex-center;
-		justify-content: flex-start;
-		gap: 0.75rem;
-	}
-
-	th,
-	td {
-		border: 1px solid $accent-color;
-		border-collapse: collapse;
-		padding: 0.1rem 0.5rem;
-		text-align: left;
-	}
-
-	td {
-		padding: 0.5rem 0.5rem;
-		border-color: rgba($accent-color, 0.3);
-	}
-
-}
-
-// Portfolio
-.portfolio {
-	grid-area: auto;
-	scrollbar-width: thin;
-	overflow-y: scroll;
-	display: block;
-	height: min-content;
-	padding-bottom: 1rem;
-
-	&::-webkit-scrollbar {
-		width: 3px;
-		height: 3px;
-		background: transparent;
-	}
-
-	&::-webkit-scrollbar-thumb {
-		background: #757575;
-	}
-	
-	@include media-medium {
-		padding-bottom: 2rem;
-		grid-area: port;
-	}
+    @include media-medium {
+      text-align: left;
+    }
+  }
 }
 
 .portfolioComponent {
-	@include contain;
+  @include homeContainer;
 
-	h2 {
-		margin: 0;
-		padding-bottom: 1rem;
-		@include flex-center;
-		justify-content: flex-start;
-		gap: 0.75rem;
-	}
-
-	h3 {
-		margin: 0;
-		font-size: 1rem;
-	}
-
-	& > div {
-		color: $sec-color;
-		@include flex-col-center;
-		align-self: flex-start;
-		gap: 0.5rem;
-
-		div {
-			@include flex-center;
-			justify-content: space-between;
-			width: 100%;
-		}
-	}
+  h1 {
+    color: $sec-color;
+    margin: 0;
+  }
+  @include media-medium {
+    width: 50%;
+  }
+}
+.header {
+  display: flex;
+  width: fit-content;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.8rem;
+  span {
+    padding-top: 0.1rem;
+    color: $accent-color;
+  }
 }
 
+.fundsCont {
+  margin-top: 1rem;
+  div {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+}
+
+.marketCont {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.marketMenu {
+  width: 80%;
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  @include media-medium {
+    width: 40%;
+    margin-top: 2rem;
+  }
+}
+
+.selButton {
+  @include btn.registerButton;
+}
+.unselButton {
+  @include btn.logInButton;
+}
+.actionModal {
+  @include homeContainer;
+  width: 30rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  span {
+    color: $accent-color;
+  }
+}
+.actionRow {
+  margin-top: 1rem;
+  width: 70%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  h4 {
+    font-weight: 400;
+    margin-bottom: 0.3rem;
+  }
+  input {
+    margin: 1%;
+    padding: 2%;
+    width: 30%;
+    color: white;
+    background: $bg-color;
+    border: 1px solid gray;
+    border-radius: 0.3rem;
+  }
+  @include media-medium {
+    width: 90%;
+  }
+}
+.errorCont {
+  width: 80%;
+  margin-top: 1rem;
+  text-align: center;
+  word-wrap: break-word;
+  p {
+    font-size: smaller;
+    color: red;
+  }
+}

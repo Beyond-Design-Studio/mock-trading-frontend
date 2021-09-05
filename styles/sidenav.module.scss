@@ -42,12 +42,16 @@
   gap: 0.15rem;
   padding: 0.15rem 0.5rem;
   width: 100%;
-
+  cursor: pointer;
+  color: $accent-color;
   p {
     font-size: small;
 
     @include media-medium {
       font-size: 1rem;
+    }
+    svg {
+      color: $accent-color;
     }
   }
 
