@@ -2,13 +2,14 @@ import React, { useEffect, useState } from "react";
 
 import styles from "@styles/market.module.scss";
 import useMediaQuery from "react-responsive";
-import useGetHoldings from "hooks/useGetHoldings";
+// import useGetHoldings from "hooks/useGetHoldings";
 import useGetPortfolio from "hooks/useGetPortfolio";
 import indianNumberConverter from "@components/functions/numberConvertor";
 
 import { useAuth } from "@components/contexts/authContext";
 import { postHolding, deleteHolding, putHolding } from "@components/functions/postHoldings";
 import putPortfolio from "@components/functions/postPortfolio";
+import useGetFilteredHolding from "hooks/useGetFilteredHoldings";
 
 
 interface ModalValues {
@@ -31,7 +32,7 @@ const MarketActions = (props: Props): JSX.Element => {
   const { user } = useAuth();
 
   const { data: portfolioData, refetch: portRefetch } = useGetPortfolio(user.jwt, user.portfolio);
-  const { data } = useGetHoldings(user.jwt, user.portfolio);
+  const { filteredData: data } = useGetFilteredHolding();
 
   const isMedium = useMediaQuery({ query: "(min-width: 769px)" });
 
@@ -75,7 +76,9 @@ const MarketActions = (props: Props): JSX.Element => {
     if (data)
       setholdingData(
         data.filter((hold: any) => hold.security.name === props.values.name)[0]
-      );
+        );
+      console.log(data, holdingData);
+      
     if (holdingData) setOwnedStock(holdingData ? holdingData.OwnedQuantity : 0);
     if (portfolioData) setAvailableFunds(portfolioData.AvailableFunds);
   }, [

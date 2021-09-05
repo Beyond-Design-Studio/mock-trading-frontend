@@ -1,12 +1,14 @@
 import React, { useEffect } from "react";
+
 import Head from "next/head";
-import { io } from "socket.io-client";
 import Sidenav from "@components/sidenav";
 import styles from "@styles/allNews.module.scss";
-import { NewsIcon } from "@components/icons";
 import Loading from "@components/loading";
 import useGetNews from "hooks/useGetNews";
 import useUser from "hooks/useUser";
+
+import { io } from "socket.io-client";
+import { NewsIcon } from "@components/icons";
 import { UserInterface } from "@components/contexts/authContext";
 
 
@@ -30,9 +32,9 @@ const Wrapped = ({ user }: { user: UserInterface }): JSX.Element => {
       refetch();
     });
     
-    // return () => {
-    //   socket.disconnect();
-    // };
+    return () => {
+      socket.disconnect();
+    };
   }, [refetch]);
 
   return (
