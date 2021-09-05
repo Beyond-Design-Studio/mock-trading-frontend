@@ -1,5 +1,5 @@
 import { useAuth } from "@components/contexts/authContext";
-import {useMemo, useState} from "react"
+import {useEffect, useMemo, useState} from "react"
 import useGetHoldings from "./useGetHoldings";
 
 
@@ -7,10 +7,10 @@ const useGetFilteredHolding = (): any => {
 
 	const { user } = useAuth();
 	
-	const { data } = useGetHoldings(user.jwt, user.portfolio);
+	const { data, refetch } = useGetHoldings(user.jwt, user.portfolio);
 	const [filteredData, setFilteredData] = useState<any>([]);
 	
-	useMemo(() => {
+	useEffect(() => {
     if (data)
 		for (let i = 0; i < data.length; i++) {
         // Innter Loop
@@ -65,7 +65,7 @@ const useGetFilteredHolding = (): any => {
   }, [data, filteredData]);
 	console.log("filteredData", filteredData);
 	
-	return {filteredData};
+	return {filteredData, refetch};
 }
 
 export default useGetFilteredHolding;
