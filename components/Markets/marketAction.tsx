@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import styles from "@styles/market.module.scss";
 import useMediaQuery from "react-responsive";
-// import useGetHoldings from "hooks/useGetHoldings";
+import useGetHoldings from "hooks/useGetHoldings";
 import useGetPortfolio from "hooks/useGetPortfolio";
 import indianNumberConverter from "@components/functions/numberConvertor";
 
@@ -32,6 +32,7 @@ const MarketActions = (props: Props): JSX.Element => {
   const { user } = useAuth();
 
   const { data: portfolioData, refetch: portRefetch } = useGetPortfolio(user.jwt, user.portfolio);
+  const { data: holdingDatas, refetch: holdingsRefetch } = useGetHoldings(user.jwt, user.portfolio);
   const { filteredData: data } = useGetFilteredHolding();
 
   const isMedium = useMediaQuery({ query: "(min-width: 769px)" });
@@ -76,7 +77,7 @@ const MarketActions = (props: Props): JSX.Element => {
     if (data)
       setholdingData(
         data.filter((hold: any) => hold.security.name === props.values.name)[0]
-        );
+      );
       console.log(data, holdingData);
       
     if (holdingData) setOwnedStock(holdingData ? holdingData.OwnedQuantity : 0);
@@ -119,6 +120,7 @@ const MarketActions = (props: Props): JSX.Element => {
         AvailableFunds: portfolioData.AvailableFunds - desiredQty * props.values.currentPrice
       }).then(res => {
         portRefetch();
+        holdingsRefetch();
         console.log(res);
       })
       props.toggleModal();
@@ -129,6 +131,7 @@ const MarketActions = (props: Props): JSX.Element => {
     if (ownedStock < desiredQty) {
       setError("Can't sell more than ye have");
     } else {
+      // let desQty = desiredQty;
       if (ownedStock === desiredQty) {
         deleteHolding(user.jwt, holdingData.id);
 
@@ -149,6 +152,17 @@ const MarketActions = (props: Props): JSX.Element => {
       props.toggleModal();
     }
   };
+
+  function maxOutBuy() {
+    const maxValue:number = (Math.round(availableFunds / props.values.currentPrice));
+    
+    if (maxValue > quantityLimit) {
+      setDesiredQty(quantityLimit);
+    }
+    else {
+      setDesiredQty(maxValue);
+    }
+  }
 
   return (
     <div className={styles.actionModal}>
@@ -173,6 +187,9 @@ const MarketActions = (props: Props): JSX.Element => {
           value={desiredQty}
           onChange={(e) => desiredQtyHandler(parseInt(e.target.value))}
         />
+        {props.action === "buy" && (
+          <button onClick={maxOutBuy} className={styles.selButton}>MAX</button>
+        )}
       </div>
 
       <div
