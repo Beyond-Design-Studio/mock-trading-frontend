@@ -27,7 +27,6 @@ const useGetFilteredHolding = (): any => {
         const filteredVals = data.filter(
           (hold: any) => data[i].StockTicker === hold.StockTicker
         );
-				console.log("filteredVals", filteredVals);
 				
         // Reduce it to get the final value.
         // Reduce's behaviour chnages when only one element is present, hence the length !== 1 terneary operator.
@@ -63,7 +62,6 @@ const useGetFilteredHolding = (): any => {
         ]);
       }
   }, [data, filteredData]);
-	console.log("filteredData", filteredData);
 	
 	return {filteredData, refetch};
 }

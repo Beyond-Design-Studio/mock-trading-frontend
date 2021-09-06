@@ -130,17 +130,38 @@ const MarketActions = (props: Props): JSX.Element => {
   const sellClick = () => {
     if (ownedStock < desiredQty) {
       setError("Can't sell more than ye have");
-    } else {
-      // let desQty = desiredQty;
-      if (ownedStock === desiredQty) {
-        deleteHolding(user.jwt, holdingData.id);
 
+    } else {
+      let desQty = desiredQty;
+
+      const desiredStocks = holdingDatas.filter((hold: any) => hold.security.name === props.values.name)
+      if (ownedStock === desiredQty) {
+        desiredStocks.map((hold: any) => deleteHolding(user.jwt, hold.id));
+
+        holdingsRefetch();
+        portRefetch();
       } else if (ownedStock > desiredQty ) {
-        // update the existing holding
-        putHolding(user.jwt, {
-          "OwnedQuantity": holdingData.OwnedQuantity - desiredQty,
-          "PurchasePrice": props.values.currentPrice
-        }, holdingData.id)
+
+        while (desQty > 0) {
+          const mostRecent = desiredStocks.pop()
+          console.log("mostRecentQty and desQty", mostRecent, desQty)
+
+          // If Desired Quantity is greater than or equal to the most recently bought stocks OwnedQty, then delete that holding
+          if (desQty >= mostRecent.OwnedQuantity) {
+            deleteHolding(user.jwt, mostRecent.id)
+            console.log( "deletedHolding" )
+
+          } else {
+            putHolding(user.jwt, {
+              "OwnedQuantity": mostRecent.OwnedQuantity - desQty,
+              "PurchasePrice": props.values.currentPrice
+            }, mostRecent.id)
+            console.log( "edited holding" )
+          }
+          desQty -= mostRecent.OwnedQuantity;
+        }
+        holdingsRefetch();
+        portRefetch();
       }
       putPortfolio(user.jwt, user.portfolio, {
         AllocatedFunds: portfolioData.AllocatedFunds - desiredQty * props.values.currentPrice,
