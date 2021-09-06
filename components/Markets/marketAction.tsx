@@ -134,7 +134,7 @@ const MarketActions = (props: Props): JSX.Element => {
     } else {
       let desQty = desiredQty;
 
-      let desiredStocks = holdingDatas.filter((hold: any) => hold.security.name === props.values.name)
+      const desiredStocks = holdingDatas.filter((hold: any) => hold.security.name === props.values.name)
       if (ownedStock === desiredQty) {
         desiredStocks.map((hold: any) => deleteHolding(user.jwt, hold.id));
 
