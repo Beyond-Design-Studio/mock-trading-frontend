@@ -6,6 +6,7 @@ import useGetPortfolio from "hooks/useGetPortfolio";
 import { useMediaQuery } from "react-responsive";
 import { useAuth } from "@components/contexts/authContext";
 import useGetFilteredHolding from "hooks/useGetFilteredHoldings";
+import getCurrentPriceFromHold from "@components/functions/getCurrentPriceFromHold";
 
 const Funds = (): JSX.Element => {
   const { user } = useAuth();
@@ -13,10 +14,17 @@ const Funds = (): JSX.Element => {
   const {filteredData: holdings} = useGetFilteredHolding();
   const [profits, setProfits] = useState<number[]>([]);
 
-  useMemo(() => {
-    holdings && setProfits(holdings.map((hold: any) => ((hold.security.currentPrice - hold.PurchasePrice) * hold.OwnedQuantity)))
+  useMemo(async () => {
+
+    const profitsArr = holdings && holdings.map(async (hold: any) => {
+      const hold_security_currentPrice = await getCurrentPriceFromHold(hold, user.jwt)
+      return (hold_security_currentPrice - hold.PurchasePrice) * hold.OwnedQuantity;
+    })
+    console.log(profitsArr);
     
-  }, [holdings])
+    setProfits(profitsArr)  
+    
+  }, [holdings, user.jwt])
   
   const isMobile = useMediaQuery({ maxWidth: 1024 });
 

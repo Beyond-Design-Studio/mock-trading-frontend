@@ -9,15 +9,15 @@ import useGetFilteredHolding from "hooks/useGetFilteredHoldings";
 
 const PortfolioSnapshot = (): JSX.Element => {
 
-  const {user} = useAuth();
+  const { user } = useAuth();
 
-  const {data} = useGetPortfolio(user.jwt, user.portfolio)
-  const {filteredData: holdings} = useGetFilteredHolding();
+  const { data } = useGetPortfolio(user.jwt, user.portfolio)
+  const { filteredData: holdings } = useGetFilteredHolding();
   const [profits, setProfits] = useState<number[]>([]);
 
   useMemo(() => {
     holdings && setProfits(holdings.map((hold: any) => ((hold.security.currentPrice - hold.PurchasePrice) * hold.OwnedQuantity)))
-    
+
   }, [holdings])
 
   return (
@@ -29,8 +29,8 @@ const PortfolioSnapshot = (): JSX.Element => {
         <h1>My Portfolio</h1>
       </div>
 
-      <div style={{width: "100%", height: "2px", backgroundColor: "var(--accent-color)"}}></div>
-      
+      <div style={{ width: "100%", height: "2px", backgroundColor: "var(--accent-color)" }}></div>
+
       {data && (
         <div className={styles.fundsCont}>
           <div>

@@ -13,6 +13,7 @@ import { useAuth } from "@components/contexts/authContext";
 import { LoaderIcon } from "@components/icons";
 import { useMediaQuery } from "react-responsive";
 import { SecurityInterface } from "@data/stonks";
+import getMostRecentPublished from "@components/functions/getMostRecentPublished";
 
 const TableRow: FC<SecurityInterface> = ({
   name,
@@ -112,6 +113,7 @@ const MarketComponent = (): JSX.Element => {
 
   const { user } = useAuth();
   const { data } = useGetStocks(user.jwt);
+  console.log(data);
 
   const clickHandler = (str: string): void => {
     setMarketView(str);
@@ -149,7 +151,7 @@ const MarketComponent = (): JSX.Element => {
                     name={stock.name}
                     img={stock.img}
                     previousPrice={stock.previousPrice}
-                    currentPrice={stock.currentPrice}
+                    currentPrice={getMostRecentPublished(stock.security_prices)}
                     type={stock.type}
                     ticker={stock.ticker}
                   />

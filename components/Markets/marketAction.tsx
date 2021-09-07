@@ -33,7 +33,7 @@ const MarketActions = (props: Props): JSX.Element => {
 
   const { data: portfolioData, refetch: portRefetch } = useGetPortfolio(user.jwt, user.portfolio);
   const { data: holdingDatas, refetch: holdingsRefetch } = useGetHoldings(user.jwt, user.portfolio);
-  const { filteredData: data } = useGetFilteredHolding();
+  const { filteredData: data, refetch: filteredRefetch } = useGetFilteredHolding();
 
   const isMedium = useMediaQuery({ query: "(min-width: 769px)" });
 
@@ -121,6 +121,7 @@ const MarketActions = (props: Props): JSX.Element => {
       }).then(res => {
         portRefetch();
         holdingsRefetch();
+        filteredRefetch();
         console.log(res);
       })
       props.toggleModal();
@@ -138,8 +139,9 @@ const MarketActions = (props: Props): JSX.Element => {
       if (ownedStock === desiredQty) {
         desiredStocks.map((hold: any) => deleteHolding(user.jwt, hold.id));
 
-        holdingsRefetch();
         portRefetch();
+        holdingsRefetch();
+        filteredRefetch();
       } else if (ownedStock > desiredQty ) {
 
         while (desQty > 0) {
@@ -160,14 +162,17 @@ const MarketActions = (props: Props): JSX.Element => {
           }
           desQty -= mostRecent.OwnedQuantity;
         }
-        holdingsRefetch();
         portRefetch();
+        holdingsRefetch();
+        filteredRefetch();
       }
       putPortfolio(user.jwt, user.portfolio, {
         AllocatedFunds: portfolioData.AllocatedFunds - desiredQty * props.values.currentPrice,
         AvailableFunds: portfolioData.AvailableFunds + desiredQty * props.values.currentPrice
       }).then(res => {
         portRefetch();
+        holdingsRefetch();
+        filteredRefetch();
         console.log(res);
       })
       props.toggleModal();
@@ -247,4 +252,5 @@ const MarketActions = (props: Props): JSX.Element => {
     </div>
   );
 };
+
 export default MarketActions;
