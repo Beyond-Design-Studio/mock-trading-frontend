@@ -14,6 +14,7 @@ import { LoaderIcon } from "@components/icons";
 import { useMediaQuery } from "react-responsive";
 import { SecurityInterface } from "@data/stonks";
 import getMostRecentPublished from "@components/functions/getMostRecentPublished";
+import getMostRecentPrevious from "@components/functions/getMostRecentPrevious";
 
 const TableRow: FC<SecurityInterface> = ({
   name,
@@ -144,13 +145,14 @@ const MarketComponent = (): JSX.Element => {
             {data
               .filter((item: any) => item.type === marketView)
               .map((stock: any, index: number) => {
+                console.log(stock);
                 return (
                   <TableRow
                     id={stock.id}
                     key={index}
                     name={stock.name}
                     img={stock.img}
-                    previousPrice={stock.previousPrice}
+                    previousPrice={getMostRecentPrevious(stock.security_prices)}
                     currentPrice={getMostRecentPublished(stock.security_prices)}
                     type={stock.type}
                     ticker={stock.ticker}

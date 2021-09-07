@@ -11,18 +11,23 @@ import getCurrentPriceFromHold from "@components/functions/getCurrentPriceFromHo
 const Funds = (): JSX.Element => {
   const { user } = useAuth();
   const { data } = useGetPortfolio(user.jwt, user.portfolio);
-  const {filteredData: holdings} = useGetFilteredHolding();
+  const { filteredData: holdings } = useGetFilteredHolding();
   const [profits, setProfits] = useState<number[]>([]);
 
   useMemo(async () => {
+    if (holdings) {
+      const profitsArr = async () => {
+        const arr = [];
+        for (const hold of holdings) {
+          const hold_security_currentPrice = await getCurrentPriceFromHold(hold, user.jwt);
+          arr.push((hold_security_currentPrice - hold.PurchasePrice) * hold.OwnedQuantity);
+        }
 
-    const profitsArr = holdings && holdings.map(async (hold: any) => {
-      const hold_security_currentPrice = await getCurrentPriceFromHold(hold, user.jwt)
-      return (hold_security_currentPrice - hold.PurchasePrice) * hold.OwnedQuantity;
-    })
-    console.log(profitsArr);
+        return arr;
+      };
     
-    setProfits(profitsArr)  
+      setProfits(await profitsArr());
+    }
     
   }, [holdings, user.jwt])
   

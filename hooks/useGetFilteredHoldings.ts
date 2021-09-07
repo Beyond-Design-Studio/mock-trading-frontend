@@ -14,12 +14,11 @@ const useGetFilteredHolding = (): any => {
     if (data)
       for (let i = 0; i < data.length; i++) {
         // Innter Loop
-				console.log(data);
 				const list: string[] = [
           ...filteredData.map((filt: any) => filt.StockTicker),
         ];
         if (list.indexOf(data[i].StockTicker) !== -1) {
-					console.log("i -->>", list);
+
           continue;
         }
 

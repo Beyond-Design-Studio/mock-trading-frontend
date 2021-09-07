@@ -6,6 +6,7 @@ import useGetPortfolio from "hooks/useGetPortfolio";
 import { PortfolioIcon } from "@components/icons";
 import { useAuth } from "@components/contexts/authContext";
 import useGetFilteredHolding from "hooks/useGetFilteredHoldings";
+import getCurrentPriceFromHold from "@components/functions/getCurrentPriceFromHold";
 
 const PortfolioSnapshot = (): JSX.Element => {
 
@@ -15,10 +16,22 @@ const PortfolioSnapshot = (): JSX.Element => {
   const { filteredData: holdings } = useGetFilteredHolding();
   const [profits, setProfits] = useState<number[]>([]);
 
-  useMemo(() => {
-    holdings && setProfits(holdings.map((hold: any) => ((hold.security.currentPrice - hold.PurchasePrice) * hold.OwnedQuantity)))
+  useMemo(async () => {
+    if (holdings) {
+      const profitsArr = async () => {
+        const arr = [];
+        // TODO Preformance optimization - make all await concurrent
+        for (const hold of holdings) {
+          const hold_security_currentPrice = await getCurrentPriceFromHold(hold, user.jwt);
+          arr.push((hold_security_currentPrice - hold.PurchasePrice) * hold.OwnedQuantity);
+        }
 
-  }, [holdings])
+        return arr;
+      };
+    
+      setProfits(await profitsArr());
+    }
+  }, [holdings, user.jwt])
 
   return (
     <div className={styles.portfolioComponent}>

@@ -91,18 +91,6 @@ const MarketActions = (props: Props): JSX.Element => {
     portfolioData,
   ]);
 
-  // const { mutate: portMutation } = useMutation(
-  //   putPortfolio(user.jwt, user.portfolio, {
-  //    AllocatedFunds: portfolioData.AllocatedFunds - desiredQty * props.values.currentPrice,
-  //    AvailableFunds: portfolioData.AvailableFunds + desiredQty * props.values.currentPrice
-  //   }),
-  //   {
-  //     onSuccess: () => {
-  //       queryClient.invalidateQueries(["portfolios", user.portfolio]);
-  //     },
-  //   }
-  // );
-
   const buyClick = () => {
     if (total > availableFunds || error) {
       console.error(total, availableFunds);
@@ -138,12 +126,7 @@ const MarketActions = (props: Props): JSX.Element => {
       const desiredStocks = holdingDatas.filter((hold: any) => hold.security.name === props.values.name)
       if (ownedStock === desiredQty) {
         desiredStocks.map((hold: any) => deleteHolding(user.jwt, hold.id));
-
-        portRefetch();
-        holdingsRefetch();
-        filteredRefetch();
       } else if (ownedStock > desiredQty ) {
-
         while (desQty > 0) {
           const mostRecent = desiredStocks.pop()
           console.log("mostRecentQty and desQty", mostRecent, desQty)
@@ -162,9 +145,6 @@ const MarketActions = (props: Props): JSX.Element => {
           }
           desQty -= mostRecent.OwnedQuantity;
         }
-        portRefetch();
-        holdingsRefetch();
-        filteredRefetch();
       }
       putPortfolio(user.jwt, user.portfolio, {
         AllocatedFunds: portfolioData.AllocatedFunds - desiredQty * props.values.currentPrice,
@@ -173,7 +153,6 @@ const MarketActions = (props: Props): JSX.Element => {
         portRefetch();
         holdingsRefetch();
         filteredRefetch();
-        console.log(res);
       })
       props.toggleModal();
     }
