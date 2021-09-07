@@ -23,7 +23,7 @@ export const putHolding = (jwt: string, data: any, holdingId: number): any => {
 		},
 		data: data
 	})
-		.then(res => res.data)
+		.then(res => console.log(res.data))
 		.catch(console.error);
 }
 
@@ -35,6 +35,6 @@ export const deleteHolding = (jwt: string, holdingId: number): any => {
 			Authorization: `Bearer ${jwt}`,
 		},
 	})
-		.then(res => res.data)
+		.then(res => console.log(res.data))
 		.catch(console.error);
 }

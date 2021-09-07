@@ -1,17 +1,45 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import styles from "@styles/portfolio.module.scss";
 import TabbedButtons from "@components/tabbedBottons";
 import indianNumberConverter from "@components/functions/numberConvertor";
 import useGetFilteredHolding from "hooks/useGetFilteredHoldings";
+import getCurrentPriceFromHold from "@components/functions/getCurrentPriceFromHold";
+import { useAuth } from "@components/contexts/authContext";
 
 const Holdings = (): JSX.Element => {
+  const { user } = useAuth();
   const [holdingsView, setHoldingsView] = useState<string>("stock");
-  
+  const [profits, setProfits] = useState<any>({});
+
   const clickHandler = (str: string): void => {
     setHoldingsView(str);
   };
 
-  const {filteredData} = useGetFilteredHolding();
+  const { filteredData } = useGetFilteredHolding();
+
+  useMemo(async () => {
+    if (filteredData) {
+      const profitsArr = async () => {
+        const arr: any = {};
+        for (const hold of filteredData) {
+          const hold_security_currentPrice = await getCurrentPriceFromHold(
+            hold,
+            user.jwt
+          );
+          console.log("kuch message daal", hold_security_currentPrice);
+
+          arr[hold.StockTicker] = hold_security_currentPrice;
+        }
+
+        console.log(arr);
+        return arr;
+      };
+
+      setProfits(await profitsArr());
+    }
+  }, [filteredData, user.jwt]);
+
+  console.log(profits);
 
   return (
     <div className={styles.holdingsContainer}>
@@ -37,42 +65,48 @@ const Holdings = (): JSX.Element => {
           </thead>
 
           <tbody>
-            {filteredData
-              ?.filter((item: any) => item.security.type === holdingsView)
-              .map((hold: any, ind: number) => {
-                return (
-                  <tr key={ind}>
-                    <td>{`${hold.StockTicker}`}</td>
-                    <td>{`${indianNumberConverter(hold.PurchasePrice)}`}</td>
-                    <td>{`${indianNumberConverter(
-                      hold.security.currentPrice
-                    )}`}</td>
-                    <td>{`${hold.OwnedQuantity}`}</td>
-                    
-                    {/* Invested */}
-                    <td>{`${indianNumberConverter(
-                      hold.PurchasePrice * hold.OwnedQuantity
-                    )}`}</td>
-                    
-                    {/* Current */}
-                    <td>{`${indianNumberConverter(
-                      hold.OwnedQuantity * hold.security.currentPrice
-                    )}`}</td>
+            {profits &&
+              filteredData &&
+              filteredData
+                .filter((item: any) => item.security.type === holdingsView)
+                .map((hold: any, ind: number) => {
+                  return (
+                    profits[hold.StockTicker] && (
+                      <tr key={ind}>
+                        <td>{`${hold.StockTicker}`}</td>
+                        <td>{`${indianNumberConverter(
+                          hold.PurchasePrice
+                        )}`}</td>
+                        <td>{`${indianNumberConverter(
+                          profits[hold.StockTicker]
+                        )}`}</td>
+                        <td>{`${hold.OwnedQuantity}`}</td>
 
-                    {/* Profit / Loss */}
-                    <td
-                      className={
-                        hold.security.currentPrice - hold.PurchasePrice >= 0
-                          ? styles.pnlProfit
-                          : styles.pnlLoss
-                      }
-                    >{`${indianNumberConverter(
-                      (hold.security.currentPrice - hold.PurchasePrice) *
-                        hold.OwnedQuantity
-                    )}`}</td>
-                  </tr>
-                );
-              })}
+                        {/* Invested */}
+                        <td>{`${indianNumberConverter(
+                          hold.PurchasePrice * hold.OwnedQuantity
+                        )}`}</td>
+
+                        {/* Current */}
+                        <td>{`${indianNumberConverter(
+                          hold.OwnedQuantity * profits[hold.StockTicker]
+                        )}`}</td>
+
+                        {/* Profit / Loss */}
+                        <td
+                          className={
+                            profits[hold.StockTicker] - hold.PurchasePrice >= 0
+                              ? styles.pnlProfit
+                              : styles.pnlLoss
+                          }
+                        >{`${indianNumberConverter(
+                          (profits[hold.StockTicker] - hold.PurchasePrice) *
+                            hold.OwnedQuantity
+                        )}`}</td>
+                      </tr>
+                    )
+                  );
+                })}
           </tbody>
         </table>
       </div>
