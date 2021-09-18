@@ -7,6 +7,7 @@ import { useAuth } from "@components/contexts/authContext";
 
 interface Props {
   setScreen: (value: string | ((prevVar: string) => string)) => void;
+  // returnUrl: string | string[];
 }
 
 
@@ -15,10 +16,22 @@ function LogIn(props: Props): JSX.Element {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
-  const {user, setUser} = useAuth();
+  const { user, setUser } = useAuth();
 
   const createPortfolio = (jwt: string, username: string, id: number) => {
-    axios({method: "post", headers: {Authorization: `Bearer ${jwt}`}, url: "/portfolios", data: qs.stringify({"InvestorName": username, "AvailableFunds": 100000, "AllocatedFunds": 0, "NetWorth": 100000, "user": id})})
+    axios({
+      method: "post",
+      headers: { Authorization: `Bearer ${jwt}` },
+      url: "/portfolios",
+      data: qs.stringify(
+        {
+          "InvestorName": username,
+          "AvailableFunds": 100000,
+          "AllocatedFunds": 0,
+          "NetWorth": 100000,
+          "user": id
+        })
+    })
       .then(res => {
         console.log(`[PORTFOLIO CREATED]`, res.data)
         setUser({ ...user, portfolio: res.data.id })
@@ -40,7 +53,7 @@ function LogIn(props: Props): JSX.Element {
     } else {
       setError(null);
 
-      axios({method: "POST", url: "/auth/local", data: qs.stringify({"identifier": email, "password": password})})
+      axios({ method: "POST", url: "/auth/local", data: qs.stringify({ "identifier": email, "password": password }) })
         .then(res => {
           console.log(res.data);
 
