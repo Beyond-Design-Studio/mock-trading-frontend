@@ -147,9 +147,9 @@ const MarketActions = (props: Props): JSX.Element => {
         }
       }
       putPortfolio(user.jwt, user.portfolio, {
-        AllocatedFunds: portfolioData.AllocatedFunds - desiredQty * props.values.currentPrice,
+        AllocatedFunds: portfolioData.AllocatedFunds - desiredQty * props.values.currentPrice > 0 ? portfolioData.AllocatedFunds - desiredQty * props.values.currentPrice : 0,
         AvailableFunds: portfolioData.AvailableFunds + desiredQty * props.values.currentPrice
-      }).then(res => {
+      }).then(() => {
         portRefetch();
         holdingsRefetch();
         filteredRefetch();
