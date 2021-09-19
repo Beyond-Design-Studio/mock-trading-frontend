@@ -18,14 +18,12 @@ const Home = (): JSX.Element => {
       </Head>
 
       <Sidenav />
-
-      {user && (
-        <div className={styles.pageContainer}>
-          <Rules />
-          <AboutUs />
-          <Sponsors />
-        </div>
-      )}
+      
+      <div className={styles.pageContainer}>
+        <Rules />
+        <AboutUs />
+        <Sponsors />
+      </div>
     </div>
   );
 };
