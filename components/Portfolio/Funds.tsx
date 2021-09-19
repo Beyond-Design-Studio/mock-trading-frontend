@@ -14,6 +14,7 @@ const Funds = (): JSX.Element => {
   const { filteredData: holdings } = useGetFilteredHolding();
   const [profits, setProfits] = useState<number[]>([]);
 
+  // TODO: Remove the profits recalculation. See Markets/portfolio.tsx
   useMemo(async () => {
     if (holdings) {
       const profitsArr = async () => {
