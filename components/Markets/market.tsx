@@ -1,5 +1,4 @@
 import React, { FC, useState } from "react";
-
 import Modal from "@components/modal";
 import Image from "next/image";
 import styles from "@styles/market.module.scss";
@@ -114,7 +113,6 @@ const MarketComponent = (): JSX.Element => {
 
   const { user } = useAuth();
   const { data } = useGetStocks(user.jwt);
-  console.log(data);
 
   const clickHandler = (str: string): void => {
     setMarketView(str);
