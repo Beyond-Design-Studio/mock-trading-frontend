@@ -17,16 +17,14 @@ const Markets = (): JSX.Element => {
       </Head>
 
       <Sidenav />
-
-      {user.jwt && (
-        <div className={styles.marketPage}>
-          <div className={styles.newsPort}>
-            <News />
-            <PortfolioSnapshot />
-          </div>
-          <MarketComponent />
+      
+      <div className={styles.marketPage}>
+        <div className={styles.newsPort}>
+          <News />
+          <PortfolioSnapshot />
         </div>
-      )}
+        <MarketComponent />
+      </div>
     </div>
   );
 };
