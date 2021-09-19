@@ -10,11 +10,9 @@ import { useAuth } from "@components/contexts/authContext";
 const News = (): JSX.Element => {
   //newsLimit is the number of news updates that has been done so far (different from final limit)
   const newsLimit = 4;
-  
+
   const { user } = useAuth();
-  const { data, error} = useGetNews(user.jwt);
-  console.log(user);
-  console.log(error);
+  const { data, error } = useGetNews(user.jwt);
 
   const [currentArticle, setCurrentArticle] =
     useState<NewsUpdateInterface | null>(null);
@@ -33,7 +31,8 @@ const News = (): JSX.Element => {
                 <span><NewsIcon /></span>
                 <h1>News</h1>
               </div>
-              <h5>Next news update in 10 seconds ({newsLimit}/12)</h5>
+              {/* TODO: Make the timer active */}
+              <h5>Next news update in _TIMER_VALUE_ ({newsLimit}/12)</h5>
             </div>
             <div className={styles.headerRight}>
               <h5>{currentArticle.published}</h5>
