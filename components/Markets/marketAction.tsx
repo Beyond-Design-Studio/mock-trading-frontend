@@ -78,8 +78,8 @@ const MarketActions = (props: Props): JSX.Element => {
       setholdingData(
         data.filter((hold: any) => hold.security.name === props.values.name)[0]
       );
-      console.log(data, holdingData);
-      
+    console.log(data, holdingData);
+
     if (holdingData) setOwnedStock(holdingData ? holdingData.OwnedQuantity : 0);
     if (portfolioData) setAvailableFunds(portfolioData.AvailableFunds);
   }, [
@@ -103,15 +103,15 @@ const MarketActions = (props: Props): JSX.Element => {
         portfolio: user.portfolio,
         security: props.values.id,
       }),
-      putPortfolio(user.jwt, user.portfolio, {
-        AllocatedFunds: portfolioData.AllocatedFunds + desiredQty * props.values.currentPrice,
-        AvailableFunds: portfolioData.AvailableFunds - desiredQty * props.values.currentPrice
-      }).then(res => {
-        portRefetch();
-        holdingsRefetch();
-        filteredRefetch();
-        console.log(res);
-      })
+        putPortfolio(user.jwt, user.portfolio, {
+          AllocatedFunds: portfolioData.AllocatedFunds + desiredQty * props.values.currentPrice,
+          AvailableFunds: portfolioData.AvailableFunds - desiredQty * props.values.currentPrice
+        }).then(res => {
+          portRefetch();
+          holdingsRefetch();
+          filteredRefetch();
+          console.log(res);
+        })
       props.toggleModal();
     }
   };
@@ -126,7 +126,7 @@ const MarketActions = (props: Props): JSX.Element => {
       const desiredStocks = holdingDatas.filter((hold: any) => hold.security.name === props.values.name)
       if (ownedStock === desiredQty) {
         desiredStocks.map((hold: any) => deleteHolding(user.jwt, hold.id));
-      } else if (ownedStock > desiredQty ) {
+      } else if (ownedStock > desiredQty) {
         while (desQty > 0) {
           const mostRecent = desiredStocks.pop()
           console.log("mostRecentQty and desQty", mostRecent, desQty)
@@ -134,14 +134,14 @@ const MarketActions = (props: Props): JSX.Element => {
           // If Desired Quantity is greater than or equal to the most recently bought stocks OwnedQty, then delete that holding
           if (desQty >= mostRecent.OwnedQuantity) {
             deleteHolding(user.jwt, mostRecent.id)
-            console.log( "deletedHolding" )
+            console.log("deletedHolding")
 
           } else {
             putHolding(user.jwt, {
               "OwnedQuantity": mostRecent.OwnedQuantity - desQty,
               "PurchasePrice": props.values.currentPrice
             }, mostRecent.id)
-            console.log( "edited holding" )
+            console.log("edited holding")
           }
           desQty -= mostRecent.OwnedQuantity;
         }
@@ -159,8 +159,8 @@ const MarketActions = (props: Props): JSX.Element => {
   };
 
   function maxOutBuy() {
-    const maxValue:number = (Math.round(availableFunds / props.values.currentPrice));
-    
+    const maxValue: number = (Math.floor(availableFunds / props.values.currentPrice));
+
     if (maxValue > quantityLimit) {
       setDesiredQty(quantityLimit);
     }
