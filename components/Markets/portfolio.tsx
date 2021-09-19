@@ -9,18 +9,19 @@ import useGetFilteredHolding from "hooks/useGetFilteredHoldings";
 import getCurrentPriceFromHold from "@components/functions/getCurrentPriceFromHold";
 
 const PortfolioSnapshot = (): JSX.Element => {
-
   const { user } = useAuth();
-
   const { data } = useGetPortfolio(user.jwt, user.portfolio)
   const { filteredData: holdings } = useGetFilteredHolding();
   const [profits, setProfits] = useState<number[]>([]);
+  const [totalProfit, setTotalProfit] = useState<number>(0);
 
   useMemo(async () => {
     if (holdings) {
       const profitsArr = async () => {
         const arr = [];
         // TODO Preformance optimization - make all await concurrent
+        // Possible solution: Add a route in backend to calculate and return profit
+
         for (const hold of holdings) {
           const hold_security_currentPrice = await getCurrentPriceFromHold(hold, user.jwt);
           arr.push((hold_security_currentPrice - hold.PurchasePrice) * hold.OwnedQuantity);
@@ -28,10 +29,15 @@ const PortfolioSnapshot = (): JSX.Element => {
 
         return arr;
       };
-    
+
       setProfits(await profitsArr());
     }
   }, [holdings, user.jwt])
+
+  useMemo(() => {
+    let profit = (profits.length !== 0) ? profits.reduce((p: number, c: number) => p + c) : 0
+    setTotalProfit(profit);
+  }, [profits]);
 
   return (
     <div className={styles.portfolioComponent}>
@@ -56,11 +62,11 @@ const PortfolioSnapshot = (): JSX.Element => {
           </div>
           <div>
             <h3>Profit</h3>
-            <p>{` ${indianNumberConverter((profits.length !== 0) ? profits.reduce((p: number, c: number) => p + c) : 0)}`}</p>
+            <p>{` ${indianNumberConverter(totalProfit)}`}</p>
           </div>
           <div>
             <h3>Total Value</h3>
-            <p>{` ${indianNumberConverter(data.AvailableFunds + data.AllocatedFunds + (profits.length !== 0 ? profits.reduce((p: number, c: number) => p + c) : 0))}`}</p>
+            <p>{` ${indianNumberConverter(data.AvailableFunds + data.AllocatedFunds + totalProfit)}`}</p>
           </div>
         </div>
       )}
