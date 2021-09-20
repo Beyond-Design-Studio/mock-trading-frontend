@@ -1,5 +1,5 @@
 import { useAuth } from "@components/contexts/authContext";
-import {useEffect, useMemo, useState} from "react"
+import {useMemo, useState} from "react"
 import useGetHoldings from "./useGetHoldings";
 
 
@@ -10,16 +10,15 @@ const useGetFilteredHolding = (): any => {
 	const { data, refetch } = useGetHoldings(user.jwt, user.portfolio);
 	const [filteredData, setFilteredData] = useState<any>([]);
 	
-	useEffect(() => {
+	useMemo(() => {
     if (data)
-		for (let i = 0; i < data.length; i++) {
+      for (let i = 0; i < data.length; i++) {
         // Innter Loop
-				console.log(data);
 				const list: string[] = [
           ...filteredData.map((filt: any) => filt.StockTicker),
         ];
         if (list.indexOf(data[i].StockTicker) !== -1) {
-					console.log("i -->>", list);
+
           continue;
         }
 
@@ -28,8 +27,8 @@ const useGetFilteredHolding = (): any => {
           (hold: any) => data[i].StockTicker === hold.StockTicker
         );
 				
-        // Reduce it to get the final value.
-        // Reduce's behaviour chnages when only one element is present, hence the length !== 1 terneary operator.
+        /* Reduce it to get the final value.
+        Reduce's behaviour chnages when only one element is present, hence the length !== 1 terneary operator. */
         const ownedQuantity = filteredVals.map((val: any) => val.OwnedQuantity).reduce(
           (p: number, c: number) => p + c
         );

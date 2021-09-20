@@ -6,17 +6,30 @@ import useGetPortfolio from "hooks/useGetPortfolio";
 import { useMediaQuery } from "react-responsive";
 import { useAuth } from "@components/contexts/authContext";
 import useGetFilteredHolding from "hooks/useGetFilteredHoldings";
+import getCurrentPriceFromHold from "@components/functions/getCurrentPriceFromHold";
 
 const Funds = (): JSX.Element => {
   const { user } = useAuth();
   const { data } = useGetPortfolio(user.jwt, user.portfolio);
-  const {filteredData: holdings} = useGetFilteredHolding();
+  const { filteredData: holdings } = useGetFilteredHolding();
   const [profits, setProfits] = useState<number[]>([]);
 
-  useMemo(() => {
-    holdings && setProfits(holdings.map((hold: any) => ((hold.security.currentPrice - hold.PurchasePrice) * hold.OwnedQuantity)))
+  useMemo(async () => {
+    if (holdings) {
+      const profitsArr = async () => {
+        const arr = [];
+        for (const hold of holdings) {
+          const hold_security_currentPrice = await getCurrentPriceFromHold(hold, user.jwt);
+          arr.push((hold_security_currentPrice - hold.PurchasePrice) * hold.OwnedQuantity);
+        }
+
+        return arr;
+      };
     
-  }, [holdings])
+      setProfits(await profitsArr());
+    }
+    
+  }, [holdings, user.jwt])
   
   const isMobile = useMediaQuery({ maxWidth: 1024 });
 
@@ -62,8 +75,9 @@ const Funds = (): JSX.Element => {
                 <p>{` ${indianNumberConverter(profits.length !== 0 ? profits.reduce((p: number, c: number) => p + c) : 0)}`}</p>
               </div>
               <div>
+                {console.log(holdings)}
                 <h3>Total Value</h3>
-                <p>{` ${indianNumberConverter(holdings.length !== 0 ? holdings.map((x: any) => x.PurchasePrice * x.OwnedQuantity).reduce((p: number, c: number) => (p + c)) : 0)}`}</p>
+                <p>{` ${indianNumberConverter(data.AvailableFunds + data.AllocatedFunds + (profits.length !== 0 ? profits.reduce((p: number, c: number) => p + c) : 0))}`}</p>
               </div>
             </div>
           </>
