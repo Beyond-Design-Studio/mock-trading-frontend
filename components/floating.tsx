@@ -1,45 +1,33 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
+import useSocket from './../hooks/useSocket';
 import styles from "@styles/floating.module.scss";
-import { io } from "socket.io-client";
 
 
 const Floating = (): JSX.Element => {
-	
+	const socket = useSocket();
 	const [time, setTime] = useState(90);
-	
-	useEffect(() => {
-    const socket = io('https://bodhi-stock-cms.herokuapp.com');
-
-    socket.on("connect", () => {
-      console.log(socket.id); // "G5p5..."
-    });
-    console.log("socket", socket.connected);
-    
-    socket.io.on("error", (error: any) => {
-      console.error("Socket Error: ", error);
-    });
-    
-    socket.on("news-update", (newsUpdate: any) => {
-      console.log("!!!!!!!!!!!news update!!!!!!!!!!!!", newsUpdate);
-    });
-    
-    return () => {
-      socket.disconnect();
-    };
-  }, []);
+	const [roundNumber, setRoundNumber] = useState(0);
+	// useEffect(() => {
+	// 	socket.on("round-update", (eventTimer: any) => {
+	// 		console.log("ROUND UPDATE", eventTimer)
+	// 		setTime(0);
+	// 		setRoundNumber(eventTimer.roundNumber);
+	// 	});
+	// }, [])
 
 
-	useEffect(() => {
-		
-		const interval = setInterval(() => {
-			setTime(time > 0 ? time - 1 : 90);
-		}, 1000);
+	// useEffect(() => {
+	// 	if (roundNumber > 0) {
+	// 		const interval = setInterval(() => {
+	// 			setTime(time > 0 ? time - 1 : 90);
+	// 		}, 1000);
 
-		return () => {
-			clearInterval(interval)
-		}
-	}, [time])
+	// 		return () => {
+	// 			clearInterval(interval)
+	// 		}
+	// 	}
+	// }, [time]);
 
 	return (
 		<Link href="/all-news">

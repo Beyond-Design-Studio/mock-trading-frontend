@@ -6,32 +6,29 @@ import styles from "@styles/allNews.module.scss";
 import Loading from "@components/loading";
 import useGetNews from "hooks/useGetNews";
 import useUser from "hooks/useUser";
+import useSocket from "hooks/useSocket";
 
-import { io } from "socket.io-client";
 import { NewsIcon } from "@components/icons";
 import { UserInterface } from "@components/contexts/authContext";
 
-
+const socket = useSocket();
 const Wrapped = ({ user }: { user: UserInterface }): JSX.Element => {
   const { data, refetch } = useGetNews(user.jwt);
-  
-  useEffect(() => {
-    const socket = io('https://bodhi-stock-cms.herokuapp.com');
 
-    socket.on("connect", () => {
-      console.log(socket.id); // "G5p5..."
-    });
+  useEffect(() => {
     console.log("socket", socket.connected);
-    
+
     socket.io.on("error", (error: any) => {
       console.error("Socket Error: ", error);
     });
-    
+
     socket.on("news-update", (newsUpdate: any) => {
       console.log("!!!!!!!!!!!news update!!!!!!!!!!!!", newsUpdate);
       refetch();
     });
-    
+
+
+
     return () => {
       socket.disconnect();
     };
