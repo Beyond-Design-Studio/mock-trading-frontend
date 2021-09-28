@@ -1,10 +1,14 @@
 import "../styles/globals.scss";
-import type { AppProps } from "next/app";
-import React from "react";
 import axios from "axios";
 import useSocket from 'hooks/useSocket'
-import { AuthProvider } from "@components/contexts/authContext";
+
+import type { AppProps } from "next/app";
+import React, { useEffect } from "react";
+
+// import { AuthProvider } from "@components/contexts/authContext";
 import { QueryClientProvider, QueryClient } from "react-query";
+import { ContextProvider } from "@components/contexts";
+import { useRound } from "@components/contexts/roundContext";
 
 const queryClient = new QueryClient();
 axios.defaults.baseURL = "http://localhost:1337";
@@ -13,19 +17,26 @@ axios.defaults.headers.post["Content-Type"] =
 
 function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   const socket = useSocket();
-  React.useEffect(() => {
+  const { round, setRound } = useRound();
+
+  useEffect(() => {
     socket.on("round-update", (eventTimer: any) => {
-      console.log("ROUND UPDATE", eventTimer)
+      setRound(eventTimer);
+      console.log("ROUND UPDATE", round);
+    });
+    socket.on("event-start", (eventStart: any) => {
+      console.log("EVENT START", eventStart);
     });
   }, [])
+
   return (
-    <AuthProvider>
+    <ContextProvider>
       <QueryClientProvider client={queryClient}>
         <>
           <Component {...pageProps} />
         </>
       </QueryClientProvider>
-    </AuthProvider>
+    </ContextProvider>
   );
 }
 export default MyApp;

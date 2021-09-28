@@ -13,8 +13,8 @@ import { useAuth } from "@components/contexts/authContext";
 import { LoaderIcon } from "@components/icons";
 import { useMediaQuery } from "react-responsive";
 import { SecurityInterface } from "@data/stonks";
-import getMostRecentPublished from "@components/functions/getMostRecentPublished";
-import getMostRecentPrevious from "@components/functions/getMostRecentPrevious";
+// import getMostRecentPublished from "@components/functions/getMostRecentPublished";
+// import getMostRecentPrevious from "@components/functions/getMostRecentPrevious";
 
 const TableRow: FC<SecurityInterface> = ({
   name,
@@ -152,8 +152,8 @@ const MarketComponent = (): JSX.Element => {
                     key={index}
                     name={stock.name}
                     img={stock.img}
-                    previousPrice={getMostRecentPrevious(stock.security_prices)}
-                    currentPrice={getMostRecentPublished(stock.security_prices)}
+                    previousPrice={stock.previousPrice}
+                    currentPrice={stock.currentPrice}
                     type={stock.type}
                     ticker={stock.ticker}
                   />
@@ -161,9 +161,7 @@ const MarketComponent = (): JSX.Element => {
               })}
           </tbody>
         ) : (
-          <tbody>
-            <Loading />
-          </tbody>
+          <Loading />
         )}
       </table>
     </section>

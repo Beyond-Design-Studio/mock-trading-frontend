@@ -1,5 +1,17 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+
+## TO-DOS
+  - [X] Change Total Value to Net worth
+  - [X] Change Allocated Funds to Amount Invested.
+  - [X] Customized News update heading
+  - [X] NaN -> Zero
+  - [ ] Partial crypto and commodities
+  - [ ] Null price for previous price on the first round.
+  - [ ] Stock price till two decimal places
+  - [X] Max button in sell dialog.
+  - [X] Sell button in portfolio.
+
 ## Getting Started
 
 First, run the development server:

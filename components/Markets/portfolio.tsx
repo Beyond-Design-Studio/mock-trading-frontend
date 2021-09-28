@@ -6,7 +6,8 @@ import useGetPortfolio from "hooks/useGetPortfolio";
 import { PortfolioIcon } from "@components/icons";
 import { useAuth } from "@components/contexts/authContext";
 import useGetFilteredHolding from "hooks/useGetFilteredHoldings";
-import getCurrentPriceFromHold from "@components/functions/getCurrentPriceFromHold";
+// import getCurrentPriceFromHold from "@components/functions/getCurrentPriceFromHold";
+import useGetStocks from "hooks/useGetStocks";
 
 const PortfolioSnapshot = (): JSX.Element => {
 
@@ -14,21 +15,23 @@ const PortfolioSnapshot = (): JSX.Element => {
 
   const { data } = useGetPortfolio(user.jwt, user.portfolio)
   const { filteredData: holdings } = useGetFilteredHolding();
+  const { data: stocks } = useGetStocks(user.jwt);
   const [profits, setProfits] = useState<number[]>([]);
 
   useMemo(async () => {
-    if (holdings) {
+    if (holdings && stocks) {
       const profitsArr = async () => {
         const arr = [];
         // TODO Preformance optimization - make all await concurrent
         for (const hold of holdings) {
-          const hold_security_currentPrice = await getCurrentPriceFromHold(hold, user.jwt);
-          arr.push((hold_security_currentPrice - hold.PurchasePrice) * hold.OwnedQuantity);
+          const holdSecurity = stocks.filter((stock: any) => stock.id === hold.security.id)[0]
+          const holdSecurityCurrentPrice = holdSecurity.currentPrice;
+          arr.push((holdSecurityCurrentPrice - hold.PurchasePrice) * hold.OwnedQuantity);
         }
 
         return arr;
       };
-    
+
       setProfits(await profitsArr());
     }
   }, [holdings, user.jwt])
@@ -51,7 +54,7 @@ const PortfolioSnapshot = (): JSX.Element => {
             <p>{` ${indianNumberConverter(data.AvailableFunds)}`}</p>
           </div>
           <div>
-            <h3>Allocated Funds</h3>
+            <h3>Amount Invested</h3>
             <p>{` ${indianNumberConverter(data.AllocatedFunds)}`}</p>
           </div>
           <div>
@@ -59,7 +62,7 @@ const PortfolioSnapshot = (): JSX.Element => {
             <p>{` ${indianNumberConverter((profits.length !== 0) ? profits.reduce((p: number, c: number) => p + c) : 0)}`}</p>
           </div>
           <div>
-            <h3>Total Value</h3>
+            <h3>Net Worth</h3>
             <p>{` ${indianNumberConverter(data.AvailableFunds + data.AllocatedFunds + (profits.length !== 0 ? profits.reduce((p: number, c: number) => p + c) : 0))}`}</p>
           </div>
         </div>

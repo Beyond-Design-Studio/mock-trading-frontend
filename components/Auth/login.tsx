@@ -22,6 +22,8 @@ function LogIn(props: Props): JSX.Element {
       .then(res => {
         console.log(`[PORTFOLIO CREATED]`, res.data)
         setUser({ ...user, portfolio: res.data.id })
+        localStorage.setItem("token", res.data.jwt);
+        router.push("/home");
       })
       .catch(err => {
         console.error(err);
@@ -50,10 +52,14 @@ function LogIn(props: Props): JSX.Element {
             username: res.data.user.username,
             portfolio: res.data.user.portfolio ? res.data.user.portfolio.id : -1
           });
-          if (!res.data.user.portfolio) createPortfolio(res.data.jwt, res.data.user.username, res.data.user.id);
+          if (!res.data.user.portfolio) {
+            console.log("[PORTFOLIO NOT FOUND]")
+            createPortfolio(res.data.jwt, res.data.user.username, res.data.user.id);
+          } else {
+            localStorage.setItem("token", res.data.jwt);
+            router.push("/home");
+            }
 
-          localStorage.setItem("token", res.data.jwt);
-          router.push("/home");
         })
         .catch((err) => {
           console.error(err);

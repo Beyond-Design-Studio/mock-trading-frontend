@@ -149,7 +149,7 @@ const MarketActions = (props: Props): JSX.Element => {
       putPortfolio(user.jwt, user.portfolio, {
         AllocatedFunds: portfolioData.AllocatedFunds - desiredQty * props.values.currentPrice,
         AvailableFunds: portfolioData.AvailableFunds + desiredQty * props.values.currentPrice
-      }).then(res => {
+      }).then(() => {
         portRefetch();
         holdingsRefetch();
         filteredRefetch();
@@ -157,6 +157,10 @@ const MarketActions = (props: Props): JSX.Element => {
       props.toggleModal();
     }
   };
+
+  const sellAll = () => {
+    setDesiredQty(ownedStock);
+  }
 
   function maxOutBuy() {
     const maxValue:number = (Math.round(availableFunds / props.values.currentPrice));
@@ -190,10 +194,13 @@ const MarketActions = (props: Props): JSX.Element => {
           min={0}
           max={9999}
           value={desiredQty}
-          onChange={(e) => desiredQtyHandler(parseInt(e.target.value))}
+          onChange={(e) => desiredQtyHandler(e.target.value ? parseFloat(e.target.value) : 0)}
         />
         {props.action === "buy" && (
           <button onClick={maxOutBuy} className={styles.selButton}>MAX</button>
+        )}
+        {props.action === "sell" && (
+          <button onClick={sellAll} className={styles.selButton}>ALL</button>
         )}
       </div>
 
