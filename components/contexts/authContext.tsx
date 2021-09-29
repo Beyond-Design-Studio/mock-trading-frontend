@@ -15,8 +15,10 @@ export interface authContextType {
 
 
 const defaultValue: authContextType = {
-	user: {jwt: "", id: -1, username: "", portfolio: -1},
-	setUser: (token) => {console.log(token)}
+	user: { jwt: "", id: -1, username: "", portfolio: -1 },
+	setUser: (token) => {
+		// console.log(token)
+	}
 }
 
 const AuthContext = createContext<authContextType>(defaultValue);
@@ -25,9 +27,9 @@ export function useAuth(): authContextType {
 	return useContext(AuthContext);
 }
 
-export const AuthProvider = ({children} : {children: ReactNode}): any => {
+export const AuthProvider = ({ children }: { children: ReactNode }): any => {
 
-	const [user, setuser] = useState<UserInterface>({jwt: "", id: -1, username: "", portfolio: -1});
+	const [user, setuser] = useState<UserInterface>({ jwt: "", id: -1, username: "", portfolio: -1 });
 	const setUser = (token: UserInterface) => {
 		setuser(token);
 	}

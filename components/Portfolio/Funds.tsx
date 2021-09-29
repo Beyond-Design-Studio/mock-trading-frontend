@@ -9,7 +9,7 @@ import useGetFilteredHolding from "hooks/useGetFilteredHoldings";
 // import getCurrentPriceFromHold from "@components/functions/getCurrentPriceFromHold";
 import useGetStocks from "hooks/useGetStocks";
 
-const Funds = (): JSX.Element => { 
+const Funds = (): JSX.Element => {
 
   const { user } = useAuth();
 
@@ -30,12 +30,12 @@ const Funds = (): JSX.Element => {
 
         return arr;
       };
-    
+
       setProfits(await profitsArr());
     }
-    
+
   }, [holdings, user.jwt])
-  
+
   const isMobile = useMediaQuery({ maxWidth: 1024 });
 
   return (
@@ -80,7 +80,7 @@ const Funds = (): JSX.Element => {
                 <p>{` ${indianNumberConverter(profits.length !== 0 ? profits.reduce((p: number, c: number) => p + c) : 0)}`}</p>
               </div>
               <div>
-                {console.log(holdings)}
+                {/* {console.log(holdings)} */}
                 <h3>Net Worth</h3>
                 <p>{` ${indianNumberConverter(data.AvailableFunds + data.AllocatedFunds + (profits.length !== 0 ? profits.reduce((p: number, c: number) => p + c) : 0))}`}</p>
               </div>

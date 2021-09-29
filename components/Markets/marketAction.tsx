@@ -80,7 +80,7 @@ const MarketActions = (props: Props): JSX.Element => {
       setholdingData(
         data.filter((hold: any) => hold.security.name === props.values.name)[0]
       );
-    console.log(data, holdingData);
+    // console.log(data, holdingData);
 
     if (holdingData) setOwnedStock(holdingData ? holdingData.OwnedQuantity : 0);
     if (portfolioData) setAvailableFunds(portfolioData.AvailableFunds);
@@ -94,11 +94,11 @@ const MarketActions = (props: Props): JSX.Element => {
   ]);
 
   const buyClick = () => {
-    console.log({
-      "portfolio_id": portfolioData.id,
-      "stock_id": props.values.id,
-      "quantity": desiredQty
-    })
+    // console.log({
+    //   "portfolio_id": portfolioData.id,
+    //   "stock_id": props.values.id,
+    //   "quantity": desiredQty
+    // })
     axios({
       url: `/stocks/buy`,
       method: "POST",
@@ -111,7 +111,7 @@ const MarketActions = (props: Props): JSX.Element => {
         "quantity": desiredQty
       }
     }).then((res) => {
-      console.log(res.data);
+      // console.log(res.data);
       portRefetch();
       holdingsRefetch();
       filteredRefetch();
@@ -119,7 +119,7 @@ const MarketActions = (props: Props): JSX.Element => {
     }).catch((err) => {
       if (err.response) {
         const errMsg = err.response.data.message[0].messages[0].id
-        console.log("[BUY ERROR]", JSON.stringify(errMsg));
+        console.error("[BUY ERROR]", JSON.stringify(errMsg));
         setError(errMsg);
       } else {
         setError("Some Error Occurred")
@@ -140,7 +140,7 @@ const MarketActions = (props: Props): JSX.Element => {
         "quantity": desiredQty
       }
     }).then((res) => {
-      console.log(res.data);
+      // console.log(res.data);
       portRefetch();
       holdingsRefetch();
       filteredRefetch();
@@ -148,7 +148,7 @@ const MarketActions = (props: Props): JSX.Element => {
     }).catch((err) => {
       if (err.response) {
         const errMsg = err.response.data.message[0].messages[0].id
-        console.log("[BUY ERROR]", JSON.stringify(errMsg));
+        console.error("[BUY ERROR]", JSON.stringify(errMsg));
         setError(errMsg);
       } else {
         setError("Some Error Occurred")

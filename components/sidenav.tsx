@@ -17,9 +17,9 @@ const Sidenav = (): JSX.Element => {
   const router = useRouter();
 
   useEffect(() => {
-    if (router && router.query) {
-      console.log("hello", router.pathname);
-    }
+    // if (router && router.query) {
+    //   console.log("hello", router.pathname);
+    // }
   }, [router]);
 
   function LogOutHandler() {

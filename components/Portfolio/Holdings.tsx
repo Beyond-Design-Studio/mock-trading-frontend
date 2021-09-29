@@ -21,7 +21,7 @@ const Holdings = (): JSX.Element => {
   useEffect(() => {
     if (user.jwt && user.jwt.length !== 0) {
       altGetStocks(user.jwt, setStock);
-    } 
+    }
   }, [])
 
   const { filteredData } = useGetFilteredHolding();
@@ -40,7 +40,7 @@ const Holdings = (): JSX.Element => {
           arr[hold.StockTicker] = holdSecurityCurrentPrice;
         }
 
-        console.log(arr);
+        // console.log(arr);
         return arr;
       };
 
@@ -48,7 +48,7 @@ const Holdings = (): JSX.Element => {
     }
   }, [filteredData, user.jwt, stocks]);
 
-  console.log(profits);
+  // console.log(profits);
 
 
   return (

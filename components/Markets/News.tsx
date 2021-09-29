@@ -8,12 +8,12 @@ import { useAuth } from "@components/contexts/authContext";
 import { useRound } from "@components/contexts/roundContext";
 
 const News = (): JSX.Element => {
-  
+
   const { round } = useRound();
   const { user } = useAuth();
-  const { data, error} = useGetNews(user.jwt);
-  console.log(user);
-  console.log("[NEWS MARKETS PAGE]", data, error);
+  const { data, error } = useGetNews(user.jwt);
+  // console.log(user);
+  // console.log("[NEWS MARKETS PAGE]", data, error);
 
   const [currentArticle, setCurrentArticle] =
     useState<NewsUpdateInterface | null>(null);
@@ -32,9 +32,9 @@ const News = (): JSX.Element => {
                 <span><NewsIcon /></span>
                 <h1>News</h1>
               </div>
-              <h5 style={{fontSize: "medium"}}>Next news update in { round.timer } seconds ({round.roundNumber}/12)</h5>
-              <h5 style={{fontSize: "small"}}>Max Alloc limit for stocks: ₹400000</h5>
-              <h5 style={{fontSize: "small"}}>Max Alloc limit for commodites and crypto: ₹300000</h5>
+              <h5 style={{ fontSize: "medium" }}>Next news update in {round.timer} seconds ({round.roundNumber}/12)</h5>
+              <h5 style={{ fontSize: "small" }}>Max Alloc limit for stocks: ₹400000</h5>
+              <h5 style={{ fontSize: "small" }}>Max Alloc limit for commodites and crypto: ₹300000</h5>
             </div>
             <div className={styles.headerRight}>
               <h5>{currentArticle.published}</h5>

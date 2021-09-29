@@ -4,7 +4,7 @@ const socket = io(dbURL);
 
 const initializeSocket = () => {
     socket.on("connect", () => {
-        console.log(socket.id);
+        // console.log(socket.id);
     });
 }
 

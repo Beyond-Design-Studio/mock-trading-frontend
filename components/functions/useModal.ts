@@ -8,7 +8,7 @@ const useModal = (): {
 	const [isVisible, setIsVisible] = useState(false);
 
 	const toggleModal = () => {
-		console.log("click");
+		// console.log("click");
 		setIsVisible(!isVisible);
 	}
 

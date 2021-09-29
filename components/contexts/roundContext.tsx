@@ -16,7 +16,9 @@ const defaultValue: roundContextType = {
     roundNumber: 0,
     timer: 90,
   },
-  setRound: (round: RoundInterface) => {console.log(round)}
+  setRound: (round: RoundInterface) => {
+    // console.log(round)
+  }
 }
 
 const RoundContext = createContext<roundContextType>(defaultValue);

@@ -36,7 +36,7 @@ const Floating = (): JSX.Element => {
 
 
   useEffect(() => {
-    console.log("ROUND UPDATE :floating.jsx", round);
+    // console.log("ROUND UPDATE :floating.jsx", round);
     if (round.roundNumber > 1 && round.roundNumber < 41) {
       const interval = setInterval(() => {
         setRound({

@@ -116,7 +116,7 @@ const MarketComponent = (): JSX.Element => {
 
   const { user } = useAuth();
   // const { data, error } = useGetStocks(user.jwt);
-  console.log(data);
+  // console.log(data);
 
   useEffect(() => {
     if (user.jwt && user.jwt.length !== 0) altGetStocks(user.jwt, setStock);
@@ -151,7 +151,7 @@ const MarketComponent = (): JSX.Element => {
             {data
               .filter((item: any) => item.type === marketView)
               .map((stock: any, index: number) => {
-                console.log(stock);
+                // console.log(stock);
                 return (
                   <TableRow
                     id={stock.id}
