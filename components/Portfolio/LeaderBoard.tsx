@@ -3,27 +3,29 @@ import styles from "@styles/portfolio.module.scss"
 import { LeaderboardIcon } from '@components/icons';
 import { useAuth } from '@components/contexts/authContext';
 import indianNumberConverter from "../functions/numberConvertor"
-import useGetLeader from 'hooks/useGetLeader';
 
 interface Props {
   InvestorName: string;
   InvestorNetWorth: number;
   PortfolioID: number;
+  data: any;
 }
 
 const Leaderboard = (props: Props): JSX.Element => {
   const [top3, setTop3] = useState<any[] | null>(null)
   const [userRank, setUserRank] = useState<number | null>(null)
+  const { data } = props;
 
   const { user } = useAuth();
-  const { data } = useGetLeader(user.jwt, user.portfolio);
 
   // console.log(data);
   // console.log(user);
 
   useEffect(() => {
     data && setTop3(data.top3)
-    data && setUserRank(data.rank)
+    if (data) {
+      setUserRank(data.rank);
+    }
   }, [data])
 
   return (

@@ -4,12 +4,13 @@ import styles from "@styles/portfolio.module.scss";
 import { useAuth } from "@components/contexts/authContext";
 interface Props {
   toggleModal: () => void;
+  textRank: string;
 }
 const Profile = (props: Props): JSX.Element => {
 
-	const { user } = useAuth();
+  const { user } = useAuth();
 
-	return (
+  return (
     <div className={styles.profileContainer}>
       <div className={styles.avatarContainer}>
         <Image
@@ -27,7 +28,7 @@ const Profile = (props: Props): JSX.Element => {
         </h1>
         <p>
           You are currently{" "}
-          <span onClick={props.toggleModal}>#21 on the leaderboard</span>!
+          <span onClick={props.toggleModal}>#{props.textRank} on the leaderboard</span>!
         </p>
       </div>
     </div>
