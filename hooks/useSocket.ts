@@ -11,8 +11,9 @@ const initializeSocket = () => {
 
 export default function useSocket(): any {
     // if socket not connected, connect it
+    console.log("SocketConnected: ", socket.connected);
     if (!socket.connected) {
-        initializeSocket();
+        // initializeSocket();
     }
     return socket;
 }

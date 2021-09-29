@@ -1,9 +1,8 @@
 import React, { useEffect } from "react";
 import Link from "next/link";
-// import useSocket from './../hooks/useSocket';
 import styles from "@styles/floating.module.scss";
 import { useRound } from "./contexts/roundContext";
-import useSocket from "hooks/useSocket";
+import { useSocket } from "@components/contexts/socketContext";
 import useGetPortfolio from "hooks/useGetPortfolio";
 import { useAuth } from "./contexts/authContext";
 import useGetStocks from "hooks/useGetStocks";
@@ -13,8 +12,8 @@ import useGetFilteredHolding from "hooks/useGetFilteredHoldings";
 const Floating = (): JSX.Element => {
   const initialTime = 15;
 
-  const socket = useSocket();
-  const {user} = useAuth();
+  const socket = useSocket().socket;
+  const { user } = useAuth();
   const { round, setRound } = useRound();
 
   const { refetch: portfolioRefetch } = useGetPortfolio(user.jwt, user.portfolio);
@@ -32,7 +31,9 @@ const Floating = (): JSX.Element => {
       stocksRefetch();
       filteredRefetch();
     });
-    return () => socket.disconnect();
+    return () => {
+      socket.off("round-update");
+    };
   }, []);
 
 

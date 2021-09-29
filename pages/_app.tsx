@@ -1,7 +1,6 @@
 import "../styles/globals.scss";
 import axios from "axios";
-import useSocket from 'hooks/useSocket'
-
+import { useSocket } from "@components/contexts/socketContext";
 import type { AppProps } from "next/app";
 import React, { useEffect } from "react";
 
@@ -16,8 +15,23 @@ axios.defaults.headers.post["Content-Type"] =
   "application/x-www-form-urlencoded";
 
 function MyApp({ Component, pageProps }: AppProps): JSX.Element {
-  const socket = useSocket();
+  const socket = useSocket().socket;
+  // console.log("socket: ", socket);
   const { setRound } = useRound();
+  const doSomethingBeforeUnload = () => {
+    // Do something
+    socket.off("event-start");
+    socket.off("round-update");
+    socket.off("round-update");
+  }
+
+  // Setup the `beforeunload` event listener
+  const setupBeforeUnloadListener = () => {
+    window.addEventListener("beforeunload", (ev) => {
+      ev.preventDefault();
+      return doSomethingBeforeUnload();
+    });
+  };
 
   useEffect(() => {
     socket.on("round-update", (eventTimer: any) => {
@@ -30,7 +44,11 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
         roundNumber: eventStart.roundNumber
       })
     });
-    return () => socket.disconnect();
+    setupBeforeUnloadListener();
+    return () => {
+      socket.off("event-start");
+      socket.off("round-update");
+    }
   }, [])
 
   return (

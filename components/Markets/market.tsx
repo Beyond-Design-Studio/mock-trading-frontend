@@ -120,7 +120,7 @@ const MarketComponent = (): JSX.Element => {
   useEffect(() => {
     if (data) {
       setStock(data);
-      console.log("STOCKS: ", data);
+      // console.log("STOCKS: ", data);
     }
   }, [user, data]);
 
