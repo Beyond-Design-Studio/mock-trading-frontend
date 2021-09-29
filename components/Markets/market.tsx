@@ -5,7 +5,7 @@ import Image from "next/image";
 import styles from "@styles/market.module.scss";
 import Loading from "@components/loading";
 import useModal from "@components/functions/useModal";
-import { altGetStocks } from "hooks/useGetStocks";
+import useGetStocks, { altGetStocks } from "hooks/useGetStocks";
 import MarketActions from "./marketAction";
 import TabbedButtons from "@components/tabbedBottons";
 
@@ -112,15 +112,21 @@ const TableRow: FC<SecurityInterface> = ({
 const MarketComponent = (): JSX.Element => {
   const [marketView, setMarketView] = useState<string>("stock");
   const isMedium = useMediaQuery({ query: "(min-width: 769px)" });
-  const [data, setStock] = useState<any[]>([]);
+  const [stock, setStock] = useState<any[]>([]);
 
   const { user } = useAuth();
-  // const { data, error } = useGetStocks(user.jwt);
-  // console.log(data);
+  const { data, error } = useGetStocks(user.jwt);
 
   useEffect(() => {
-    if (user.jwt && user.jwt.length !== 0) altGetStocks(user.jwt, setStock);
-  }, [])
+    if (data) {
+      setStock(data);
+      console.log("STOCKS: ", data);
+    }
+  }, [user, data]);
+
+  // useEffect(() => {
+  //   if (user.jwt && user.jwt.length !== 0) altGetStocks(user.jwt, setStock);
+  // }, [])
 
   const clickHandler = (str: string): void => {
     setMarketView(str);
@@ -148,7 +154,7 @@ const MarketComponent = (): JSX.Element => {
 
         {data ? (
           <tbody>
-            {data
+            {stock
               .filter((item: any) => item.type === marketView)
               .map((stock: any, index: number) => {
                 // console.log(stock);

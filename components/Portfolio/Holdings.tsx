@@ -3,13 +3,13 @@ import styles from "@styles/portfolio.module.scss";
 import TabbedButtons from "@components/tabbedBottons";
 import useGetFilteredHolding from "hooks/useGetFilteredHoldings";
 import { useAuth } from "@components/contexts/authContext";
-import { altGetStocks } from "hooks/useGetStocks";
+import useGetStocks, { altGetStocks } from "hooks/useGetStocks";
 import RowTable from "@components/Markets/TableRow";
 
 
 const Holdings = (): JSX.Element => {
   const { user } = useAuth();
-  // const { data: stocks } = useGetStocks(user.jwt);
+  const { data } = useGetStocks(user.jwt);
   const [stocks, setStock] = useState<any[]>([]);
   const [holdingsView, setHoldingsView] = useState<string>("stock");
   const [profits, setProfits] = useState<any>({});
@@ -18,11 +18,17 @@ const Holdings = (): JSX.Element => {
     setHoldingsView(str);
   };
 
+  // useEffect(() => {
+  //   if (user.jwt && user.jwt.length !== 0) {
+  //     altGetStocks(user.jwt, setStock);
+  //   }
+  // }, [])
   useEffect(() => {
-    if (user.jwt && user.jwt.length !== 0) {
-      altGetStocks(user.jwt, setStock);
+    if (data) {
+      setStock(data);
+      // console.log("STOCKS: ", data);
     }
-  }, [])
+  }, [user, data]);
 
   const { filteredData } = useGetFilteredHolding();
 
