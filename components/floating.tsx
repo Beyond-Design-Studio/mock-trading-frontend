@@ -32,6 +32,7 @@ const Floating = (): JSX.Element => {
       stocksRefetch();
       filteredRefetch();
     });
+    return () => socket.disconnect();
   }, []);
 
 

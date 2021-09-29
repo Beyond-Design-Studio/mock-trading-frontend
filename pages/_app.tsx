@@ -30,6 +30,7 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
         roundNumber: eventStart.roundNumber
       })
     });
+    return () => socket.disconnect();
   }, [])
 
   return (
