@@ -6,11 +6,17 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
   - [X] Change Allocated Funds to Amount Invested.
   - [X] Customized News update heading
   - [X] NaN -> Zero
-  - [ ] Partial crypto and commodities
-  - [ ] Null price for previous price on the first round.
-  - [ ] Stock price till two decimal places
+  - [X] Partial crypto and commodities
+  - [X] Stock price till two decimal places
   - [X] Max button in sell dialog.
   - [X] Sell button in portfolio.
+  - [X] Null price for previous price on the first round.
+  - [X] Sort out MAX button.
+  - [X] Logo change and disable click.
+  - [X] display MAX allocation limit. Under the next news in 10 seconds line
+  - [X] Market Action accessibility.
+  - [X] Change Profit to ‘Unrealized Profit/Loss’.
+  - [ ] Round updates
 
 ## Getting Started
 

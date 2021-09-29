@@ -14,8 +14,8 @@ const PortfolioSnapshot = (): JSX.Element => {
   const { user } = useAuth();
 
   const { data } = useGetPortfolio(user.jwt, user.portfolio)
-  const { filteredData: holdings } = useGetFilteredHolding();
   const { data: stocks } = useGetStocks(user.jwt);
+  const { filteredData: holdings } = useGetFilteredHolding();
   const [profits, setProfits] = useState<number[]>([]);
 
   useMemo(async () => {
@@ -28,7 +28,6 @@ const PortfolioSnapshot = (): JSX.Element => {
           const holdSecurityCurrentPrice = holdSecurity.currentPrice;
           arr.push((holdSecurityCurrentPrice - hold.PurchasePrice) * hold.OwnedQuantity);
         }
-
         return arr;
       };
 
@@ -58,7 +57,7 @@ const PortfolioSnapshot = (): JSX.Element => {
             <p>{` ${indianNumberConverter(data.AllocatedFunds)}`}</p>
           </div>
           <div>
-            <h3>Profit</h3>
+            <h3>Unrealized Profit/Loss</h3>
             <p>{` ${indianNumberConverter((profits.length !== 0) ? profits.reduce((p: number, c: number) => p + c) : 0)}`}</p>
           </div>
           <div>

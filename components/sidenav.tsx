@@ -33,7 +33,7 @@ const Sidenav = (): JSX.Element => {
 
       <aside className={`${styles.leftbar}`}>
         <div className={`${styles.bodhiTitle}`}>
-          <Link href="/">
+          <Link href="/home">
             <a tabIndex={0} className={`${styles.linkIcon}`}>
               <p>Bodhi</p>
               <BodhiIcon />

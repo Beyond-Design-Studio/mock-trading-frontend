@@ -9,8 +9,10 @@ import useGetFilteredHolding from "hooks/useGetFilteredHoldings";
 // import getCurrentPriceFromHold from "@components/functions/getCurrentPriceFromHold";
 import useGetStocks from "hooks/useGetStocks";
 
-const Funds = (): JSX.Element => {
+const Funds = (): JSX.Element => { 
+
   const { user } = useAuth();
+
   const { data } = useGetPortfolio(user.jwt, user.portfolio);
   const { data: stocks } = useGetStocks(user.jwt);
   const { filteredData: holdings } = useGetFilteredHolding();
@@ -51,7 +53,7 @@ const Funds = (): JSX.Element => {
               <p>{` ${indianNumberConverter(data.AllocatedFunds)}`}</p>
             </div>
             <div>
-              <h3>Profit</h3>
+              <h3>Unrealized Profit/Loss</h3>
               <p>{` ${indianNumberConverter(profits.length !== 0 ? profits.reduce((p: number, c: number) => p + c) : 0)}`}</p>
             </div>
             <div>
@@ -74,7 +76,7 @@ const Funds = (): JSX.Element => {
             </div>
             <div className={styles.fundsRow}>
               <div>
-                <h3>Profit</h3>
+                <h3>Unrealized Profit/Loss</h3>
                 <p>{` ${indianNumberConverter(profits.length !== 0 ? profits.reduce((p: number, c: number) => p + c) : 0)}`}</p>
               </div>
               <div>

@@ -17,24 +17,25 @@ axios.defaults.headers.post["Content-Type"] =
 
 function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   const socket = useSocket();
-  const { round, setRound } = useRound();
+  const { setRound } = useRound();
 
   useEffect(() => {
     socket.on("round-update", (eventTimer: any) => {
-      setRound(eventTimer);
-      console.log("ROUND UPDATE", round);
+      console.log("ROUND UPDATE", eventTimer);
     });
     socket.on("event-start", (eventStart: any) => {
       console.log("EVENT START", eventStart);
+      setRound({
+        timer: eventStart.timer,
+        roundNumber: eventStart.roundNumber
+      })
     });
   }, [])
 
   return (
     <ContextProvider>
       <QueryClientProvider client={queryClient}>
-        <>
-          <Component {...pageProps} />
-        </>
+        <Component {...pageProps} />
       </QueryClientProvider>
     </ContextProvider>
   );

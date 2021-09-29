@@ -7,9 +7,11 @@ import useGetPortfolio from "hooks/useGetPortfolio";
 import indianNumberConverter from "@components/functions/numberConvertor";
 
 import { useAuth } from "@components/contexts/authContext";
-import { postHolding, deleteHolding, putHolding } from "@components/functions/postHoldings";
-import putPortfolio from "@components/functions/postPortfolio";
+// import { deleteHolding, putHolding } from "@components/functions/postHoldings";
+// import putPortfolio from "@components/functions/postPortfolio";
 import useGetFilteredHolding from "hooks/useGetFilteredHoldings";
+import axios from "axios";
+import toFixed from "@components/functions/toFixed";
 
 
 interface ModalValues {
@@ -32,7 +34,7 @@ const MarketActions = (props: Props): JSX.Element => {
   const { user } = useAuth();
 
   const { data: portfolioData, refetch: portRefetch } = useGetPortfolio(user.jwt, user.portfolio);
-  const { data: holdingDatas, refetch: holdingsRefetch } = useGetHoldings(user.jwt, user.portfolio);
+  const { refetch: holdingsRefetch } = useGetHoldings(user.jwt, user.portfolio);
   const { filteredData: data, refetch: filteredRefetch } = useGetFilteredHolding();
 
   const isMedium = useMediaQuery({ query: "(min-width: 769px)" });
@@ -42,9 +44,9 @@ const MarketActions = (props: Props): JSX.Element => {
 
   const allocationLimit: number =
     props.values.type === "stocks" ? 400000 : 300000;
-  const quantityLimit: number = Math.floor(
+  const quantityLimit: number = props.values.type === "stock" ? Math.floor(
     allocationLimit / props.values.currentPrice
-  );
+  ) : (allocationLimit / props.values.currentPrice);
 
   //TODO make the limits also count securities owned by user beforehand
   const [desiredQty, setDesiredQty] = useState<number>(0);
@@ -78,8 +80,8 @@ const MarketActions = (props: Props): JSX.Element => {
       setholdingData(
         data.filter((hold: any) => hold.security.name === props.values.name)[0]
       );
-      console.log(data, holdingData);
-      
+    console.log(data, holdingData);
+
     if (holdingData) setOwnedStock(holdingData ? holdingData.OwnedQuantity : 0);
     if (portfolioData) setAvailableFunds(portfolioData.AvailableFunds);
   }, [
@@ -92,70 +94,66 @@ const MarketActions = (props: Props): JSX.Element => {
   ]);
 
   const buyClick = () => {
-    if (total > availableFunds || error) {
-      console.error(total, availableFunds);
-      setError("Buy Limit exceeded");
-    } else if (desiredQty > 0) {
-      postHolding(user.jwt, {
-        StockTicker: `${props.values.ticker}`,
-        PurchasePrice: props.values.currentPrice,
-        OwnedQuantity: desiredQty,
-        portfolio: user.portfolio,
-        security: props.values.id,
-      }),
-      putPortfolio(user.jwt, user.portfolio, {
-        AllocatedFunds: portfolioData.AllocatedFunds + desiredQty * props.values.currentPrice,
-        AvailableFunds: portfolioData.AvailableFunds - desiredQty * props.values.currentPrice
-      }).then(res => {
-        portRefetch();
-        holdingsRefetch();
-        filteredRefetch();
-        console.log(res);
-      })
+    console.log({
+      "portfolio_id": portfolioData.id,
+      "stock_id": props.values.id,
+      "quantity": desiredQty
+    })
+    axios({
+      url: `/stocks/buy`,
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${user.jwt}`
+      },
+      data: {
+        "portfolio_id": portfolioData.id,
+        "stock_id": props.values.id,
+        "quantity": desiredQty
+      }
+    }).then((res) => {
+      console.log(res.data);
+      portRefetch();
+      holdingsRefetch();
+      filteredRefetch();
       props.toggleModal();
-    }
+    }).catch((err) => {
+      if (err.response) {
+        const errMsg = err.response.data.message[0].messages[0].id
+        console.log("[BUY ERROR]", JSON.stringify(errMsg));
+        setError(errMsg);
+      } else {
+        setError("Some Error Occurred")
+      }
+    })
   };
 
   const sellClick = () => {
-    if (ownedStock < desiredQty) {
-      setError("Can't sell more than ye have");
-
-    } else {
-      let desQty = desiredQty;
-
-      const desiredStocks = holdingDatas.filter((hold: any) => hold.security.name === props.values.name)
-      if (ownedStock === desiredQty) {
-        desiredStocks.map((hold: any) => deleteHolding(user.jwt, hold.id));
-      } else if (ownedStock > desiredQty ) {
-        while (desQty > 0) {
-          const mostRecent = desiredStocks.pop()
-          console.log("mostRecentQty and desQty", mostRecent, desQty)
-
-          // If Desired Quantity is greater than or equal to the most recently bought stocks OwnedQty, then delete that holding
-          if (desQty >= mostRecent.OwnedQuantity) {
-            deleteHolding(user.jwt, mostRecent.id)
-            console.log( "deletedHolding" )
-
-          } else {
-            putHolding(user.jwt, {
-              "OwnedQuantity": mostRecent.OwnedQuantity - desQty,
-              "PurchasePrice": props.values.currentPrice
-            }, mostRecent.id)
-            console.log( "edited holding" )
-          }
-          desQty -= mostRecent.OwnedQuantity;
-        }
+    axios({
+      method: "POST",
+      url: `/stocks/sell`,
+      headers: {
+        Authorization: `Bearer ${user.jwt}`
+      },
+      data: {
+        "portfolio_id": portfolioData.id,
+        "stock_id": props.values.id,
+        "quantity": desiredQty
       }
-      putPortfolio(user.jwt, user.portfolio, {
-        AllocatedFunds: portfolioData.AllocatedFunds - desiredQty * props.values.currentPrice,
-        AvailableFunds: portfolioData.AvailableFunds + desiredQty * props.values.currentPrice
-      }).then(() => {
-        portRefetch();
-        holdingsRefetch();
-        filteredRefetch();
-      })
+    }).then((res) => {
+      console.log(res.data);
+      portRefetch();
+      holdingsRefetch();
+      filteredRefetch();
       props.toggleModal();
-    }
+    }).catch((err) => {
+      if (err.response) {
+        const errMsg = err.response.data.message[0].messages[0].id
+        console.log("[BUY ERROR]", JSON.stringify(errMsg));
+        setError(errMsg);
+      } else {
+        setError("Some Error Occurred")
+      }
+    })
   };
 
   const sellAll = () => {
@@ -163,12 +161,13 @@ const MarketActions = (props: Props): JSX.Element => {
   }
 
   function maxOutBuy() {
-    const maxValue:number = (Math.round(availableFunds / props.values.currentPrice));
-    
+    const maxValue: number = props.values.type === "stock" ?
+      (Math.floor(availableFunds / props.values.currentPrice)) :
+      parseFloat((availableFunds / props.values.currentPrice).toFixed(2));
+
     if (maxValue > quantityLimit) {
-      setDesiredQty(quantityLimit);
-    }
-    else {
+      setDesiredQty(toFixed(quantityLimit, 2));
+    } else {
       setDesiredQty(maxValue);
     }
   }
