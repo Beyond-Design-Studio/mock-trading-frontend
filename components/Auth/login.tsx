@@ -7,6 +7,7 @@ import { useAuth } from "@components/contexts/authContext";
 
 interface Props {
   setScreen: (value: string | ((prevVar: string) => string)) => void;
+  // returnUrl: string | string[];
 }
 
 
@@ -15,13 +16,15 @@ function LogIn(props: Props): JSX.Element {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
-  const {user, setUser} = useAuth();
+  const { user, setUser } = useAuth();
 
   const createPortfolio = (jwt: string, username: string, id: number) => {
-    axios({method: "post", headers: {Authorization: `Bearer ${jwt}`}, url: "/portfolios", data: qs.stringify({"InvestorName": username, "AvailableFunds": 100000, "AllocatedFunds": 0, "NetWorth": 100000, "user": id})})
+    axios({ method: "post", headers: { Authorization: `Bearer ${jwt}` }, url: "/portfolios", data: qs.stringify({ "InvestorName": username, "AvailableFunds": 100000, "AllocatedFunds": 0, "NetWorth": 100000, "user": id }) })
       .then(res => {
         console.log(`[PORTFOLIO CREATED]`, res.data)
         setUser({ ...user, portfolio: res.data.id })
+        localStorage.setItem("token", res.data.jwt);
+        router.push("/home");
       })
       .catch(err => {
         console.error(err);
@@ -40,9 +43,9 @@ function LogIn(props: Props): JSX.Element {
     } else {
       setError(null);
 
-      axios({method: "POST", url: "/auth/local", data: qs.stringify({"identifier": email, "password": password})})
+      axios({ method: "POST", url: "/auth/local", data: qs.stringify({ "identifier": email, "password": password }) })
         .then(res => {
-          console.log(res.data);
+          // console.log(res.data);
 
           setUser({
             jwt: res.data.jwt,
@@ -50,10 +53,14 @@ function LogIn(props: Props): JSX.Element {
             username: res.data.user.username,
             portfolio: res.data.user.portfolio ? res.data.user.portfolio.id : -1
           });
-          if (!res.data.user.portfolio) createPortfolio(res.data.jwt, res.data.user.username, res.data.user.id);
+          if (!res.data.user.portfolio) {
+            // console.log("[PORTFOLIO NOT FOUND]")
+            createPortfolio(res.data.jwt, res.data.user.username, res.data.user.id);
+          } else {
+            localStorage.setItem("token", res.data.jwt);
+            router.push("/home");
+          }
 
-          localStorage.setItem("token", res.data.jwt);
-          router.push("/home");
         })
         .catch((err) => {
           console.error(err);

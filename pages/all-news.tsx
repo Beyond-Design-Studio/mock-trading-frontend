@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 import Head from "next/head";
 import Sidenav from "@components/sidenav";
@@ -7,35 +7,11 @@ import Loading from "@components/loading";
 import useGetNews from "hooks/useGetNews";
 import useUser from "hooks/useUser";
 
-import { io } from "socket.io-client";
 import { NewsIcon } from "@components/icons";
 import { UserInterface } from "@components/contexts/authContext";
 
-
 const Wrapped = ({ user }: { user: UserInterface }): JSX.Element => {
-  const { data, refetch } = useGetNews(user.jwt);
-  
-  useEffect(() => {
-    const socket = io('https://bodhi-stock-cms.herokuapp.com');
-
-    socket.on("connect", () => {
-      console.log(socket.id); // "G5p5..."
-    });
-    console.log("socket", socket.connected);
-    
-    socket.io.on("error", (error: any) => {
-      console.error("Socket Error: ", error);
-    });
-    
-    socket.on("news-update", (newsUpdate: any) => {
-      console.log("!!!!!!!!!!!news update!!!!!!!!!!!!", newsUpdate);
-      refetch();
-    });
-    
-    return () => {
-      socket.disconnect();
-    };
-  }, [refetch]);
+  const { data } = useGetNews(user.jwt);
 
   return (
     <>
@@ -48,7 +24,7 @@ const Wrapped = ({ user }: { user: UserInterface }): JSX.Element => {
                   <span>
                     <NewsIcon />
                   </span>
-                  <h1>News Update {item.id}</h1>
+                  <h1>{item.Title}</h1>
                 </div>
               </div>
               <div className={styles.headerRight}>

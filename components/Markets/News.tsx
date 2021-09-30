@@ -2,19 +2,18 @@ import React, { useState, useEffect } from "react";
 import styles from "@styles/market.module.scss";
 import { NewsIcon } from "@components/icons";
 import { NewsUpdateInterface } from "@data/news";
-import Loading from "@components/loading";
 import Link from "next/link";
 import useGetNews from "hooks/useGetNews";
 import { useAuth } from "@components/contexts/authContext";
+import { useRound } from "@components/contexts/roundContext";
 
 const News = (): JSX.Element => {
-  //newsLimit is the number of news updates that has been done so far (different from final limit)
-  const newsLimit = 4;
-  
+
+  const { round } = useRound();
   const { user } = useAuth();
-  const { data, error} = useGetNews(user.jwt);
-  console.log(user);
-  console.log(error);
+  const { data } = useGetNews(user.jwt);
+  // console.log(user);
+  // console.log("[NEWS MARKETS PAGE]", data, error);
 
   const [currentArticle, setCurrentArticle] =
     useState<NewsUpdateInterface | null>(null);
@@ -33,7 +32,9 @@ const News = (): JSX.Element => {
                 <span><NewsIcon /></span>
                 <h1>News</h1>
               </div>
-              <h5>Next news update in 10 seconds ({newsLimit}/12)</h5>
+              <h5 style={{ fontSize: "medium" }}>Next news update in {round.timer} seconds ({round.roundNumber}/{round.max_rounds})</h5>
+              <h5 style={{ fontSize: "small" }}>Max Alloc limit for stocks: ₹400000</h5>
+              <h5 style={{ fontSize: "small" }}>Max Alloc limit for commodites and crypto: ₹300000</h5>
             </div>
             <div className={styles.headerRight}>
               <h5>{currentArticle.published}</h5>
@@ -78,7 +79,7 @@ const News = (): JSX.Element => {
       )}
       {!currentArticle && (
         <>
-          <Loading />
+          <p>No artices yet</p>
         </>
       )}
     </div>

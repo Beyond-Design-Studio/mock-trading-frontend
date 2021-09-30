@@ -9,14 +9,16 @@ import Modal from "@components/modal";
 import useModal from "@components/functions/useModal";
 import Leaderboard from "@components/Portfolio/LeaderBoard";
 import useGetPortfolio from "hooks/useGetPortfolio";
+import useGetLeader from 'hooks/useGetLeader';
 import useUser from "hooks/useUser";
 
 const Portfolio = (): JSX.Element => {
 
-	const { user } = useUser();
-	const { isVisible, toggleModal } = useModal();
-
-  const {data} = useGetPortfolio(user.jwt, user.portfolio);
+  const { user } = useUser();
+  const { isVisible, toggleModal } = useModal();
+  const { data: rankData } = useGetLeader(user.jwt, user.portfolio);
+  const [textRank, setTextRank] = React.useState("");
+  const { data } = useGetPortfolio(user.jwt, user.portfolio);
 
   return (
     <div>
@@ -33,12 +35,12 @@ const Portfolio = (): JSX.Element => {
             isVisible={isVisible}
             toggleModal={toggleModal}
           >
-            {data && 
-              <Leaderboard PortfolioID={data.id} InvestorName={data.InvestorName}  InvestorNetWorth={data.NetWorth}/>
+            {data &&
+              <Leaderboard PortfolioID={data.id} InvestorName={data.InvestorName} InvestorNetWorth={data.NetWorth} data={rankData} />
             }
           </Modal>
 
-          <Profile toggleModal={toggleModal} />
+          <Profile toggleModal={toggleModal} textRank={rankData ? rankData.rank.toString() : ""} />
 
           <div className={styles.statsContainer}>
             <Funds />
