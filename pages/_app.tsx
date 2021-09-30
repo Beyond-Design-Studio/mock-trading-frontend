@@ -1,25 +1,25 @@
 import "../styles/globals.scss";
+import axios from "axios";
 import type { AppProps } from "next/app";
 import React from "react";
-import axios from "axios";
-import { AuthProvider } from "@components/contexts/authContext";
-import { RouteGuard } from "@components/routeGuard";
+
+// import { AuthProvider } from "@components/contexts/authContext";
 import { QueryClientProvider, QueryClient } from "react-query";
+import { ContextProvider } from "@components/contexts";
 
 const queryClient = new QueryClient();
-axios.defaults.baseURL = "https://bodhi-stock-cms.herokuapp.com";
+axios.defaults.baseURL = "http://localhost:1337";
 axios.defaults.headers.post["Content-Type"] =
   "application/x-www-form-urlencoded";
 
 function MyApp({ Component, pageProps }: AppProps): JSX.Element {
+
   return (
-    <AuthProvider>
+    <ContextProvider>
       <QueryClientProvider client={queryClient}>
-        <RouteGuard>
-          <Component {...pageProps} />
-        </RouteGuard>
+        <Component {...pageProps} />
       </QueryClientProvider>
-    </AuthProvider>
+    </ContextProvider>
   );
 }
 export default MyApp;

@@ -1,53 +1,109 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import styles from "@styles/floating.module.scss";
-import { io } from "socket.io-client";
+import { useRound } from "./contexts/roundContext";
+import { useSocket } from "@components/contexts/socketContext";
+import useGetPortfolio from "hooks/useGetPortfolio";
+import { useAuth } from "./contexts/authContext";
+import useGetStocks from "hooks/useGetStocks";
+import useGetHoldings from "hooks/useGetHoldings";
+import axios from "axios";
 
 
 const Floating = (): JSX.Element => {
-	
-	const [time, setTime] = useState(90);
-	
-	useEffect(() => {
-    const socket = io('https://bodhi-stock-cms.herokuapp.com');
 
-    socket.on("connect", () => {
-      console.log(socket.id); // "G5p5..."
+  const socket = useSocket().socket;
+  const { user } = useAuth();
+  const { round, setRound } = useRound();
+  const [initialTime, setInitialTime] = useState(0);
+
+  const { refetch: portfolioRefetch } = useGetPortfolio(user.jwt, user.portfolio);
+  const { refetch: stocksRefetch } = useGetStocks(user.jwt);
+  const { refetch: filteredRefetch } = useGetHoldings(user.jwt, user.portfolio);
+
+  useEffect(() => {
+    // console.log("useEffect");
+    axios({
+      method: "GET",
+      url: "/even-start-triggers",
+      headers: {
+        Authorization: `Bearer ${user.jwt}`,
+      },
+    }).then(res => {
+      // console.log(res.data);
+      setInitialTime(res.data[0].round_duration_in_seconds)
+      setRound({ ...round, max_rounds: res.data[0].number_rounds, eventStarted: res.data[0].event_started });
+    })
+      .catch((err) => console.error(err));
+  }, []);
+
+  useEffect(() => {
+    socket.on("event-start", (eventStart: any) => {
+      console.log("event-start", eventStart);
+      setRound({
+        ...round,
+        roundNumber: eventStart.roundNumber,
+        timer: eventStart.timer,
+        eventStarted: eventStart.eventStarted,
+      })
+    })
+
+    socket.on("round-update", (eventTimer: any) => {
+      setRound({
+        ...round,
+        roundNumber: eventTimer.roundNumber,
+        timer: initialTime,
+        eventStarted: eventTimer.eventStarted,
+      });
+      portfolioRefetch();
+      stocksRefetch();
+      filteredRefetch();
     });
-    console.log("socket", socket.connected);
-    
-    socket.io.on("error", (error: any) => {
-      console.error("Socket Error: ", error);
-    });
-    
-    socket.on("news-update", (newsUpdate: any) => {
-      console.log("!!!!!!!!!!!news update!!!!!!!!!!!!", newsUpdate);
-    });
-    
     return () => {
-      socket.disconnect();
+      socket.off("round-update");
+
     };
   }, []);
 
 
-	useEffect(() => {
-		
-		const interval = setInterval(() => {
-			setTime(time > 0 ? time - 1 : 90);
-		}, 1000);
+  useEffect(() => {
+    // console.log("ROUND UPDATE :floating.jsx", round.eventStarted);
+    // if (round.roundNumber >= 1 && round.roundNumber < maxRounds) {
+    const interval = setInterval(() => {
+      setRound({
+        ...round,
+        timer: round.timer > 0 ? round.timer - 1 : initialTime
+      });
+    }, 1000);
 
-		return () => {
-			clearInterval(interval)
-		}
-	}, [time])
+    return () => {
+      clearInterval(interval);
+    }
+    // }
+  }, [round.roundNumber, round.timer, round]);
 
-	return (
-		<Link href="/all-news">
-			<a className={styles.fixedContainer}>
-				{time}
-			</a>
-		</Link>
-	);
+  return (
+    <div>
+      <style jsx>{`
+        .fixedContainer {
+
+        }
+      `}</style>
+
+      <Link href="/all-news">
+        <a className={`${styles.fixedContainer} counter-container`}>
+          <div>
+            <p>Round: </p>
+            <p>{round.roundNumber}</p>
+          </div>
+          <div>
+            <p>Time: </p>
+            <p>{round.timer}</p>
+          </div>
+        </a>
+      </Link>
+    </div>
+  );
 }
 
 export default Floating;

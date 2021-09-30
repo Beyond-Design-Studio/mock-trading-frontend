@@ -5,7 +5,7 @@ import { useEffect } from "react";
 
 export default function useUser(): authContextType {
 
-	const {user, setUser} = useAuth();
+	const { user, setUser } = useAuth();
 
 	useEffect(() => {
 
@@ -13,13 +13,13 @@ export default function useUser(): authContextType {
 			const token = localStorage.getItem("token");
 
 			if (!token) {
-				console.log("No token found");
+				console.error("No token found");
 				router.push("/auth")
 				return;
 			}
 
-			console.log("fetching user data");
-			
+			// console.log("fetching user data");
+
 			axios({
 				method: "GET",
 				url: "/users/me",
@@ -28,24 +28,24 @@ export default function useUser(): authContextType {
 				}
 			})
 				.then(res => {
-					console.log("data fetched");
+					// console.log("data fetched");
 					setUser({
-            jwt: token,
-            id: res.data.id,
-            username: res.data.username,
-            portfolio: res.data.portfolio
-          });
+						jwt: token,
+						id: res.data.id,
+						username: res.data.username,
+						portfolio: res.data.portfolio
+					});
 
-					return {user, setUser};
+					return { user, setUser };
 				})
 				.catch(err => {
-					console.log(err);
+					console.error(err);
 					router.push("/auth");
 				})
 		}
 
 	}, [user, setUser])
 
-	
-	return {user, setUser};
+
+	return { user, setUser };
 }

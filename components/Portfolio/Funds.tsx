@@ -6,31 +6,38 @@ import useGetPortfolio from "hooks/useGetPortfolio";
 import { useMediaQuery } from "react-responsive";
 import { useAuth } from "@components/contexts/authContext";
 import useGetFilteredHolding from "hooks/useGetFilteredHoldings";
-import getCurrentPriceFromHold from "@components/functions/getCurrentPriceFromHold";
+// import getCurrentPriceFromHold from "@components/functions/getCurrentPriceFromHold";
+import useGetStocks from "hooks/useGetStocks";
+import useGetHoldings from "hooks/useGetHoldings";
 
 const Funds = (): JSX.Element => {
+
   const { user } = useAuth();
+
   const { data } = useGetPortfolio(user.jwt, user.portfolio);
-  const { filteredData: holdings } = useGetFilteredHolding();
+  const { data: stocks } = useGetStocks(user.jwt);
+  const { data: holdingData } = useGetHoldings(user.jwt, user.portfolio);
+  const { filteredData: holdings } = useGetFilteredHolding(holdingData);
   const [profits, setProfits] = useState<number[]>([]);
 
-  useMemo(async () => {
-    if (holdings) {
-      const profitsArr = async () => {
+  useMemo(() => {
+    if (holdings && stocks) {
+      const profitsArr = () => {
         const arr = [];
         for (const hold of holdings) {
-          const hold_security_currentPrice = await getCurrentPriceFromHold(hold, user.jwt);
-          arr.push((hold_security_currentPrice - hold.PurchasePrice) * hold.OwnedQuantity);
+          const holdSecurity = stocks.filter((stock: any) => stock.id === hold.security.id)[0]
+          const holdSecurityCurrentPrice = holdSecurity.currentPrice;
+          arr.push((holdSecurityCurrentPrice - hold.PurchasePrice) * hold.OwnedQuantity);
         }
 
         return arr;
       };
-    
-      setProfits(await profitsArr());
+
+      setProfits(profitsArr());
     }
-    
+
   }, [holdings, user.jwt])
-  
+
   const isMobile = useMediaQuery({ maxWidth: 1024 });
 
   return (
@@ -44,15 +51,15 @@ const Funds = (): JSX.Element => {
               <p>{` ${indianNumberConverter(data.AvailableFunds)}`}</p>
             </div>
             <div>
-              <h3>Allocated Funds</h3>
+              <h3>Amount Invested</h3>
               <p>{` ${indianNumberConverter(data.AllocatedFunds)}`}</p>
             </div>
             <div>
-              <h3>Profit</h3>
+              <h3>Unrealized Profit/Loss</h3>
               <p>{` ${indianNumberConverter(profits.length !== 0 ? profits.reduce((p: number, c: number) => p + c) : 0)}`}</p>
             </div>
             <div>
-              <h3>Total Value</h3>
+              <h3>Net Worth</h3>
               <p>{` ${indianNumberConverter(holdings.length !== 0 ? holdings.map((x: any) => x.PurchasePrice * x.OwnedQuantity).reduce((p: number, c: number) => (p + c)) : 0)}`}</p>
             </div>
           </>
@@ -65,18 +72,18 @@ const Funds = (): JSX.Element => {
                 <p>{` ${indianNumberConverter(data.AvailableFunds)}`}</p>
               </div>
               <div>
-                <h3>Allocated Funds</h3>
+                <h3>Amount Invested</h3>
                 <p>{` ${indianNumberConverter(data.AllocatedFunds)}`}</p>
               </div>
             </div>
             <div className={styles.fundsRow}>
               <div>
-                <h3>Profit</h3>
+                <h3>Unrealized Profit/Loss</h3>
                 <p>{` ${indianNumberConverter(profits.length !== 0 ? profits.reduce((p: number, c: number) => p + c) : 0)}`}</p>
               </div>
               <div>
-                {console.log(holdings)}
-                <h3>Total Value</h3>
+                {/* {console.log(holdings)} */}
+                <h3>Net Worth</h3>
                 <p>{` ${indianNumberConverter(data.AvailableFunds + data.AllocatedFunds + (profits.length !== 0 ? profits.reduce((p: number, c: number) => p + c) : 0))}`}</p>
               </div>
             </div>

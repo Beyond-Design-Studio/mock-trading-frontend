@@ -17,9 +17,9 @@ const Sidenav = (): JSX.Element => {
   const router = useRouter();
 
   useEffect(() => {
-    if (router && router.query) {
-      console.log("hello", router.pathname);
-    }
+    // if (router && router.query) {
+    //   console.log("hello", router.pathname);
+    // }
   }, [router]);
 
   function LogOutHandler() {
@@ -33,7 +33,7 @@ const Sidenav = (): JSX.Element => {
 
       <aside className={`${styles.leftbar}`}>
         <div className={`${styles.bodhiTitle}`}>
-          <Link href="/">
+          <Link href="/home">
             <a tabIndex={0} className={`${styles.linkIcon}`}>
               <p>Bodhi</p>
               <BodhiIcon />

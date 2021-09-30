@@ -8,7 +8,7 @@ const getNews = async (jwt: string) => {
 		headers: {
 			Authorization: `Bearer ${jwt}`,
 		},
-	})
+	});
 
 	return data;
 }
