@@ -22,20 +22,29 @@ const Floating = (): JSX.Element => {
   const { refetch: filteredRefetch } = useGetHoldings(user.jwt, user.portfolio);
 
   useEffect(() => {
+    // console.log("useEffect");
     axios({
       method: "GET",
-      url: "/evet-start-triggers",
+      url: "/even-start-triggers",
       headers: {
         Authorization: `Bearer ${user.jwt}`,
       },
-    }).then(res => setInitialTime(res.data.round_duration_in_seconds))
-    .catch(console.error);
+    }).then(res => {
+      // console.log(res.data);
+      setInitialTime(res.data[0].round_duration_in_seconds)
+      setRound({ ...round, max_rounds: res.data[0].number_rounds, eventStarted: res.data[0].event_started });
+    })
+      .catch((err) => console.error(err));
+  }, []);
 
+  useEffect(() => {
     socket.on("event-start", (eventStart: any) => {
+      console.log("event-start", eventStart);
       setRound({
         ...round,
         roundNumber: eventStart.roundNumber,
         timer: eventStart.timer,
+        eventStarted: eventStart.eventStarted,
       })
     })
 
@@ -43,7 +52,8 @@ const Floating = (): JSX.Element => {
       setRound({
         ...round,
         roundNumber: eventTimer.roundNumber,
-        timer: 0
+        timer: initialTime,
+        eventStarted: eventTimer.eventStarted,
       });
       portfolioRefetch();
       stocksRefetch();
@@ -51,25 +61,26 @@ const Floating = (): JSX.Element => {
     });
     return () => {
       socket.off("round-update");
+
     };
   }, []);
 
 
   useEffect(() => {
-    // console.log("ROUND UPDATE :floating.jsx", round);
-    if (round.roundNumber > 1 && round.roundNumber < 41) {
-      const interval = setInterval(() => {
-        setRound({
-          ...round,
-          timer: round.timer > 0 ? round.timer - 1 : initialTime
-        });
-      }, 1000);
+    // console.log("ROUND UPDATE :floating.jsx", round.eventStarted);
+    // if (round.roundNumber >= 1 && round.roundNumber < maxRounds) {
+    const interval = setInterval(() => {
+      setRound({
+        ...round,
+        timer: round.timer > 0 ? round.timer - 1 : initialTime
+      });
+    }, 1000);
 
-      return () => {
-        clearInterval(interval)
-      }
+    return () => {
+      clearInterval(interval);
     }
-  }, [round]);
+    // }
+  }, [round.roundNumber, round.timer, round]);
 
   return (
     <div>

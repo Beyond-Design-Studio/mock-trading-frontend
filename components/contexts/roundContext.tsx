@@ -4,6 +4,8 @@ import { createContext, useContext, useState, ReactNode } from "react";
 export interface RoundInterface {
   roundNumber: number,
   timer: number,
+  max_rounds: number,
+  eventStarted: boolean,
 }
 
 export interface roundContextType {
@@ -15,6 +17,8 @@ const defaultValue: roundContextType = {
   round: {
     roundNumber: 0,
     timer: 90,
+    max_rounds: 20,
+    eventStarted: false,
   },
   setRound: (round: RoundInterface) => {
     // console.log(round)
@@ -29,14 +33,14 @@ export function useRound(): roundContextType {
 
 export const RoundProvider = ({ children }: { children: ReactNode }): any => {
 
-  const [round, setround] = useState<RoundInterface>({ roundNumber: 0, timer: 90 });
+  const [round, setround] = useState<RoundInterface>({ roundNumber: 0, timer: 90, max_rounds: 20, eventStarted: false });
   const setRound = (round: RoundInterface) => {
     setround(round);
   }
 
   const value = {
     round,
-    setRound
+    setRound,
   }
 
   return (
