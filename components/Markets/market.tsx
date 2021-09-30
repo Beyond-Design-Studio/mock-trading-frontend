@@ -8,6 +8,8 @@ import useModal from "@components/functions/useModal";
 import useGetStocks, { altGetStocks } from "hooks/useGetStocks";
 import MarketActions from "./marketAction";
 import TabbedButtons from "@components/tabbedBottons";
+import indianNumberConverter from "@components/functions/numberConvertor";
+import toFixed from "@components/functions/toFixed";
 
 import { useAuth } from "@components/contexts/authContext";
 import { LoaderIcon } from "@components/icons";
@@ -26,7 +28,7 @@ const TableRow: FC<SecurityInterface> = ({
   id,
   ticker
 }): JSX.Element => {
-  const gain = (currentPrice - previousPrice) / previousPrice;
+  const gain = previousPrice ? (currentPrice - previousPrice) / previousPrice : 0;
   const color = gain < 0 ? "#ff3535" : gain === 0 ? "#888" : "#029d02";
   const { isVisible, toggleModal } = useModal();
   const isMedium = useMediaQuery({ query: "(min-width: 769px)" });
@@ -78,8 +80,8 @@ const TableRow: FC<SecurityInterface> = ({
 
         {isMedium ? (
           <>
-            <td>{round.roundNumber === 1 ? "-" : previousPrice}</td>
-            <td>{currentPrice}</td>
+            <td>{round.roundNumber === 1 || !previousPrice ? "-" : indianNumberConverter(previousPrice)}</td>
+            <td>{indianNumberConverter(currentPrice)}</td>
           </>
         ) : null}
 
@@ -88,7 +90,7 @@ const TableRow: FC<SecurityInterface> = ({
             {!isMedium && <p>{currentPrice}</p>}
             <div>
               <p style={{ color: `${color}` }}>
-                {currentPrice - previousPrice}
+                {previousPrice ? indianNumberConverter(toFixed(currentPrice - previousPrice, 2)) : "-"}
               </p>
               <p style={{ color: `${color}` }}>{`(${gain < 0 ? "" : gain === 0 ? "" : "+"
                 }${(gain * 100).toFixed(2)}%)`}</p>

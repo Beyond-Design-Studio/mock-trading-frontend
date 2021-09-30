@@ -16,7 +16,6 @@ axios.defaults.headers.post["Content-Type"] =
 
 function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   const socket = useSocket().socket;
-  // console.log("socket: ", socket);
   const { setRound } = useRound();
   const doSomethingBeforeUnload = () => {
     // Do something
