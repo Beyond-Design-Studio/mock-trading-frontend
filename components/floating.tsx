@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import styles from "@styles/floating.module.scss";
 import { useRound } from "./contexts/roundContext";
@@ -7,20 +7,38 @@ import useGetPortfolio from "hooks/useGetPortfolio";
 import { useAuth } from "./contexts/authContext";
 import useGetStocks from "hooks/useGetStocks";
 import useGetHoldings from "hooks/useGetHoldings";
+import axios from "axios";
 
 
 const Floating = (): JSX.Element => {
-  const initialTime = 15;
 
   const socket = useSocket().socket;
   const { user } = useAuth();
   const { round, setRound } = useRound();
+  const [initialTime, setInitialTime] = useState(0);
 
   const { refetch: portfolioRefetch } = useGetPortfolio(user.jwt, user.portfolio);
   const { refetch: stocksRefetch } = useGetStocks(user.jwt);
-  const {refetch: filteredRefetch} = useGetHoldings(user.jwt, user.portfolio);
+  const { refetch: filteredRefetch } = useGetHoldings(user.jwt, user.portfolio);
 
   useEffect(() => {
+    axios({
+      method: "GET",
+      url: "/evet-start-triggers",
+      headers: {
+        Authorization: `Bearer ${user.jwt}`,
+      },
+    }).then(res => setInitialTime(res.data.round_duration_in_seconds))
+    .catch(console.error);
+
+    socket.on("event-start", (eventStart: any) => {
+      setRound({
+        ...round,
+        roundNumber: eventStart.roundNumber,
+        timer: eventStart.timer,
+      })
+    })
+
     socket.on("round-update", (eventTimer: any) => {
       setRound({
         ...round,

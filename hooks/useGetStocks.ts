@@ -15,7 +15,7 @@ const getStock = async (jwt: string) => {
 
 
 export default function useGetStocks(jwt: string): any {
-  return useQuery("stocks", () => getStock(jwt));
+  return useQuery("stocks", () => getStock(jwt), {retry: true});
 }
 
 export function altGetStocks(jwt: string, setStock: any): any {
