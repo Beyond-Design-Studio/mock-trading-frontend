@@ -18,9 +18,9 @@ const Funds = (): JSX.Element => {
   const { filteredData: holdings } = useGetFilteredHolding();
   const [profits, setProfits] = useState<number[]>([]);
 
-  useMemo(async () => {
+  useMemo(() => {
     if (holdings && stocks) {
-      const profitsArr = async () => {
+      const profitsArr = () => {
         const arr = [];
         for (const hold of holdings) {
           const holdSecurity = stocks.filter((stock: any) => stock.id === hold.security.id)[0]
@@ -31,7 +31,7 @@ const Funds = (): JSX.Element => {
         return arr;
       };
 
-      setProfits(await profitsArr());
+      setProfits(profitsArr());
     }
 
   }, [holdings, user.jwt])
