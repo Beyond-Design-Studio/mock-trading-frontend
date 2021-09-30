@@ -9,4 +9,8 @@ module.exports = {
     "next",
     "next/core-web-vitals",
   ],
+  "rules": {
+    "react/no-unescaped-entities": "off",
+    "no-useless-escape": "off",
+  },
 };
