@@ -8,6 +8,7 @@ import { useAuth } from "@components/contexts/authContext";
 import useGetFilteredHolding from "hooks/useGetFilteredHoldings";
 // import getCurrentPriceFromHold from "@components/functions/getCurrentPriceFromHold";
 import useGetStocks from "hooks/useGetStocks";
+import useGetHoldings from "hooks/useGetHoldings";
 
 const PortfolioSnapshot = (): JSX.Element => {
 
@@ -15,7 +16,8 @@ const PortfolioSnapshot = (): JSX.Element => {
 
   const { data } = useGetPortfolio(user.jwt, user.portfolio)
   const { data: stocks } = useGetStocks(user.jwt);
-  const { filteredData: holdings } = useGetFilteredHolding();
+  const { data: holdingData } = useGetHoldings(user.jwt, user.portfolio);
+  const { filteredData: holdings } = useGetFilteredHolding(holdingData);
   const [profits, setProfits] = useState<number[]>([]);
 
   useMemo(() => {

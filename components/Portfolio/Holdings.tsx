@@ -1,40 +1,23 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, {  useMemo, useState } from "react";
 import styles from "@styles/portfolio.module.scss";
 import TabbedButtons from "@components/tabbedBottons";
 import useGetFilteredHolding from "hooks/useGetFilteredHoldings";
 import { useAuth } from "@components/contexts/authContext";
-import useGetStocks, { altGetStocks } from "hooks/useGetStocks";
+import useGetStocks from "hooks/useGetStocks";
 import RowTable from "@components/Markets/TableRow";
+import useGetHoldings from "hooks/useGetHoldings";
 
 
 const Holdings = (): JSX.Element => {
   const { user } = useAuth();
-  const { data } = useGetStocks(user.jwt);
-  const [stocks, setStock] = useState<any[]>([]);
+  const { data: stocks } = useGetStocks(user.jwt);
   const [holdingsView, setHoldingsView] = useState<string>("stock");
   const [profits, setProfits] = useState<any>({});
+  const {data: holdingData} = useGetHoldings(user.jwt, user.portfolio);
+  const { filteredData } = useGetFilteredHolding(holdingData);
 
-  const clickHandler = (str: string): void => {
-    setHoldingsView(str);
-  };
-
-  // useEffect(() => {
-  //   if (user.jwt && user.jwt.length !== 0) {
-  //     altGetStocks(user.jwt, setStock);
-  //   }
-  // }, [])
-  useEffect(() => {
-    if (data) {
-      setStock(data);
-      // console.log("STOCKS: ", data);
-    }
-  }, [user, data]);
-
-  const { filteredData } = useGetFilteredHolding();
-
-
-  useMemo(async () => {
-    if (filteredData && stocks.length !== 0) {
+  useMemo(() => {
+    if (filteredData && stocks) {
       const profitsArr = () => {
         const arr: any = {};
         for (const hold of filteredData) {
@@ -46,7 +29,6 @@ const Holdings = (): JSX.Element => {
           arr[hold.StockTicker] = holdSecurityCurrentPrice;
         }
 
-        // console.log(arr);
         return arr;
       };
 
@@ -54,8 +36,9 @@ const Holdings = (): JSX.Element => {
     }
   }, [filteredData, user.jwt, stocks]);
 
-  // console.log(profits);
-
+  const clickHandler = (str: string): void => {
+    setHoldingsView(str);
+  };
 
   return (
     <>

@@ -34,25 +34,24 @@ const MarketActions = (props: Props): JSX.Element => {
   const { user } = useAuth();
 
   const { data: portfolioData, refetch: portRefetch } = useGetPortfolio(user.jwt, user.portfolio);
-  const { refetch: holdingsRefetch } = useGetHoldings(user.jwt, user.portfolio);
-  const { filteredData: data, refetch: filteredRefetch } = useGetFilteredHolding();
+  const { data: holdings, refetch: holdingsRefetch } = useGetHoldings(user.jwt, user.portfolio);
+  const { filteredData: data } = useGetFilteredHolding(holdings);
 
   const isMedium = useMediaQuery({ query: "(min-width: 769px)" });
 
   const [holdingData, setholdingData] = useState<any>(null);
   const [ownedStock, setOwnedStock] = useState(0);
-
-  const allocationLimit: number =
-    props.values.type === "stocks" ? 400000 : 300000;
-  const quantityLimit: number = props.values.type === "stock" ? Math.floor(
-    allocationLimit / props.values.currentPrice
-  ) : (allocationLimit / props.values.currentPrice);
-
-  //TODO make the limits also count securities owned by user beforehand
   const [desiredQty, setDesiredQty] = useState<number>(0);
   const [total, setTotal] = useState<number>(0);
   const [error, setError] = useState<string | null>(null);
   const [availableFunds, setAvailableFunds] = useState(0);
+
+  const allocationLimit: number = props.values.type === "stocks" ? 400000 : 300000;
+  const quantityLimit: number = props.values.type === "stock" ? Math.floor(
+      allocationLimit / props.values.currentPrice
+    ) : (allocationLimit / props.values.currentPrice);
+
+  //TODO make the limits also count securities owned by user beforehand
 
   function desiredQtyHandler(val: number) {
     if (desiredQty < 1) {
@@ -80,7 +79,6 @@ const MarketActions = (props: Props): JSX.Element => {
       setholdingData(
         data.filter((hold: any) => hold.security.name === props.values.name)[0]
       );
-    // console.log(data, holdingData);
 
     if (holdingData) setOwnedStock(holdingData ? holdingData.OwnedQuantity : 0);
     if (portfolioData) setAvailableFunds(portfolioData.AvailableFunds);
@@ -110,11 +108,9 @@ const MarketActions = (props: Props): JSX.Element => {
         "stock_id": props.values.id,
         "quantity": desiredQty
       }
-    }).then((res) => {
-      // console.log(res.data);
+    }).then(() => {
       portRefetch();
       holdingsRefetch();
-      filteredRefetch();
       props.toggleModal();
     }).catch((err) => {
       if (err.response) {
@@ -139,11 +135,9 @@ const MarketActions = (props: Props): JSX.Element => {
         "stock_id": props.values.id,
         "quantity": desiredQty
       }
-    }).then((res) => {
-      // console.log(res.data);
+    }).then(() => {
       portRefetch();
       holdingsRefetch();
-      filteredRefetch();
       props.toggleModal();
     }).catch((err) => {
       if (err.response) {

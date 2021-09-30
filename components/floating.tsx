@@ -6,7 +6,7 @@ import { useSocket } from "@components/contexts/socketContext";
 import useGetPortfolio from "hooks/useGetPortfolio";
 import { useAuth } from "./contexts/authContext";
 import useGetStocks from "hooks/useGetStocks";
-import useGetFilteredHolding from "hooks/useGetFilteredHoldings";
+import useGetHoldings from "hooks/useGetHoldings";
 
 
 const Floating = (): JSX.Element => {
@@ -18,7 +18,7 @@ const Floating = (): JSX.Element => {
 
   const { refetch: portfolioRefetch } = useGetPortfolio(user.jwt, user.portfolio);
   const { refetch: stocksRefetch } = useGetStocks(user.jwt);
-  const { refetch: filteredRefetch } = useGetFilteredHolding();
+  const {refetch: filteredRefetch} = useGetHoldings(user.jwt, user.portfolio);
 
   useEffect(() => {
     socket.on("round-update", (eventTimer: any) => {

@@ -11,7 +11,7 @@ const News = (): JSX.Element => {
 
   const { round } = useRound();
   const { user } = useAuth();
-  const { data, error } = useGetNews(user.jwt);
+  const { data } = useGetNews(user.jwt);
   // console.log(user);
   // console.log("[NEWS MARKETS PAGE]", data, error);
 
