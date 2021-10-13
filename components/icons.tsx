@@ -1,5 +1,5 @@
 import React from "react";
-import Image from 'next/image'
+
 
 export const HomeIcon = (): JSX.Element => {
 	return (
@@ -69,12 +69,8 @@ export const MarketIcon = (): JSX.Element => {
 }
 
 export const BodhiIcon = (): JSX.Element => {
-  const imageProps:any = {
-    src: "logo.png",
-    width: 24
-  }
   return (
-    <Image {...imageProps}/>
+    <img src="logo.png" width="24"></img>
   );
 
 }
