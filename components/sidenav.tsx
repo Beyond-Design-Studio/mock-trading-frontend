@@ -33,12 +33,10 @@ const Sidenav = (): JSX.Element => {
 
       <aside className={`${styles.leftbar}`}>
         <div className={`${styles.bodhiTitle}`}>
-          <Link href="/home">
-            <a tabIndex={0} className={`${styles.linkIcon}`}>
+            <a href="https://bodhicapital.in" target="_blank" tabIndex={0} className={`${styles.linkIcon}`}>
               <p>Bodhi</p>
               <BodhiIcon />
             </a>
-          </Link>
         </div>
 
         <div className={`${styles.centerIcons}`}>
