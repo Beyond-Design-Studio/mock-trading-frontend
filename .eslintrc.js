@@ -12,5 +12,6 @@ module.exports = {
   "rules": {
     "react/no-unescaped-entities": "off",
     "no-useless-escape": "off",
+    "@next/next/no-img-element": "off",
   },
 };
