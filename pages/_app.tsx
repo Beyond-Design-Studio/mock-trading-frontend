@@ -5,6 +5,7 @@ import React from "react";
 
 // import { AuthProvider } from "@components/contexts/authContext";
 import { QueryClientProvider, QueryClient } from "react-query";
+import { ReactQueryDevtools } from 'react-query/devtools'
 import { ContextProvider } from "@components/contexts";
 
 const queryClient = new QueryClient();
@@ -18,6 +19,7 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
     <ContextProvider>
       <QueryClientProvider client={queryClient}>
         <Component {...pageProps} />
+        <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
     </ContextProvider>
   );

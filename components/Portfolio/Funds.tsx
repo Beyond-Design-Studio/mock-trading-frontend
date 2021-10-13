@@ -36,7 +36,7 @@ const Funds = (): JSX.Element => {
       setProfits(profitsArr());
     }
 
-  }, [holdings, user.jwt])
+  }, [holdings, stocks])
 
   const isMobile = useMediaQuery({ maxWidth: 1024 });
 

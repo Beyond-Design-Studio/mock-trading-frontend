@@ -1,4 +1,4 @@
-import React, {  useMemo, useState } from "react";
+import React, {  useEffect, useState } from "react";
 import styles from "@styles/portfolio.module.scss";
 import TabbedButtons from "@components/tabbedBottons";
 import useGetFilteredHolding from "hooks/useGetFilteredHoldings";
@@ -16,7 +16,7 @@ const Holdings = (): JSX.Element => {
   const {data: holdingData} = useGetHoldings(user.jwt, user.portfolio);
   const { filteredData } = useGetFilteredHolding(holdingData);
 
-  useMemo(() => {
+  useEffect(() => {
     if (filteredData && stocks) {
       const profitsArr = () => {
         const arr: any = {};
@@ -34,7 +34,7 @@ const Holdings = (): JSX.Element => {
 
       setProfits(profitsArr());
     }
-  }, [filteredData, user.jwt, stocks]);
+  }, [filteredData, stocks]);
 
   const clickHandler = (str: string): void => {
     setHoldingsView(str);
@@ -44,6 +44,7 @@ const Holdings = (): JSX.Element => {
     <>
       <div className={styles.holdingsContainer}>
         <h1>Your Holdings</h1>
+        {console.log("[Holdings.tsx] 47", holdingData)}
         <div className={styles.holdingsMenu}>
           <TabbedButtons market={holdingsView} setMarket={clickHandler} />
         </div>
@@ -66,8 +67,8 @@ const Holdings = (): JSX.Element => {
 
             <tbody>
               {profits &&
-                filteredData &&
-                filteredData
+                holdingData &&
+                holdingData
                   .filter((item: any) => item.security.type === holdingsView)
                   .map((hold: any, ind: number) => {
                     return (
