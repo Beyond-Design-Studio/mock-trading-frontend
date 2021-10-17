@@ -157,7 +157,7 @@ const MarketActions = (props: Props): JSX.Element => {
   function maxOutBuy() {
     const maxValue: number = props.values.type === "stock" ?
       (Math.floor(availableFunds / props.values.currentPrice)) :
-      parseFloat((availableFunds / props.values.currentPrice).toFixed(2));
+      toFixed((availableFunds / props.values.currentPrice), 2);
 
     if (maxValue > quantityLimit) {
       setDesiredQty(toFixed(quantityLimit, 2));
