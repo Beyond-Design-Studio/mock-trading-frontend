@@ -30,6 +30,7 @@ const Profile = (props: Props): JSX.Element => {
           You are currently{" "}
           <span onClick={props.toggleModal}>#{props.textRank} on the leaderboard</span>!
         </p>
+        <p style={{ cursor: "pointer" }} onClick={props.toggleModal}>view leaderboard</p>
       </div>
     </div>
   );

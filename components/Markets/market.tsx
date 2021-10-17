@@ -159,13 +159,12 @@ const MarketComponent = (): JSX.Element => {
             {stock
               .filter((item: any) => item.type === marketView)
               .map((stock: any, index: number) => {
-                // console.log(stock);
                 return (
                   <TableRow
                     id={stock.id}
                     key={index}
                     name={stock.name}
-                    img={stock.img}
+                    img={stock.image ? stock.image.url : null}
                     previousPrice={stock.previousPrice}
                     currentPrice={stock.currentPrice}
                     type={stock.type}
