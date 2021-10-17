@@ -2,8 +2,8 @@
 
 .fixedContainer {
 	position: fixed;
-	bottom: 5%;
-	right: 5%;
+  bottom: 12%;
+  right: 5%;
 	border-radius: 50%;
 	border: 5px solid $accent-color;
 	color: $sec-color;
@@ -14,6 +14,15 @@
 	font-family: $font-montserrat;
 	@include flex-col-center;
   transition: all 0.25s;
+
+  @include media-smol {
+    bottom: 5%;
+    right: 1%;
+  }
+
+  @include media-large {
+    right: 5%;
+  }
 
   div {
     display: flex;

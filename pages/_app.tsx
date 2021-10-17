@@ -9,7 +9,7 @@ import { ReactQueryDevtools } from 'react-query/devtools'
 import { ContextProvider } from "@components/contexts";
 
 const queryClient = new QueryClient();
-axios.defaults.baseURL = process.env.TEST_DATABASE_URL;
+axios.defaults.baseURL = process.env.PRODUCTION_DATABASE_URL;
 axios.defaults.headers.post["Content-Type"] =
   "application/x-www-form-urlencoded";
 
