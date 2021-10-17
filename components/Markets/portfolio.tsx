@@ -62,7 +62,7 @@ const PortfolioSnapshot = (): JSX.Element => {
             <p>{` ${indianNumberConverter((profits.length !== 0) ? profits.reduce((p: number, c: number) => p + c) : 0)}`}</p>
           </div>
           <div>
-            <h3>Net Worth</h3>
+            <h3>Net Worth <span style={{ fontWeight: "normal", fontSize: "medium" }}>(incl unrealized P/L)</span></h3>
             <p>{` ${indianNumberConverter(data.AvailableFunds + data.AllocatedFunds + (profits.length !== 0 ? profits.reduce((p: number, c: number) => p + c) : 0))}`}</p>
           </div>
         </div>
