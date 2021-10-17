@@ -1,4 +1,4 @@
-import React, {  useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import styles from "@styles/portfolio.module.scss";
 import TabbedButtons from "@components/tabbedBottons";
 import useGetFilteredHolding from "hooks/useGetFilteredHoldings";
@@ -13,7 +13,7 @@ const Holdings = (): JSX.Element => {
   const { data: stocks } = useGetStocks(user.jwt);
   const [holdingsView, setHoldingsView] = useState<string>("stock");
   const [profits, setProfits] = useState<any>({});
-  const {data: holdingData} = useGetHoldings(user.jwt, user.portfolio);
+  const { data: holdingData } = useGetHoldings(user.jwt, user.portfolio);
   const { filteredData } = useGetFilteredHolding(holdingData);
 
   useEffect(() => {
@@ -66,21 +66,24 @@ const Holdings = (): JSX.Element => {
             </thead>
 
             <tbody>
-              {profits &&
-                holdingData &&
+              {holdingData &&
+                profits &&
                 holdingData
                   .filter((item: any) => item.security.type === holdingsView)
                   .map((hold: any, ind: number) => {
                     return (
-                      profits[hold.StockTicker] && (
+                      <Fragment key={ind}>
                         <RowTable
                           index={ind}
                           hold={hold}
                           profits={profits}
                         />
-                      )
+                      </Fragment>
+                      // profits[hold.StockTicker] && (
+                      // )
                     );
                   })}
+              {console.log(profits)}
             </tbody>
           </table>
         </div>

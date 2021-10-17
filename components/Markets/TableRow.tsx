@@ -41,9 +41,9 @@ const RowTable = ({ index, hold, profits }: {
         <td>{`${indianNumberConverter(
           hold.PurchasePrice
         )}`}</td>
-        <td>{`${indianNumberConverter(
+        <td>{`${profits[hold.StockTicker] ? indianNumberConverter(
           profits[hold.StockTicker]
-        )}`}</td>
+        ) : "loading"}`}</td>
         <td>{`${hold.OwnedQuantity}`}</td>
 
         {/* Invested */}
@@ -52,21 +52,24 @@ const RowTable = ({ index, hold, profits }: {
         )}`}</td>
 
         {/* Current */}
-        <td>{`${indianNumberConverter(
+        <td>{`${profits[hold.StockTicker] ? indianNumberConverter(
           hold.OwnedQuantity * profits[hold.StockTicker]
-        )}`}</td>
+        ) : "loading"}`}</td>
 
         {/* Profit / Loss */}
-        <td
-          className={
-            profits[hold.StockTicker] - hold.PurchasePrice >= 0
-              ? styles.pnlProfit
-              : styles.pnlLoss
-          }
-        >{`${indianNumberConverter(
-          (profits[hold.StockTicker] - hold.PurchasePrice) *
-          hold.OwnedQuantity
-        )}`}</td>
+        {
+          profits[hold.StockTicker] ?
+            <td
+              className={
+                profits[hold.StockTicker] - hold.PurchasePrice >= 0
+                  ? styles.pnlProfit
+                  : styles.pnlLoss
+              }
+            >{`${indianNumberConverter(
+              (profits[hold.StockTicker] - hold.PurchasePrice) *
+              hold.OwnedQuantity
+            )}`}</td> : <td>loading</td>
+        }
 
         {/* Sell */}
         <td>
