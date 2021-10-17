@@ -5,7 +5,7 @@ import Image from "next/image";
 import styles from "@styles/market.module.scss";
 import Loading from "@components/loading";
 import useModal from "@components/functions/useModal";
-import useGetStocks, { altGetStocks } from "hooks/useGetStocks";
+import useGetStocks from "hooks/useGetStocks";
 import MarketActions from "./marketAction";
 import TabbedButtons from "@components/tabbedBottons";
 import indianNumberConverter from "@components/functions/numberConvertor";
@@ -117,7 +117,7 @@ const MarketComponent = (): JSX.Element => {
   const [stock, setStock] = useState<any[]>([]);
 
   const { user } = useAuth();
-  const { data, error } = useGetStocks(user.jwt);
+  const { data } = useGetStocks(user.jwt);
 
   useEffect(() => {
     if (data) {
