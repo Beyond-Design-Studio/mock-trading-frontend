@@ -34,7 +34,7 @@ const PortfolioSnapshot = (): JSX.Element => {
 
       setProfits(profitsArr());
     }
-  }, [holdings, user.jwt])
+  }, [holdings, stocks])
 
   return (
     <div className={styles.portfolioComponent}>
