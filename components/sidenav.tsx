@@ -17,9 +17,9 @@ const Sidenav = (): JSX.Element => {
   const router = useRouter();
 
   useEffect(() => {
-    if (router && router.query) {
-      console.log("hello", router.pathname);
-    }
+    // if (router && router.query) {
+    //   console.log("hello", router.pathname);
+    // }
   }, [router]);
 
   function LogOutHandler() {
@@ -33,12 +33,10 @@ const Sidenav = (): JSX.Element => {
 
       <aside className={`${styles.leftbar}`}>
         <div className={`${styles.bodhiTitle}`}>
-          <Link href="/">
-            <a tabIndex={0} className={`${styles.linkIcon}`}>
+            <a href="https://bodhicapital.in" target="_blank" rel="noreferrer" tabIndex={0} className={`${styles.linkIcon}`}>
               <p>Bodhi</p>
               <BodhiIcon />
             </a>
-          </Link>
         </div>
 
         <div className={`${styles.centerIcons}`}>

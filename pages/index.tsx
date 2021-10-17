@@ -17,7 +17,7 @@ const Home = (): JSX.Element => {
       <div className={styles.background}></div>
       <div className={styles.container}>
         <div>
-          <h1>Mock Trading</h1>
+          <h1>Bodhi Stock Exchange</h1>
           <p>
             {"Welcome to India's premier inter-collegiate mock stock exchange."}
           </p>

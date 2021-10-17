@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 
 import Modal from "@components/modal";
 import Image from "next/image";
@@ -8,13 +8,16 @@ import useModal from "@components/functions/useModal";
 import useGetStocks from "hooks/useGetStocks";
 import MarketActions from "./marketAction";
 import TabbedButtons from "@components/tabbedBottons";
+import indianNumberConverter from "@components/functions/numberConvertor";
+import toFixed from "@components/functions/toFixed";
 
 import { useAuth } from "@components/contexts/authContext";
 import { LoaderIcon } from "@components/icons";
 import { useMediaQuery } from "react-responsive";
 import { SecurityInterface } from "@data/stonks";
-import getMostRecentPublished from "@components/functions/getMostRecentPublished";
-import getMostRecentPrevious from "@components/functions/getMostRecentPrevious";
+import { useRound } from "@components/contexts/roundContext";
+// import getMostRecentPublished from "@components/functions/getMostRecentPublished";
+// import getMostRecentPrevious from "@components/functions/getMostRecentPrevious";
 
 const TableRow: FC<SecurityInterface> = ({
   name,
@@ -25,11 +28,12 @@ const TableRow: FC<SecurityInterface> = ({
   id,
   ticker
 }): JSX.Element => {
-  const gain = (currentPrice - previousPrice) / previousPrice;
+  const gain = previousPrice ? (currentPrice - previousPrice) / previousPrice : 0;
   const color = gain < 0 ? "#ff3535" : gain === 0 ? "#888" : "#029d02";
   const { isVisible, toggleModal } = useModal();
   const isMedium = useMediaQuery({ query: "(min-width: 769px)" });
   const [secAction, setSecAction] = useState<string>("");
+  const { round } = useRound();
 
   function modalHandler(action: string) {
     setSecAction(action);
@@ -76,8 +80,8 @@ const TableRow: FC<SecurityInterface> = ({
 
         {isMedium ? (
           <>
-            <td>{previousPrice}</td>
-            <td>{currentPrice}</td>
+            <td>{round.roundNumber === 1 || !previousPrice ? "-" : indianNumberConverter(previousPrice)}</td>
+            <td>{indianNumberConverter(currentPrice)}</td>
           </>
         ) : null}
 
@@ -86,11 +90,10 @@ const TableRow: FC<SecurityInterface> = ({
             {!isMedium && <p>{currentPrice}</p>}
             <div>
               <p style={{ color: `${color}` }}>
-                {currentPrice - previousPrice}
+                {previousPrice ? indianNumberConverter(toFixed(currentPrice - previousPrice, 2)) : "-"}
               </p>
-              <p style={{ color: `${color}` }}>{`(${
-                gain < 0 ? "" : gain === 0 ? "" : "+"
-              }${(gain * 100).toFixed(2)}%)`}</p>
+              <p style={{ color: `${color}` }}>{`(${gain < 0 ? "" : gain === 0 ? "" : "+"
+                }${(gain * 100).toFixed(2)}%)`}</p>
             </div>
           </div>
         </td>
@@ -111,10 +114,21 @@ const TableRow: FC<SecurityInterface> = ({
 const MarketComponent = (): JSX.Element => {
   const [marketView, setMarketView] = useState<string>("stock");
   const isMedium = useMediaQuery({ query: "(min-width: 769px)" });
+  const [stock, setStock] = useState<any[]>([]);
 
   const { user } = useAuth();
   const { data } = useGetStocks(user.jwt);
-  console.log(data);
+
+  useEffect(() => {
+    if (data) {
+      setStock(data);
+      // console.log("STOCKS: ", data);
+    }
+  }, [user, data]);
+
+  // useEffect(() => {
+  //   if (user.jwt && user.jwt.length !== 0) altGetStocks(user.jwt, setStock);
+  // }, [])
 
   const clickHandler = (str: string): void => {
     setMarketView(str);
@@ -142,18 +156,18 @@ const MarketComponent = (): JSX.Element => {
 
         {data ? (
           <tbody>
-            {data
+            {stock
               .filter((item: any) => item.type === marketView)
               .map((stock: any, index: number) => {
-                console.log(stock);
+                // console.log(stock);
                 return (
                   <TableRow
                     id={stock.id}
                     key={index}
                     name={stock.name}
                     img={stock.img}
-                    previousPrice={getMostRecentPrevious(stock.security_prices)}
-                    currentPrice={getMostRecentPublished(stock.security_prices)}
+                    previousPrice={stock.previousPrice}
+                    currentPrice={stock.currentPrice}
                     type={stock.type}
                     ticker={stock.ticker}
                   />
@@ -161,9 +175,7 @@ const MarketComponent = (): JSX.Element => {
               })}
           </tbody>
         ) : (
-          <tbody>
-            <Loading />
-          </tbody>
+          <Loading />
         )}
       </table>
     </section>
