@@ -62,11 +62,11 @@ const MarketActions = (props: Props): JSX.Element => {
     }
 
     if (props.action === "buy" && val > quantityLimit) {
-      setError("The input quanity is above the allocation limit.");
+      setError("The input quantity is above the allocation limit.");
     }
     //TODO error for exceeded held quantity when selling
     else if (props.action === "sell" && val > ownedStock) {
-      setError("The input quanity is greater than your owned quantity.");
+      setError("The input quantity is greater than your owned quantity.");
     } else {
       setError(null);
       setDesiredQty(val);
