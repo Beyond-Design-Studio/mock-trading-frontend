@@ -1,6 +1,8 @@
+import { useState } from "react"
+
+
 function useGetFilteredHolding(data: any): any {
-  // const [filteredData, setFilteredData] = useState<any>([]);
-  let filteredData: any[] = []
+  const [filteredData, setFilteredData] = useState<any>([]);
 
   if (data)
     for (let i = 0; i < data.length; i++) {
@@ -33,7 +35,7 @@ function useGetFilteredHolding(data: any): any {
         : filteredVals[0].PurchasePrice;
 
       // If Duplicate doesn't exists, append to filteredData
-      filteredData = [
+      setFilteredData([
         ...filteredData,
         {
           ...data[i],
@@ -46,7 +48,7 @@ function useGetFilteredHolding(data: any): any {
             )
             : filteredVals[0].OwnedQuantity,
         },
-      ];
+      ]);
     }
 
   return { filteredData };
