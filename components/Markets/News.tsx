@@ -72,14 +72,14 @@ const News = (): JSX.Element => {
           </div>
           <div className={styles.linkContainer}>
             <Link href={"/all-news"}>
-              <a>View all news updates</a>
+              <a>View previous news updates</a>
             </Link>
           </div>
         </>
       )}
       {!currentArticle && (
         <>
-          <p>No Articles yet</p>
+          <p>No Articles Yet</p>
         </>
       )}
     </div>

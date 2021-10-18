@@ -59,8 +59,8 @@ const Funds = (): JSX.Element => {
               <p>{` ${indianNumberConverter(profits.length !== 0 ? profits.reduce((p: number, c: number) => p + c) : 0)}`}</p>
             </div>
             <div>
-              <h3>Net Worth</h3>
-              <p>{` ${indianNumberConverter(holdings.length !== 0 ? holdings.map((x: any) => x.PurchasePrice * x.OwnedQuantity).reduce((p: number, c: number) => (p + c)) : 0)}`}</p>
+              <h3>Net Worth <span style={{ fontWeight: "normal", fontSize: "small" }}>(incl unrealized P/L)</span></h3>
+              <p>{` ${indianNumberConverter(data.AvailableFunds + data.AllocatedFunds + (profits.length !== 0 ? profits.reduce((p: number, c: number) => p + c) : 0))}`}</p>
             </div>
           </>
         )}
@@ -83,7 +83,7 @@ const Funds = (): JSX.Element => {
               </div>
               <div>
                 {/* {console.log(holdings)} */}
-                <h3>Net Worth</h3>
+                <h3>Net Worth <span style={{ fontWeight: "normal", fontSize: "medium" }}>(incl unrealized P/L)</span></h3>
                 <p>{` ${indianNumberConverter(data.AvailableFunds + data.AllocatedFunds + (profits.length !== 0 ? profits.reduce((p: number, c: number) => p + c) : 0))}`}</p>
               </div>
             </div>

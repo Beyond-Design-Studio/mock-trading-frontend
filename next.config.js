@@ -6,7 +6,7 @@ module.exports = {
   },
   reactStrictMode: true,
   images: {
-    domains: ["avatars.dicebear.com"]
+    domains: ["avatars.dicebear.com", "res.cloudinary.com"]
   },
   env: {
     PRODUCTION_DATABASE_URL: 'https://bodhi-stock-cms.herokuapp.com',
