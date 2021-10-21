@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, ReactNode } from "react";
 import io from "socket.io-client";
-const dbURL: string = process.env.PRODUCTION_DATABASE_URL ? process.env.PRODUCTION_DATABASE_URL : "http://localhost:1337";
+const dbURL: string = process.env.NEXT_PUBLIC_DATABASE_URL ? process.env.NEXT_PUBLIC_DATABASE_URL : "http://localhost:1337";
 export interface socketContextType {
     socket: any;
 }
