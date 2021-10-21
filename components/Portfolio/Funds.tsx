@@ -33,7 +33,7 @@ const Funds = (): JSX.Element => {
               <p>{` ${indianNumberConverter(data.NetWorth - data.unrealized_networth)}`}</p>
             </div>
             <div>
-              <h3>Net Worth <span style={{ fontWeight: "normal", fontSize: "small" }}>(incl unrealized P/L)</span></h3>
+              <h3>Net Worth </h3>
               <p>{` ${indianNumberConverter(data.NetWorth)}`}</p>
             </div>
           </>
@@ -57,7 +57,7 @@ const Funds = (): JSX.Element => {
               </div>
               <div>
                 {/* {console.log(holdings)} */}
-                <h3>Net Worth <span style={{ fontWeight: "normal", fontSize: "medium" }}>(incl unrealized P/L)</span></h3>
+                <h3>Net Worth</h3>
                 <p>{` ${indianNumberConverter(data.NetWorth)}`}</p>
               </div>
             </div>
