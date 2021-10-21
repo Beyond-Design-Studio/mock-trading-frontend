@@ -26,8 +26,8 @@ const Sponsors = (): JSX.Element => {
         alignItems: "center",
         justifyContent: "space-evenly",
       }}>
-        <a tabIndex={0} target="_blank" href="https://finforall.graphy.com">
-          <img width={200} height={200} src="/sponsors/fin.png"></img>
+        <a tabIndex={0} target="_blank" rel="noreferrer" href="https://finforall.graphy.com">
+          <img alt="finforall logo" width={200} height={200} src="/sponsors/fin.png"></img>
         </a>
       </div>
     </div>
