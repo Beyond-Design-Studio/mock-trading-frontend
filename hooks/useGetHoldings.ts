@@ -4,7 +4,7 @@ import axios from "axios";
 const getHolding = async (jwt: string, portfolioId: number) => {
 	if (jwt) {
 		const { data } = await axios({
-			url: `/holdings?portfolio=${portfolioId}`,
+			url: `/holdings?portfolio_id=${portfolioId}`,
 			method: "GET",
 			headers: {
 				Authorization: `Bearer ${jwt}`,

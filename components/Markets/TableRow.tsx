@@ -2,30 +2,41 @@ import styles from "@styles/portfolio.module.scss";
 import indianNumberConverter from "@components/functions/numberConvertor";
 import useModal from "@components/functions/useModal";
 import Modal from "@components/modal";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import MarketActions from "./marketAction";
+import useGetStock from "hooks/useGetStock";
+import { useAuth } from "@components/contexts/authContext";
 
 
-const RowTable = ({ index, hold, profits }: {
+const RowTable = ({ index, hold }: {
   index: number,
   hold: any,
-  profits: number[],
 }) => {
 
+  const { user } = useAuth();
+  const { data: stock } = useGetStock(user.jwt, hold.stock_id);
   const { isVisible, toggleModal } = useModal();
+
+  const [modalProps, setModalProps] = useState<any>();
+
   const sellAction = () => {
     toggleModal();
   }
 
-  const modalProps = {
-    name: hold.security.name,
-    ticker: hold.StockTicker,
-    id: hold.security.id,
-    previousPrice: hold.security.previousPrice,
-    currentPrice: hold.security.currentPrice,
-    type: hold.security.type,
-    img: hold.security.img,
-  }
+  useEffect(() => {
+    if (stock) {
+      console.log(stock)
+      setModalProps({
+        name: stock.name,
+        ticker: stock.ticker,
+        id: hold.stock_id,
+        previousPrice: stock.previousPrice,
+        currentPrice: stock.currentPrice,
+        type: stock.type,
+        img: stock.img,
+      });
+    }
+  }, [])
 
   return (
     <>
@@ -37,37 +48,44 @@ const RowTable = ({ index, hold, profits }: {
         />
       </Modal>
       <tr key={index}>
-        <td>{`${hold.StockTicker}`}</td>
+        {/* Stocks */}
+        <td>{`${stock ? stock.ticker : "-loading-"}`}</td>
+
+        {/* Average Price */}
         <td>{`${indianNumberConverter(
-          hold.PurchasePrice
+          hold.average_price
         )}`}</td>
-        <td>{`${profits[hold.StockTicker] ? indianNumberConverter(
-          profits[hold.StockTicker]
-        ) : "loading"}`}</td>
-        <td>{`${hold.OwnedQuantity}`}</td>
+
+        {/* Current Price */}
+        <td>{`${stock ? indianNumberConverter(
+          stock.currentPrice
+        ) : "-loading-"}`}</td>
+
+        {/* Owned Quantity */}
+        <td>{`${hold.total_quantity}`}</td>
 
         {/* Invested */}
         <td>{`${indianNumberConverter(
-          hold.PurchasePrice * hold.OwnedQuantity
+          hold.total_quantity * hold.average_price
         )}`}</td>
 
         {/* Current */}
-        <td>{`${profits[hold.StockTicker] ? indianNumberConverter(
-          hold.OwnedQuantity * profits[hold.StockTicker]
-        ) : "loading"}`}</td>
+        <td>{`${stock ? indianNumberConverter(
+          hold.total_quantity * stock.currentPrice
+        ) : "-loading-"}`}</td>
 
         {/* Profit / Loss */}
         {
-          profits[hold.StockTicker] ?
+          stock ?
             <td
               className={
-                profits[hold.StockTicker] - hold.PurchasePrice >= 0
+                stock.currentPrice - hold.average_price >= 0
                   ? styles.pnlProfit
                   : styles.pnlLoss
               }
             >{`${indianNumberConverter(
-              (profits[hold.StockTicker] - hold.PurchasePrice) *
-              hold.OwnedQuantity
+              (stock.currentPrice - hold.average_price) *
+              hold.total_quantity
             )}`}</td> : <td>loading</td>
         }
 

@@ -17,7 +17,7 @@ export interface authContextType {
 const defaultValue: authContextType = {
 	user: { jwt: "", id: -1, username: "", portfolio: -1 },
 	setUser: (token) => {
-		// console.log(token)
+		console.log(token)
 	}
 }
 
