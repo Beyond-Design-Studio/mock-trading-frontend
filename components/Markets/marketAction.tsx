@@ -10,10 +10,10 @@ import indianNumberConverter from "@components/functions/numberConvertor";
 import { useAuth } from "@components/contexts/authContext";
 // import { deleteHolding, putHolding } from "@components/functions/postHoldings";
 // import putPortfolio from "@components/functions/postPortfolio";
-import useGetFilteredHolding from "hooks/useGetFilteredHoldings";
 import axios from "axios";
 import toFixed from "@components/functions/toFixed";
 import { useGetStockById } from "hooks/useGetStocks";
+import { useRound } from "@components/contexts/roundContext";
 
 
 interface ModalValues {
@@ -34,10 +34,10 @@ interface Props {
 
 const MarketActions = (props: Props): JSX.Element => {
   const { user } = useAuth();
+  const { round } = useRound();
 
   const { data: portfolioData, refetch: portRefetch } = useGetPortfolio(user.jwt, user.portfolio);
   const { data: holdings, refetch: holdingsRefetch } = useGetHoldings(user.jwt, user.portfolio);
-  const { filteredData: data } = useGetFilteredHolding(holdings);
   const { data: stockData } = useGetStockById(user.jwt, props.values.id);
 
   const isMedium = useMediaQuery({ query: "(min-width: 769px)" });
@@ -79,9 +79,9 @@ const MarketActions = (props: Props): JSX.Element => {
 
   useEffect(() => {
     setTotal(desiredQty * props.values.currentPrice);
-    if (data)
+    if (holdings)
       setholdingData(
-        data.filter((hold: any) => hold.security.name === props.values.name)[0]
+        holdings.filter((hold: any) => hold.stock_id === props.values.id)[0]
       );
 
     if (stockData) {
@@ -94,14 +94,26 @@ const MarketActions = (props: Props): JSX.Element => {
     }
 
     console.log(holdingData);
-    if (holdingData) setOwnedStock(holdingData ? holdingData.OwnedQuantity : 0);
+    if (holdingData) setOwnedStock(holdingData ? holdingData.total_quantity : 0);
     if (portfolioData) setAvailableFunds(portfolioData.AvailableFunds);
-    holdingData ? setAllocationLimit(holdingData.price_limit) : setAllocationLimit(stockData ? stockData.price_limit : allocationLimit);
+
+    if (holdingData) {
+      const filteredAllocLim = holdingData.transactions.filter(( transaction: any ) => transaction.round_number === round.roundNumber)
+
+      if (filteredAllocLim.length !== 0) {
+        setAllocationLimit(filteredAllocLim[0].price_limit)
+      } else {
+        setAllocationLimit(stockData ? stockData.price_limit : allocationLimit)
+      }
+    } else {
+      setAllocationLimit(stockData ? stockData.price_limit : allocationLimit)
+    }
+
   }, [
     desiredQty,
     props.values.currentPrice,
     holdingData,
-    data,
+    holdings,
     props.values.name,
     portfolioData,
     stockData
@@ -186,73 +198,73 @@ const MarketActions = (props: Props): JSX.Element => {
     <div className={styles.actionModal}>
       {
         !loading ?
-        <>
-          <h2>
-            <span>{props.action.toLocaleUpperCase()}</span> {props.values.name}
-          </h2>
+          <>
+            <h2>
+              <span>{props.action.toLocaleUpperCase()}</span> {props.values.name}
+            </h2>
 
-          <div className={styles.actionRow}>
-            <h4>Current Price: {props.values.currentPrice}</h4>
-            <h4>Current Qty Held: {ownedStock}</h4>
-          </div>
-
-          <div
-            className={styles.actionRow}
-            style={isMedium ? { width: "80%" } : { width: "60%" }}
-          >
-            <h4>Desired Qty:</h4>
-            <input
-              type="number"
-              min={0}
-              max={9999}
-              value={desiredQty}
-              onChange={(e) => desiredQtyHandler(e.target.value ? parseFloat(e.target.value) : 0)}
-            />
-            {props.action === "buy" && (
-              <button onClick={maxOutBuy} className={styles.selButton}>MAX</button>
-            )}
-            {props.action === "sell" && (
-              <button onClick={sellAll} className={styles.selButton}>ALL</button>
-            )}
-          </div>
-
-          <div
-            className={styles.actionRow}
-            style={isMedium ? { width: "80%" } : { width: "30%" }}
-          >
-            <h4>Total:</h4>
-            <h4>{indianNumberConverter(total)}</h4>
-          </div>
-
-          <div
-            className={styles.actionRow}
-            style={isMedium ? { width: "50%" } : { width: "40%" }}
-          >
-            <button onClick={props.toggleModal} className={styles.unselButton}>
-              cancel
-            </button>
-            {props.action === "buy" ? (
-              <button onClick={buyClick} className={styles.selButton}>
-                {props.action}
-              </button>
-            ) : (
-              <button onClick={sellClick} className={styles.selButton}>
-                {props.action}
-              </button>
-            )}
-          </div>
-          {error && (
-            <div className={styles.errorCont}>
-              <p>{error}</p>
+            <div className={styles.actionRow}>
+              <h4>Current Price: {props.values.currentPrice}</h4>
+              <h4>Current Qty Held: {ownedStock}</h4>
             </div>
-          )}
-        </>
-        :
-        <div className={ loadingstyle.bouncingLoader }>
-          <div></div>
-          <div></div>
-          <div></div>
-        </div>
+
+            <div
+              className={styles.actionRow}
+              style={isMedium ? { width: "80%" } : { width: "60%" }}
+            >
+              <h4>Desired Qty:</h4>
+              <input
+                type="number"
+                min={0}
+                max={9999}
+                value={desiredQty}
+                onChange={(e) => desiredQtyHandler(e.target.value ? parseFloat(e.target.value) : 0)}
+              />
+              {props.action === "buy" && (
+                <button onClick={maxOutBuy} className={styles.selButton}>MAX</button>
+              )}
+              {props.action === "sell" && (
+                <button onClick={sellAll} className={styles.selButton}>ALL</button>
+              )}
+            </div>
+
+            <div
+              className={styles.actionRow}
+              style={isMedium ? { width: "80%" } : { width: "30%" }}
+            >
+              <h4>Total:</h4>
+              <h4>{indianNumberConverter(total)}</h4>
+            </div>
+
+            <div
+              className={styles.actionRow}
+              style={isMedium ? { width: "50%" } : { width: "40%" }}
+            >
+              <button onClick={props.toggleModal} className={styles.unselButton}>
+                cancel
+              </button>
+              {props.action === "buy" ? (
+                <button onClick={buyClick} className={styles.selButton}>
+                  {props.action}
+                </button>
+              ) : (
+                <button onClick={sellClick} className={styles.selButton}>
+                  {props.action}
+                </button>
+              )}
+            </div>
+            {error && (
+              <div className={styles.errorCont}>
+                <p>{error}</p>
+              </div>
+            )}
+          </>
+          :
+          <div className={loadingstyle.bouncingLoader}>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
       }
     </div>
   );
