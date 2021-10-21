@@ -36,30 +36,30 @@ function LogIn(props: Props): JSX.Element {
     e.preventDefault();
     setError(null);
 
-    if (email === "" || password === "") {
-      setError("Please fill in all the fields");
-    } else if (!(email.includes("@") && email.includes("."))) {
-      setError("Please enter a valid email address");
-    } else {
+    if (true) {
+      //   setError("Please fill in all the fields");
+      // } else if (!(email.includes("@") && email.includes("."))) {
+      //   setError("Please enter a valid email address");
+      // } else {
       setError(null);
 
-      axios({ method: "POST", url: "/auth/local", data: qs.stringify({ "identifier": email, "password": password }) })
+      axios({ method: "POST", url: "/connect/github", data: qs.stringify({ "identifier": email, "password": password }) })
         .then(res => {
           // console.log(res.data);
 
-          setUser({
-            jwt: res.data.jwt,
-            id: res.data.user.id,
-            username: res.data.user.username,
-            portfolio: res.data.user.portfolio ? res.data.user.portfolio.id : -1
-          });
-          if (!res.data.user.portfolio) {
-            // console.log("[PORTFOLIO NOT FOUND]")
-            createPortfolio(res.data.jwt, res.data.user.username, res.data.user.id);
-          } else {
-            localStorage.setItem("token", res.data.jwt);
-            router.push("/home");
-          }
+          // setUser({
+          //   jwt: res.data.jwt,
+          //   id: res.data.user.id,
+          //   username: res.data.user.username,
+          //   portfolio: res.data.user.portfolio ? res.data.user.portfolio.id : -1
+          // });
+          // if (!res.data.user.portfolio) {
+          //   // console.log("[PORTFOLIO NOT FOUND]")
+          //   createPortfolio(res.data.jwt, res.data.user.username, res.data.user.id);
+          // } else {
+          //   localStorage.setItem("token", res.data.jwt);
+          //   router.push("/home");
+          // }
 
         })
         .catch((err) => {
@@ -72,7 +72,7 @@ function LogIn(props: Props): JSX.Element {
   return (
     <form className={styles.authContainer}>
       <h1>Login to your account</h1>
-      <p>
+      {/* <p>
         {"Don't have an account? "}
         <a onClick={() => props.setScreen("register")}>Sign up here</a>
       </p>
@@ -102,10 +102,12 @@ function LogIn(props: Props): JSX.Element {
         <div className={styles.errorContainer}>
           <p>{error}</p>
         </div>
-      )}
+      )} */}
       <div>
-        <button onClick={(e) => loginHandler(e)} className={styles.authLogInButton}>
-          Login
+        <button className={styles.authLogInButton}>
+          <a href={`${process.env.NEXT_PUBLIC_DATABASE_URL}/connect/auth0`}>
+            Login
+          </a>
         </button>
       </div>
     </form>

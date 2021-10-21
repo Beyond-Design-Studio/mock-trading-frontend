@@ -5,6 +5,10 @@ import styles from "@styles/landing.module.scss";
 import Nav from "@components/nav";
 
 const Home = (): JSX.Element => {
+  React.useEffect(() => {
+    let jwt = localStorage.getItem('auth0_aic_mock_trading_jwt')
+    console.log(jwt)
+  }, []);
   return (
     <div style={{ overflow: "hidden" }}>
 
