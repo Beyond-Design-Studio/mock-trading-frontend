@@ -17,8 +17,9 @@ const Portfolio = (): JSX.Element => {
   const { user } = useUser();
   const { isVisible, toggleModal } = useModal();
   const { data: rankData } = useGetLeader(user.jwt, user.portfolio);
-  const [textRank, setTextRank] = React.useState("");
   const { data } = useGetPortfolio(user.jwt, user.portfolio);
+
+  // const [textRank, setTextRank] = useState("");
 
   return (
     <div>
