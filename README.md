@@ -16,7 +16,7 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
   - [X] display MAX allocation limit. Under the next news in 10 seconds line
   - [X] Market Action accessibility.
   - [X] Change Profit to ‘Unrealized Profit/Loss’.
-  - [ ] Round updates
+  - [X] Round updates
 
 ## Getting Started
 
