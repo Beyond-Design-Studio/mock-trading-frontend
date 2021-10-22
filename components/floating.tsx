@@ -35,7 +35,7 @@ const Floating = (): JSX.Element => {
         },
       })
         .then(res => {
-        console.log(res.data);
+        // console.log(res.data);
         setInitialTime(res.data[0].round_duration_in_seconds)
         setRound({ ...round, max_rounds: res.data[0].number_rounds, eventStarted: res.data[0].event_started });
       })
@@ -44,7 +44,7 @@ const Floating = (): JSX.Element => {
 
   useEffect(() => {
     socket.on("event-start", (eventStart: any) => {
-      console.log("event-start", eventStart);
+      // console.log("event-start", eventStart);
       setRound({
         ...round,
         roundNumber: eventStart.roundNumber,
@@ -54,7 +54,7 @@ const Floating = (): JSX.Element => {
     })
 
     socket.on("round-update", (eventTimer: any) => {
-      console.log("hello", eventTimer)
+      // console.log("hello", eventTimer)
       setRound({
         ...round,
         roundNumber: eventTimer.roundNumber,

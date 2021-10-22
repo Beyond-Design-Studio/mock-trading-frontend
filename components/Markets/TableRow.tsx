@@ -25,7 +25,7 @@ const RowTable = ({ index, hold }: {
 
   useEffect(() => {
     if (stock) {
-      console.log(stock)
+      // console.log(stock)
       setModalProps({
         name: stock.name,
         ticker: stock.ticker,
