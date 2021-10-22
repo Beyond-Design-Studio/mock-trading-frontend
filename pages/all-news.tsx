@@ -16,7 +16,7 @@ const Wrapped = ({ user }: { user: UserInterface }): JSX.Element => {
   return (
     <>
       {data ? (
-        [...data].sort((a, b) => a.round_number - b.round_number).map((item, ind) => (
+        [...data].sort((a, b) => b.round_number - a.round_number).map((item, ind) => (
           <div className={styles.newsContainer} key={item.id}>
             <div className={styles.headerContainer}>
               <div className={styles.headerLeft}>
