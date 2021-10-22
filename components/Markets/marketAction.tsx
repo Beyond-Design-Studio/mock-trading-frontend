@@ -132,7 +132,6 @@ const MarketActions = (props: Props): JSX.Element => {
         Authorization: `Bearer ${user.jwt}`
       },
       data: {
-        "portfolio_id": portfolioData.id,
         "stock_id": props.values.id,
         "quantity": desiredQty
       }

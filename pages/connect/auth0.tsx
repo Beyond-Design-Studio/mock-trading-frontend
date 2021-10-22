@@ -17,7 +17,7 @@ const LoginRedirect = () => {
   useEffect(() => {
     // Successfully logged with the provider
     // Now logging with strapi by using the access_token (given by the provider) in props.location.search
-    console.log('LoginRedirect: useEffect',);
+    // console.log('LoginRedirect: useEffect', access_token);
     fetch(`${backendUrl}/auth/auth0/callback?access_token=${access_token}`)
       .then(res => {
         if (res.status !== 200) {
@@ -43,8 +43,8 @@ const LoginRedirect = () => {
 
   return (
     <Fragment>
-      <div className={ styles["top-div"] }>
-        <div style={{display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center"}}>
+      <div className={styles["top-div"]}>
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
           <div className={loadingstyle.bouncingLoader}>
             <div></div>
             <div></div>
