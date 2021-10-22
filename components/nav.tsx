@@ -17,9 +17,9 @@ const Nav = ():JSX.Element => {
 				</li>
 
 				<li className={styles["nav-right"]}>
-					<Link href="/auth">
-						<a><button className={styles.navLogInButton}>Login</button></a>
-					</Link>
+          <a href={`${process.env.NEXT_PUBLIC_DATABASE_URL}/connect/auth0`}>
+            <a><button className={styles.navLogInButton}>Login</button></a>
+          </a>
 				</li>
 			</ul>
 		</nav>

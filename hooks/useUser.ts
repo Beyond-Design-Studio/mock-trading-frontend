@@ -14,7 +14,7 @@ export default function useUser(): authContextType {
 
 			if (!token) {
 				console.error("No token found");
-				router.push("/auth")
+				router.push("/")
 				return;
 			}
 
@@ -40,7 +40,7 @@ export default function useUser(): authContextType {
 				})
 				.catch(err => {
 					console.error(err);
-					router.push("/auth");
+					router.push("/");
 				})
 		}
 

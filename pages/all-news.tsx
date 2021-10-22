@@ -42,6 +42,8 @@ const Wrapped = ({ user }: { user: UserInterface }): JSX.Element => {
                 {item.Article3 ? <li>{item.Article3}</li> : null}
                 {item.Article4 ? <li>{item.Article4}</li> : null}
                 {item.Article5 ? <li>{item.Article5}</li> : null}
+                {item.Article6 ? <li>{item.Article6}</li> : null}
+                {item.Article7 ? <li>{item.Article7}</li> : null}
               </ul>
             </div>
           </div>

@@ -26,20 +26,21 @@ const Floating = (): JSX.Element => {
   const { refetch: newsRefetch } = useGetNews(user.jwt);
 
   useEffect(() => {
-    // console.log("useEffect");
-    axios({
-      method: "GET",
-      url: "/even-start-triggers",
-      headers: {
-        Authorization: `Bearer ${user.jwt}`,
-      },
-    }).then(res => {
-      console.log(res.data);
-      setInitialTime(res.data[0].round_duration_in_seconds)
-      setRound({ ...round, max_rounds: res.data[0].number_rounds, eventStarted: res.data[0].event_started });
-    })
-      .catch((err) => console.error(err));
-  }, []);
+    if (user)
+      axios({
+        method: "GET",
+        url: "/even-start-triggers",
+        headers: {
+          Authorization: `Bearer ${user.jwt}`,
+        },
+      })
+        .then(res => {
+        console.log(res.data);
+        setInitialTime(res.data[0].round_duration_in_seconds)
+        setRound({ ...round, max_rounds: res.data[0].number_rounds, eventStarted: res.data[0].event_started });
+      })
+        .catch((err) => console.error(err));
+  }, [user]);
 
   useEffect(() => {
     socket.on("event-start", (eventStart: any) => {
@@ -53,6 +54,7 @@ const Floating = (): JSX.Element => {
     })
 
     socket.on("round-update", (eventTimer: any) => {
+      console.log("hello", eventTimer)
       setRound({
         ...round,
         roundNumber: eventTimer.roundNumber,

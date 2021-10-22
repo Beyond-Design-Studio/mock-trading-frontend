@@ -18,15 +18,14 @@ const Rules = (): JSX.Element => {
           <li>The stock market will be open for <b> 80 minutes for a total of 20 rounds. Each round shall be 4 minutes long. </b></li>
           <li>There will be a new set of news updates at the beginning of each round on the basis of which participants should make their investing decisions.</li>
           <li>Each individual will have <b>Rs. 10,00,000</b>to invest.</li>
-          <li>For rounds 1-10, investors may only buy <b>Rs. 5,00,000 worth of one stock, Rs. 2,00,000 worth of one cryptocurrency, and Rs. 2,00,000 worth of one commodity in each round.
-          </b></li>
-          <li>For rounds 11-20, the investment limits shall be increased to <b>Rs. 7,50,000 for a particular stock, Rs. 5,00,000 for a particular cryptocurrency, and Rs. 5,00,000 for a particular commodity in each round.</b></li>
-          <li>Stocks, cryptocurrencies, and commodities may be bought and sold at any given time</li>
+          <li>For rounds 1-10, the investment limits are <b>Rs. 5,00,000 per stock, Rs. 2,00,000 per cryptocurrency, and Rs. 2,00,000 per commodity in each round. </b></li>
+          <li>For rounds 11-20, the investment limits shall be increased to <b>Rs. 7,50,000 per stock, Rs. 5,00,000 per cryptocurrency, and Rs. 5,00,000 per commodity in each round.</b></li>
+          <li>Investors may buy/sell any number of stocks, cryptocurrencies, and commodities at any time during the event.</li>
           <li>At the end of the event the individuals with the 3 highest net worths will be declared as the winners.
           </li>
           <li>Use of calculators is permitted. </li>
           <li>Use of the internet is permitted. </li>
-          <li>In case of technical difficulties, please contact any of the organisers at the event helpdesk.</li>
+          <li>In case of technical difficulties, please contact the organisers at the event <a href='https://zoom.us/j/94677452623?pwd=R1ZkNWh0c2VSN2ZxbGdISWl6NW5CUT09' >helpdesk.</a></li>
         </ul>
       </div>
     </div>
