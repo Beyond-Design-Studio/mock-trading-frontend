@@ -68,6 +68,12 @@ const News = (): JSX.Element => {
               {currentArticle.Article5 ? (
                 <li>{currentArticle.Article5}</li>
               ) : null}
+              {currentArticle.Article6 ? (
+                <li>{currentArticle.Article6}</li>
+              ) : null}
+              {currentArticle.Article7 ? (
+                <li>{currentArticle.Article7}</li>
+              ) : null}
             </ul>
           </div>
           <div className={styles.linkContainer}>
