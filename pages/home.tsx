@@ -6,6 +6,8 @@ import styles from "@styles/home.module.scss";
 import Rules from "@components/Home/Rules";
 import AboutUs from "@components/Home/AboutUs";
 import Sponsors from "@components/Home/Sponsors";
+import DesignPartners from "@components/Home/DesignPartners";
+
 import useUser from "hooks/useUser";
 
 const Home = (): JSX.Element => {
@@ -24,6 +26,7 @@ const Home = (): JSX.Element => {
           <Rules />
           <AboutUs />
           <Sponsors />
+          <DesignPartners />
         </div>
       )}
     </div>
