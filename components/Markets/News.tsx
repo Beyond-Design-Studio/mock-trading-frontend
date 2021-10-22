@@ -33,8 +33,6 @@ const News = (): JSX.Element => {
                 <h1>News</h1>
               </div>
               <h5 style={{ fontSize: "medium" }}>Next news update in {round.timer} seconds ({round.roundNumber}/{round.max_rounds})</h5>
-              <h5 style={{ fontSize: "small" }}>Max Alloc limit for stocks: ₹400000</h5>
-              <h5 style={{ fontSize: "small" }}>Max Alloc limit for commodites and crypto: ₹300000</h5>
             </div>
             <div className={styles.headerRight}>
               <h5>{currentArticle.published}</h5>
