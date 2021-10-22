@@ -8,7 +8,7 @@ const Home = (): JSX.Element => {
 
   useEffect(() => {
     const jwt = localStorage.getItem('auth0_aic_mock_trading_jwt')
-    console.log(jwt)
+    // console.log(jwt)
   }, []);
 
   return (

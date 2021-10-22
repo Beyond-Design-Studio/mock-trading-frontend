@@ -36,7 +36,6 @@ const Portfolio = (): JSX.Element => {
             isVisible={isVisible}
             toggleModal={toggleModal}
           >
-            {data && console.log("[portfolio.tsx 38]", data)}
             {data &&
               <Leaderboard PortfolioID={data.id} InvestorName={data.InvestorName} InvestorNetWorth={data.NetWorth} data={rankData} />
             }

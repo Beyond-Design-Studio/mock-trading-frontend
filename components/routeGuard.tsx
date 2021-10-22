@@ -11,11 +11,11 @@ function RouteGuard(props: Props) {
   const router = useRouter();
   const [authorized, setAuthorized] = useState(false);
   const { user } = useAuth();
-  console.log("user", user);
+  // console.log("user", user);
 
   useEffect(() => {
     // on initial load - run auth check 
-    console.log("authorized", authorized);
+    // console.log("authorized", authorized);
     !user.jwt && authCheck(router.asPath);
 
     // on route change start - hide page content by setting authorized to false  
@@ -36,7 +36,7 @@ function RouteGuard(props: Props) {
 
   function authCheck(url: any) {
     // redirect to login page if accessing a private page and not logged in 
-    console.log("url", url);
+    // console.log("url", url);
     const publicPaths = ['/', '/auth', '/register', '/login',];
     const path = url.split('?')[0];
     if (!user.jwt && !publicPaths.includes(path)) {

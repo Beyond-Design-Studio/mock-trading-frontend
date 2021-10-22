@@ -36,7 +36,7 @@ const LoginRedirect = () => {
       })
       .catch(err => {
         console.log(err);
-        setText('An error occurred, please see the developer console.')
+        setText('Loading...or an error has occurred')
       });
   }, [access_token]);
 

@@ -85,15 +85,15 @@ const MarketActions = (props: Props): JSX.Element => {
       );
 
     if (stockData) {
-      console.log("MarketActions.tsx stockData", stockData);
+      // console.log("MarketActions.tsx stockData", stockData);
       setLoading(false);
     }
     else {
-      console.log("welp");
+      // console.log("welp");
       setLoading(true);
     }
 
-    console.log(holdingData);
+    // console.log(holdingData);
     if (holdingData) setOwnedStock(holdingData ? holdingData.total_quantity : 0);
     if (portfolioData) setAvailableFunds(portfolioData.AvailableFunds);
 
