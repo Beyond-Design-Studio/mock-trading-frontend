@@ -6,6 +6,8 @@ export interface NewsUpdateInterface {
   Article3?: string | null;
   Article4?: string | null;
   Article5?: string | null;
+  Article6?: string | null;
+  Article7?: string | null;
   published_at: "2021-08-15T15:55:13.506Z",
   created_at: "2021-08-15T15:55:08.183Z",
   updated_at: "2021-08-15T15:55:13.519Z"
