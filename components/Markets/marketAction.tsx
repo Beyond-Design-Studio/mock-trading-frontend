@@ -33,12 +33,16 @@ interface Props {
 }
 
 const MarketActions = (props: Props): JSX.Element => {
+  const [loading, setLoading] = useState(false);
+  // if (!props.values) {
+  //   setLoading(true);
+  // }
   const { user } = useAuth();
   const { round } = useRound();
 
   const { data: portfolioData, refetch: portRefetch } = useGetPortfolio(user.jwt, user.portfolio);
   const { data: holdings, refetch: holdingsRefetch } = useGetHoldings(user.jwt, user.portfolio);
-  const { data: stockData } = useGetStockById(user.jwt, props.values.id);
+  const { data: stockData } = useGetStockById(user.jwt, props.values ? props.values.id : 1);
 
   const isMedium = useMediaQuery({ query: "(min-width: 769px)" });
 
@@ -49,11 +53,10 @@ const MarketActions = (props: Props): JSX.Element => {
   const [error, setError] = useState<string | null>(null);
   const [availableFunds, setAvailableFunds] = useState(0);
   const [allocationLimit, setAllocationLimit] = useState(1000);
-  const [loading, setLoading] = useState(false);
 
-  const quantityLimit: number = props.values.type === "stock" ? Math.floor(
-    allocationLimit / props.values.currentPrice
-  ) : (allocationLimit / props.values.currentPrice);
+  const quantityLimit: number = (props.values ? props.values.type === "stock" : true) ? Math.floor(
+    allocationLimit / (props.values ? props.values.currentPrice : 0)
+  ) : (allocationLimit / (props.values ? props.values.currentPrice : 0));
 
   //TODO make the limits also count securities owned by user beforehand
 
@@ -77,11 +80,21 @@ const MarketActions = (props: Props): JSX.Element => {
     }
   }
 
+  // useEffect(() => {
+
+  // }, [props]);
+
   useEffect(() => {
-    setTotal(desiredQty * props.values.currentPrice);
+    if (!props.values) {
+      setLoading(true);
+      // console.log("no values");
+    } else {
+      setLoading(false);
+    }
+    setTotal(desiredQty * (props.values ? props.values.currentPrice : 0));
     if (holdings)
       setholdingData(
-        holdings.filter((hold: any) => hold.stock_id === props.values.id)[0]
+        holdings.filter((hold: any) => hold.stock_id === props.values ? props.values.id : 1)[0]
       );
 
     if (stockData) {
@@ -98,7 +111,9 @@ const MarketActions = (props: Props): JSX.Element => {
     if (portfolioData) setAvailableFunds(portfolioData.AvailableFunds);
 
     if (holdingData) {
-      const filteredAllocLim = holdingData.transactions.filter(( transaction: any ) => transaction.round_number === round.roundNumber)
+      const filteredAllocLim = holdingData.transactions
+        ? holdingData.transactions.filter((transaction: any) => transaction.round_number === round.roundNumber)
+        : [];
 
       if (filteredAllocLim.length !== 0) {
         setAllocationLimit(filteredAllocLim[0].price_limit)
@@ -111,10 +126,10 @@ const MarketActions = (props: Props): JSX.Element => {
 
   }, [
     desiredQty,
-    props.values.currentPrice,
+    props.values ? props.values.currentPrice : 0,
     holdingData,
     holdings,
-    props.values.name,
+    props.values ? props.values.name : "",
     portfolioData,
     stockData
   ]);
@@ -132,7 +147,7 @@ const MarketActions = (props: Props): JSX.Element => {
         Authorization: `Bearer ${user.jwt}`
       },
       data: {
-        "stock_id": props.values.id,
+        "stock_id": props.values ? props.values.id : -1,
         "quantity": desiredQty
       }
     }).then(() => {
@@ -159,7 +174,7 @@ const MarketActions = (props: Props): JSX.Element => {
       },
       data: {
         "portfolio_id": portfolioData.id,
-        "stock_id": props.values.id,
+        "stock_id": props.values ? props.values.id : -1,
         "quantity": desiredQty
       }
     }).then(() => {
@@ -182,9 +197,9 @@ const MarketActions = (props: Props): JSX.Element => {
   }
 
   function maxOutBuy() {
-    const maxValue: number = props.values.type === "stock" ?
-      (Math.floor(availableFunds / props.values.currentPrice)) :
-      toFixed((availableFunds / props.values.currentPrice), 2);
+    const maxValue: number = (props.values ? props.values.type === "stock" : true) ?
+      (Math.floor(availableFunds / (props.values ? props.values.currentPrice : 0))) :
+      toFixed((availableFunds / (props.values ? props.values.currentPrice : 0)), 2);
 
     if (maxValue > quantityLimit) {
       setDesiredQty(toFixed(quantityLimit, 2));
@@ -199,11 +214,11 @@ const MarketActions = (props: Props): JSX.Element => {
         !loading ?
           <>
             <h2>
-              <span>{props.action.toLocaleUpperCase()}</span> {props.values.name}
+              <span>{props.action.toLocaleUpperCase()}</span> {(props.values ? props.values.name : "")}
             </h2>
 
             <div className={styles.actionRow}>
-              <h4>Current Price: {props.values.currentPrice}</h4>
+              <h4>Current Price: {props.values ? props.values.currentPrice : 0}</h4>
               <h4>Current Qty Held: {ownedStock}</h4>
             </div>
 
