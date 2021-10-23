@@ -19,7 +19,11 @@ const News = (): JSX.Element => {
     useState<NewsUpdateInterface | null>(null);
 
   useEffect(() => {
-    if (data) setCurrentArticle(data[data.length - 1]);
+    if (data) {
+      console.log(data);
+      const sorted_news = [...data].sort((a, b) => b.round_number - a.round_number)
+      setCurrentArticle(sorted_news[0]);
+    }
   }, [user, data]);
 
   return (
@@ -83,7 +87,7 @@ const News = (): JSX.Element => {
       )}
       {!currentArticle && (
         <>
-          <p>No Articles Yet</p>
+          <p>No Articles Yet. Round Will Start at 19:40</p>
         </>
       )}
     </div>

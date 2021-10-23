@@ -26,11 +26,13 @@ const Rules = (): JSX.Element => {
       <div>
         <ul>
           <li>The stock market will be open for <b> 80 minutes for a total of 20 rounds. Each round shall be 4 minutes long. </b></li>
+          <li>The 1st round shall begin at 7:40PM sharp.</li>
           <li>There will be a new set of news updates at the beginning of each round on the basis of which participants should make their investing decisions.</li>
           <li>Each individual will have <b>Rs. 10,00,000</b> to invest.</li>
           <li>For rounds 1-10, the investment limits are <b>Rs. 5,00,000 per stock, Rs. 2,00,000 per cryptocurrency, and Rs. 2,00,000 per commodity in each round. </b></li>
           <li>For rounds 11-20, the investment limits shall be increased to <b>Rs. 7,50,000 per stock, Rs. 5,00,000 per cryptocurrency, and Rs. 5,00,000 per commodity in each round.</b></li>
           <li>Investors may buy/sell any number of stocks, cryptocurrencies, and commodities at any time during the event.</li>
+          <li>Stock can only be purchased in whole quantities (eg. 10, 1134 etc.), while crypto currencies and commodities may be purchased in fractional units upto 2 decimal places (eg. 12.35, 0.56 etc.).</li>
           <li>At the end of the event the individuals with the 3 highest net worths will be declared as the winners.
           </li>
           <li>Use of calculators is permitted. </li>
