@@ -44,7 +44,6 @@ const Floating = (): JSX.Element => {
 
   useEffect(() => {
     socket.on("event-start", (eventStart: any) => {
-      // console.log("event-start", eventStart);
       setRound({
         ...round,
         roundNumber: eventStart.roundNumber,
