@@ -4,6 +4,16 @@ import { RulesIcon } from "@components/icons";
 const Rules = (): JSX.Element => {
   return (
     <div className={styles.rulesContainer}>
+      <style jsx>{`
+        .hoverColor {
+          color: white
+        }
+        .hoverColor:hover {
+          color: var(--accent-color);
+        }
+      `}</style>
+
+
       <div className={styles.containerHeader}>
         <span>
           <RulesIcon />
@@ -25,7 +35,7 @@ const Rules = (): JSX.Element => {
           </li>
           <li>Use of calculators is permitted. </li>
           <li>Use of the internet is permitted. </li>
-          <li>In case of technical difficulties, please contact the organisers at the event <a href='https://zoom.us/j/94677452623?pwd=R1ZkNWh0c2VSN2ZxbGdISWl6NW5CUT09' target="_blank" rel="noreferrer" style={{ 'textDecoration': 'underline', color: '#0645AD' }}>helpdesk.</a></li>
+          <li>In case of technical difficulties, please contact the organisers at the event <a href='https://zoom.us/j/94677452623?pwd=R1ZkNWh0c2VSN2ZxbGdISWl6NW5CUT09' target="_blank" rel="noreferrer" style={{ 'textDecoration': 'underline' }} className="hoverColor">helpdesk.</a></li>
         </ul>
       </div>
     </div>

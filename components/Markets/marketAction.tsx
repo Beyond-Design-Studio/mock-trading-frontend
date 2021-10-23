@@ -92,10 +92,11 @@ const MarketActions = (props: Props): JSX.Element => {
       setLoading(false);
     }
     setTotal(desiredQty * (props.values ? props.values.currentPrice : 0));
-    if (holdings)
+    if (holdings && props.values) {
       setholdingData(
-        holdings.filter((hold: any) => hold.stock_id === props.values ? props.values.id : 1)[0]
+        holdings.filter((hold: any) => hold.stock_id === props.values.id)[0]
       );
+    }
 
     if (stockData) {
       // console.log("MarketActions.tsx stockData", stockData);
