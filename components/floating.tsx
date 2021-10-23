@@ -35,32 +35,37 @@ const Floating = (): JSX.Element => {
         },
       })
         .then(res => {
-        // console.log(res.data);
+        console.log(res.data);
         setInitialTime(res.data[0].round_duration_in_seconds)
-        setRound({ ...round, max_rounds: res.data[0].number_rounds, eventStarted: res.data[0].event_started });
+        setRound({ ...round, timer: res.data[0].current_seconds, roundNumber: res.data[0].current_round, max_rounds: res.data[0].number_rounds, eventStarted: res.data[0].event_started });
+        console.log(round);
       })
         .catch((err) => console.error(err));
   }, [user]);
 
   useEffect(() => {
     socket.on("event-start", (eventStart: any) => {
+      console.log("event-start", eventStart);
       setRound({
         ...round,
         roundNumber: eventStart.roundNumber,
         timer: eventStart.timer,
         eventStarted: eventStart.eventStarted,
       });
+      console.log(round);
     })
 
     socket.on("round-update", (eventTimer: any) => {
-      // console.log("hello", eventTimer)
-      setRound({
-        ...round,
-        roundNumber: eventTimer.roundNumber,
-        timer: initialTime,
-        eventStarted: eventTimer.eventStarted,
-      });
-      // router.reload();
+      console.log("hello", eventTimer.roundNumber)
+      if (eventTimer.roundNumber) {
+        setRound({
+          ...round,
+          roundNumber: eventTimer.roundNumber,
+          timer: initialTime,
+        });
+        console.log("round updated", round);
+      }
+
       stocksRefetch({
         cancelRefetch: true
       });
@@ -77,7 +82,6 @@ const Floating = (): JSX.Element => {
 
 
   useEffect(() => {
-    // console.log("ROUND UPDATE :floating.jsx", round.eventStarted);
     if (round.roundNumber >= 1) {
       const interval = setInterval(() => {
         setRound({
@@ -90,7 +94,7 @@ const Floating = (): JSX.Element => {
         clearInterval(interval);
       }
     }
-  }, [round.roundNumber, round.timer, round]);
+  }, [round]);
 
   return (
     <div>
@@ -104,7 +108,7 @@ const Floating = (): JSX.Element => {
         <a className={`${styles.fixedContainer} counter-container`}>
           <div>
             <p>Round: </p>
-            <p>{round.roundNumber < round.max_rounds ? round.roundNumber : round.max_rounds}</p>
+            <p>{round.roundNumber}</p>
           </div>
           <div>
             <p>Time: </p>
