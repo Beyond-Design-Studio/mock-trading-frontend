@@ -35,7 +35,7 @@ const PortfolioSnapshot = (): JSX.Element => {
           </div>
           <div>
             <h3>Unrealized Profit/Loss</h3>
-            <p>{` ${indianNumberConverter(data.NetWorth - data.unrealized_networth)}`}</p>
+            <p>{` ${indianNumberConverter(data.unrealized_networth - data.NetWorth)}`}</p>
           </div>
           <div>
             <h3>Net Worth </h3>
