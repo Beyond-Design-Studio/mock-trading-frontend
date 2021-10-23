@@ -22,7 +22,7 @@ const News = (): JSX.Element => {
     if (data) {
       console.log(data);
       const sorted_news = [...data].sort((a, b) => b.round_number - a.round_number)
-      setCurrentArticle(sorted_news[data.length - 1]);
+      setCurrentArticle(sorted_news[0]);
     }
   }, [user, data]);
 
