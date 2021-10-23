@@ -21,7 +21,7 @@ const defaultValue: roundContextType = {
     eventStarted: false,
   },
   setRound: (round: RoundInterface) => {
-    // console.log(round)
+    console.log(round)
   }
 }
 
