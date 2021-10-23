@@ -27,6 +27,7 @@ const Leaderboard = (props: Props): JSX.Element => {
       setUserRank(data.rank);
     }
   }, [data])
+  console.log(props)
 
   return (
     <div className={styles.leaderBoardContainer}>
@@ -53,7 +54,7 @@ const Leaderboard = (props: Props): JSX.Element => {
               <tr className={top3name} key={ind}>
                 <td>{ind + 1}</td>
                 <td><span>{item.InvestorName}</span></td>
-                <td>{indianNumberConverter(item.NetWorth)}</td>
+                <td>{indianNumberConverter(item.unrealized_networth)}</td>
               </tr>
             )
           }
