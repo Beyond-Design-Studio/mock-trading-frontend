@@ -37,7 +37,7 @@ const Portfolio = (): JSX.Element => {
             toggleModal={toggleModal}
           >
             {data &&
-              <Leaderboard PortfolioID={data.id} InvestorName={data.InvestorName} InvestorNetWorth={data.NetWorth} data={rankData} />
+              <Leaderboard PortfolioID={data.id} InvestorName={data.InvestorName} InvestorNetWorth={data.unrealized_networth} data={rankData} />
             }
           </Modal>
 
