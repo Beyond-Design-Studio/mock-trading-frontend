@@ -36,7 +36,8 @@ const RowTable = ({ index, hold }: {
         img: stock.img,
       });
     }
-  }, [])
+  }, [stock])
+  // console.log(hold, modalProps)
 
   return (
     <>

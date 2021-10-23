@@ -48,6 +48,7 @@ const TableRow: FC<SecurityInterface> = ({
     type: type,
     ticker: ticker
   };
+  // console.log("MODAL PROPS: ", modalProps);
 
   return (
     <>

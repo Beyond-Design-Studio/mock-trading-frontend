@@ -19,7 +19,7 @@ const Holdings = (): JSX.Element => {
     <>
       <div className={styles.holdingsContainer}>
         <h1>Your Holdings</h1>
-        {console.log("[Holdings.tsx] 47", holdingData, error)}
+        {/* {console.log("[Holdings.tsx] 47", holdingData, error)} */}
         <div className={styles.holdingsMenu}>
           <TabbedButtons market={holdingsView} setMarket={clickHandler} />
         </div>
