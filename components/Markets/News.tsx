@@ -83,7 +83,7 @@ const News = (): JSX.Element => {
       )}
       {!currentArticle && (
         <>
-          <p>No Articles Yet</p>
+          <p>No Articles Yet. Round Will Start at 19:40</p>
         </>
       )}
     </div>
