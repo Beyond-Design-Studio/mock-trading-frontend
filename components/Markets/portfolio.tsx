@@ -39,7 +39,7 @@ const PortfolioSnapshot = (): JSX.Element => {
           </div>
           <div>
             <h3>Net Worth </h3>
-            <p>{` ${indianNumberConverter(data.NetWorth)}`}</p>
+            <p>{` ${indianNumberConverter(data.unrealized_networth)}`}</p>
           </div>
         </div>
       )}
