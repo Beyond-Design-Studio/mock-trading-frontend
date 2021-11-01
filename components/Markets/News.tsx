@@ -20,7 +20,7 @@ const News = (): JSX.Element => {
 
   useEffect(() => {
     if (data) {
-      console.log(data);
+      // console.log(data);
       const sorted_news = [...data].sort((a, b) => b.round_number - a.round_number)
       setCurrentArticle(sorted_news[0]);
     }

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import styles from "@styles/floating.module.scss";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import useGetStocks from "hooks/useGetStocks";
 import useGetPortfolio from "hooks/useGetPortfolio";
 import useGetHoldings from "hooks/useGetHoldings";
@@ -9,24 +9,22 @@ import useGetNews from "hooks/useGetNews";
 import { useRound } from "./contexts/roundContext";
 import { useSocket } from "@components/contexts/socketContext";
 import { useAuth } from "./contexts/authContext";
-// import { useRouter } from "next/router";
 
 
 const Floating = (): JSX.Element => {
+  const socket = useSocket().socket;
 
   const { user } = useAuth();
-  const socket = useSocket().socket;
   const { round, setRound } = useRound();
-  const [initialTime, setInitialTime] = useState(0);
-  // const router = useRouter();
 
   const { refetch: stocksRefetch } = useGetStocks(user.jwt);
   const { refetch: portfolioRefetch } = useGetPortfolio(user.jwt, user.portfolio);
   const { refetch: filteredRefetch } = useGetHoldings(user.jwt, user.portfolio);
   const { refetch: newsRefetch } = useGetNews(user.jwt);
 
-  useEffect(() => {
-    if (user)
+  function syncRoundWithBackend(): void {
+    if (user.jwt) {
+      console.log("sync...");
       axios({
         method: "GET",
         url: "/even-start-triggers",
@@ -35,35 +33,52 @@ const Floating = (): JSX.Element => {
         },
       })
         .then(res => {
-        console.log(res.data);
-        setInitialTime(res.data[0].round_duration_in_seconds)
-        setRound({ ...round, timer: res.data[0].current_seconds, roundNumber: res.data[0].current_round, max_rounds: res.data[0].number_rounds, eventStarted: res.data[0].event_started });
-        console.log(round);
-      })
-        .catch((err) => console.error(err));
-  }, [user]);
+          setRound({
+            ...round,
+            timer: 0,
+            roundNumber: res.data[0].current_round,
+            max_rounds: res.data[0].number_rounds,
+            eventStarted: res.data[0].event_started,
+            roundDuration: res.data[0].round_duration_in_seconds,
+          });
+
+          console.log(res.data[0].current_seconds);
+          // console.log("ROUND floating", round);
+        })
+        .catch((err) => console.error(err.response.data));
+    }
+  }
+
+  useEffect(() => {
+    syncRoundWithBackend();
+    console.log(user);
+  }, [user.jwt]);
 
   useEffect(() => {
     socket.on("event-start", (eventStart: any) => {
-      console.log("event-start", eventStart);
+      console.log("event-start", eventStart, round.roundDuration);
+
       setRound({
         ...round,
         roundNumber: eventStart.roundNumber,
-        timer: eventStart.timer,
         eventStarted: eventStart.eventStarted,
+        timer: round.roundDuration ? round.roundDuration - eventStart.timer : eventStart.timer,
       });
-      console.log(round);
-    })
+    });
 
     socket.on("round-update", (eventTimer: any) => {
-      console.log("hello", eventTimer.roundNumber)
+
+      if (!round.roundDuration) {
+        syncRoundWithBackend();
+      }
+      console.log(eventTimer)
+
       if (eventTimer.roundNumber) {
         setRound({
           ...round,
           roundNumber: eventTimer.roundNumber,
-          timer: initialTime,
+          timer: round.roundDuration ? round.roundDuration - eventTimer.timer : eventTimer.timer,
         });
-        console.log("round updated", round);
       }
 
       stocksRefetch({
@@ -77,8 +92,9 @@ const Floating = (): JSX.Element => {
     });
     return () => {
       socket.off("round-update");
+      socket.off("event-start");
     };
-  }, []);
+  }, [round]);
 
 
   useEffect(() => {
@@ -86,7 +102,7 @@ const Floating = (): JSX.Element => {
       const interval = setInterval(() => {
         setRound({
           ...round,
-          timer: round.timer > 0 ? round.timer - 1 : initialTime
+          timer: round.timer > 0 ? round.timer - 1 : 0
         });
       }, 1000);
 
@@ -98,12 +114,6 @@ const Floating = (): JSX.Element => {
 
   return (
     <div>
-      <style jsx>{`
-        .fixedContainer {
-
-        }
-      `}</style>
-
       <Link href="/all-news">
         <a className={`${styles.fixedContainer} counter-container`}>
           <div>
@@ -112,7 +122,7 @@ const Floating = (): JSX.Element => {
           </div>
           <div>
             <p>Time: </p>
-            <p>{round.timer}</p>
+            <p>{round.timer === 0 ? "..." : round.timer}</p>
           </div>
         </a>
       </Link>

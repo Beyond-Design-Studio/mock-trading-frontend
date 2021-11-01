@@ -9,6 +9,7 @@ import Sponsors from "@components/Home/Sponsors";
 import DesignPartners from "@components/Home/DesignPartners";
 
 import useUser from "hooks/useUser";
+import Floating from "@components/floating";
 
 const Home = (): JSX.Element => {
   const { user } = useUser();
@@ -20,6 +21,7 @@ const Home = (): JSX.Element => {
       </Head>
 
       <Sidenav />
+      <Floating />
 
       {user && (
         <div className={styles.pageContainer}>

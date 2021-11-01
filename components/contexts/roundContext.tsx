@@ -6,6 +6,7 @@ export interface RoundInterface {
   timer: number,
   max_rounds: number,
   eventStarted: boolean,
+  roundDuration?: number
 }
 
 export interface roundContextType {
@@ -34,8 +35,8 @@ export function useRound(): roundContextType {
 export const RoundProvider = ({ children }: { children: ReactNode }): any => {
 
   const [round, setround] = useState<RoundInterface>({ roundNumber: 0, timer: 90, max_rounds: 20, eventStarted: false });
-  const setRound = (round: RoundInterface) => {
-    setround(round);
+  const setRound = (newRound: RoundInterface) => {
+    setround(newRound);
   }
 
   const value = {
