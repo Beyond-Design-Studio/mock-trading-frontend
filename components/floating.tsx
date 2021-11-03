@@ -24,7 +24,7 @@ const Floating = (): JSX.Element => {
 
   function syncRoundWithBackend(): void {
     if (user.jwt) {
-      console.log("sync...");
+      // console.log("sync...");
       axios({
         method: "GET",
         url: "/even-start-triggers",
@@ -41,22 +41,20 @@ const Floating = (): JSX.Element => {
             eventStarted: res.data[0].event_started,
             roundDuration: res.data[0].round_duration_in_seconds,
           });
-
-          console.log(res.data[0].current_seconds);
-          // console.log("ROUND floating", round);
         })
         .catch((err) => console.error(err.response.data));
     }
   }
 
   useEffect(() => {
-    syncRoundWithBackend();
-    console.log(user);
+    if (!round.roundDuration) {
+      syncRoundWithBackend();
+    }
   }, [user.jwt]);
 
   useEffect(() => {
     socket.on("event-start", (eventStart: any) => {
-      console.log("event-start", eventStart, round.roundDuration);
+      // console.log("event-start", eventStart, round.roundDuration);
 
       setRound({
         ...round,
@@ -68,10 +66,7 @@ const Floating = (): JSX.Element => {
 
     socket.on("round-update", (eventTimer: any) => {
 
-      if (!round.roundDuration) {
-        syncRoundWithBackend();
-      }
-      console.log(eventTimer)
+      // console.log(eventTimer)
 
       if (eventTimer.roundNumber) {
         setRound({
@@ -118,7 +113,7 @@ const Floating = (): JSX.Element => {
         <a className={`${styles.fixedContainer} counter-container`}>
           <div>
             <p>Round: </p>
-            <p>{round.roundNumber}</p>
+            <p>{round.roundNumber === 69 ? "Nice" : round.roundNumber}</p>
           </div>
           <div>
             <p>Time: </p>

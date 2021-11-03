@@ -157,7 +157,7 @@ const MarketActions = (props: Props): JSX.Element => {
       props.toggleModal();
     }).catch((err) => {
       if (err.response) {
-        const errMsg = err.response.data.message[0].messages[0].id
+        const errMsg = err.response.data?.message[0]?.messages[0]?.id
         console.error("[BUY ERROR]", JSON.stringify(errMsg));
         setError(errMsg);
       } else {
