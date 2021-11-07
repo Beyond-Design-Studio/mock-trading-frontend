@@ -53,12 +53,12 @@ const Funds = (): JSX.Element => {
             <div className={styles.fundsRow}>
               <div>
                 <h3>Unrealized Profit/Loss</h3>
-                <p>{` ${indianNumberConverter(data.unrealized_networth - data.NetWorth)}`}</p>
+                <p>{` ${data.unrealized_networth ? indianNumberConverter(data.unrealized_networth - data.NetWorth) : "-"}`}</p>
               </div>
               <div>
                 {/* {console.log(holdings)} */}
                 <h3>Net Worth</h3>
-                <p>{` ${indianNumberConverter(data.unrealized_networth)}`}</p>
+                <p>{` ${data.unrealized_networth ? indianNumberConverter(data.unrealized_networth) : "-"}`}</p>
               </div>
             </div>
           </>
