@@ -1,4 +1,3 @@
-import React, { useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
@@ -11,16 +10,9 @@ import {
   NewsIcon,
 } from "@components/icons";
 import styles from "@styles/sidenav.module.scss";
-import Floating from "./floating";
 
 const Sidenav = (): JSX.Element => {
   const router = useRouter();
-
-  useEffect(() => {
-    // if (router && router.query) {
-    //   console.log("hello", router.pathname);
-    // }
-  }, [router]);
 
   function LogOutHandler() {
     localStorage.removeItem("token");
@@ -29,8 +21,6 @@ const Sidenav = (): JSX.Element => {
 
   return (
     <>
-      <Floating />
-
       <aside className={`${styles.leftbar}`}>
         <div className={`${styles.bodhiTitle}`}>
             <a href="https://bodhicapital.in" target="_blank" rel="noreferrer" tabIndex={0} className={`${styles.linkIcon}`}>

@@ -11,6 +11,7 @@ import Leaderboard from "@components/Portfolio/LeaderBoard";
 import useGetPortfolio from "hooks/useGetPortfolio";
 import useGetLeader from 'hooks/useGetLeader';
 import useUser from "hooks/useUser";
+import Floating from "@components/floating";
 
 const Portfolio = (): JSX.Element => {
 
@@ -28,6 +29,7 @@ const Portfolio = (): JSX.Element => {
       </Head>
 
       <Sidenav />
+      <Floating />
 
       <div className={styles.portfolioPage}>
         <>

@@ -9,6 +9,7 @@ import useUser from "hooks/useUser";
 
 import { NewsIcon } from "@components/icons";
 import { UserInterface } from "@components/contexts/authContext";
+import Floating from "@components/floating";
 
 const Wrapped = ({ user }: { user: UserInterface }): JSX.Element => {
   const { data } = useGetNews(user.jwt);
@@ -65,6 +66,7 @@ const AllNews = (): JSX.Element => {
       </Head>
 
       <Sidenav />
+      <Floating />
 
       <div className={styles.allNewsPage}>
         <h1>All News Updates</h1>

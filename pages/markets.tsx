@@ -6,6 +6,7 @@ import MarketComponent from "@components/Markets/market";
 import News from "@components/Markets/News";
 import PortfolioSnapshot from "@components/Markets/portfolio";
 import useUser from "hooks/useUser";
+import Floating from "@components/floating";
 
 const Markets = (): JSX.Element => {
   const { user } = useUser();
@@ -17,6 +18,7 @@ const Markets = (): JSX.Element => {
       </Head>
 
       <Sidenav />
+      <Floating />
 
       {user.jwt && (
         <div className={styles.marketPage}>
