@@ -54,7 +54,7 @@ const Leaderboard = (props: Props): JSX.Element => {
               <tr className={top3name} key={ind}>
                 <td>{ind + 1}</td>
                 <td><span>{item.InvestorName}</span></td>
-                <td>{indianNumberConverter(item.unrealized_networth)}</td>
+                <td>{indianNumberConverter(item.unrealized_networth ? item.unrealized_networth : 0)}</td>
               </tr>
             )
           }
@@ -67,7 +67,7 @@ const Leaderboard = (props: Props): JSX.Element => {
               <tr className={styles.yourPosition}>
                 <td>{userRank}</td>
                 <td><span>{props.InvestorName}</span></td>
-                <td>{indianNumberConverter(props.InvestorNetWorth)}</td>
+                <td>{indianNumberConverter(props.InvestorNetWorth ? props.InvestorNetWorth : 0)}</td>
               </tr>
             </>
           )}
