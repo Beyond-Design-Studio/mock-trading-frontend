@@ -154,7 +154,7 @@
   }
 
   td:nth-child(1) {
-    width: 15%;
+    width: 25%;
     padding-left: 0.75rem;
 
     @include media-medium {
@@ -182,6 +182,17 @@
     @include media-medium {
       text-align: left;
     }
+  }
+
+  td:nth-last-child(1) {
+    text-align: right;
+    width: 15%;
+
+    @include media-medium {
+      text-align: left;
+      width: auto;
+    }
+
   }
 }
 
