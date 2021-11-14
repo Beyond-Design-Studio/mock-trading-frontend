@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useState } from "react";
 
 import Modal from "@components/modal";
-import Image from "next/image";
+// import Image from "next/image";
 import styles from "@styles/market.module.scss";
 import Loading from "@components/loading";
 import useModal from "@components/functions/useModal";
@@ -12,7 +12,7 @@ import indianNumberConverter from "@components/functions/numberConvertor";
 import toFixed from "@components/functions/toFixed";
 
 import { useAuth } from "@components/contexts/authContext";
-import { LoaderIcon } from "@components/icons";
+// import { LoaderIcon } from "@components/icons";
 import { useMediaQuery } from "react-responsive";
 import { SecurityInterface } from "@data/stonks";
 import { useRound } from "@components/contexts/roundContext";
@@ -61,20 +61,6 @@ const TableRow: FC<SecurityInterface> = ({
       </Modal>
 
       <tr tabIndex={1}>
-        <td>
-          {img ? (
-            <Image
-              src={img}
-              alt={"Logo"}
-              height={70}
-              width={70}
-              objectFit="contain"
-            />
-          ) : (
-            <LoaderIcon />
-          )}
-        </td>
-
         <td>
           <p>{name}</p>
         </td>
@@ -144,7 +130,7 @@ const MarketComponent = (): JSX.Element => {
       <table className={`${styles.marketTable}`}>
         <thead>
           <tr>
-            <th colSpan={2}>STOCK</th>
+            <th>STOCK</th>
             {isMedium ? (
               <>
                 <th>PREVIOUS PRICE</th>
