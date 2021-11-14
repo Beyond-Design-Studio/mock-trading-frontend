@@ -38,7 +38,7 @@ const Rules = (): JSX.Element => {
           <li>Use of calculators is permitted. </li>
           <li>Use of the internet is permitted. </li>
           <li>In case your timer is not working, please switch to a different network as some Indian telecoms do not support polling/sockets which might make the timer to not work. If you don't have a different network, please note that the rounds last 4 minutes each so please time yourself accordingly. </li>
-          <li>In case of technical difficulties, please contact the organisers at the event <a href='https://meet.google.com/fqi-tuzt-hzgs' target="_blank" rel="noreferrer" style={{ 'textDecoration': 'underline' }} className="hoverColor">helpdesk (https://meet.google.com/fqi-tuzt-hzg).</a></li>
+          <li>In case of technical difficulties, please contact the organisers at the event <a href='https://meet.google.com/fqi-tuzt-hzg' target="_blank" rel="noreferrer" style={{ 'textDecoration': 'underline' }} className="hoverColor">helpdesk (https://meet.google.com/fqi-tuzt-hzg).</a></li>
 
         </ul>
       </div>
